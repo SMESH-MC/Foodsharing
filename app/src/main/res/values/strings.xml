@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Titles -->
+    <string name="app_name">Foodsharing</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_start_screen">StartScreen</string>
+    <string name="title_activity_search__browse">Search_Browse</string>
+    <string name="title_activity_profile_search">ProfileSearch</string>
+    <string name="title_activity_edit_offer">EditOffer</string>
+
+    <!-- activity elements -->
+    <string name="browse_tv">Browse</string>
+    <string name="items">Items</string>
+    <string name="category_btn">categories</string>
+    <string name="location_btn">location</string>
+    <string name="profiles_btn">profiles</string>
+    <string name="create_tv">Create/ Edit</string>
+    <string name="placed_offers_btn">placed offers</string>
+    <string name="profile_btn">profile</string>
+    <string name="new_offer_btn">new offer</string>
+    <string name="title_activity_item_search">ItemSearch</string>
+    <string name="hello_world">Hello world!</string>
+
+</resources>
