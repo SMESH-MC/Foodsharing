@@ -1,19 +1,27 @@
 package de.htwds.mada.foodsharing;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 
-public class EditOffer extends ActionBarActivity {
+public class EditOffer extends Activity {
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private ImageView photo;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_offer);
+        photo = (ImageView)findViewById(R.id.offeringPhoto);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -35,5 +43,23 @@ public class EditOffer extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void dispatchTakePictureIntent(View view) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //makes sure any app can handle the Intent:
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            //launch an activity with a desired result
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            bitmap = (Bitmap)extras.get("data");
+            photo.setImageBitmap(bitmap);
+        }
     }
 }

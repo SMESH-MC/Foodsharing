@@ -30,9 +30,13 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:id="@+id/imageView"
+            android:id="@+id/offeringPhoto"
             android:visibility="visible"
-            android:background="@drawable/abc_ic_menu_selectall_mtrl_alpha" />
+            android:background="@drawable/abc_ic_menu_selectall_mtrl_alpha"
+            android:clickable="true"
+            android:nestedScrollingEnabled="false"
+            android:longClickable="false"
+            android:onClick="dispatchTakePictureIntent" />
     </LinearLayout>
 
     <LinearLayout
@@ -59,7 +63,7 @@
             android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:nestedScrollingEnabled="false"></RadioGroup>
+            android:nestedScrollingEnabled="false" />
 
     </LinearLayout>
 
