@@ -8,6 +8,9 @@
     <string name="title_activity_search__browse">Search_Browse</string>
     <string name="title_activity_profile_search">ProfileSearch</string>
     <string name="title_activity_edit_offer">EditOffer</string>
+    <string name="title_activity_locations">Locations</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_profile_edit">Edit profile</string>
 
     <!-- activity elements -->
     <string name="browse_tv">Browse</string>
@@ -21,5 +24,6 @@
     <string name="new_offer_btn">new offer</string>
     <string name="title_activity_item_search">ItemSearch</string>
     <string name="hello_world">Hello world!</string>
+    <string name="google_maps_key">Wat soll hier stehn?</string>
 
 </resources>
