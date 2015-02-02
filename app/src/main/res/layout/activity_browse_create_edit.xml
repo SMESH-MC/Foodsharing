@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Browse"
+            android:text="@string/browse_tv"
             android:id="@+id/textView"
             android:textSize="25sp"
             android:layout_gravity="center_horizontal" />
@@ -80,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Create/ Edit"
+            android:text="@string/create_edit_tv"
             android:id="@+id/textView2"
             android:textSize="25sp"
             android:layout_gravity="center_horizontal"
