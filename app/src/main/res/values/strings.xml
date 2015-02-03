@@ -1,29 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Titles -->
+
     <string name="app_name">Foodsharing</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_start_screen">StartScreen</string>
+    <!-- Titles -->
     <string name="title_activity_search__browse">Search_Browse</string>
     <string name="title_activity_profile_search">ProfileSearch</string>
     <string name="title_activity_edit_offer">EditOffer</string>
-    <string name="title_activity_profile">Profile</string>
     <string name="title_activity_profile_edit">Edit profile</string>
-
-    <!-- activity elements -->
-    <string name="browse_tv">Browse</string>
-    <string name="items">Items</string>
-    <string name="category_btn">categories</string>
-    <string name="location_btn">location</string>
-    <string name="profiles_btn">profiles</string>
-    <string name="create_tv">Create/ Edit</string>
-    <string name="placed_offers_btn">placed offers</string>
-    <string name="profile_btn">profile</string>
-    <string name="new_offer_btn">new offer</string>
-    <string name="title_activity_item_search">ItemSearch</string>
     <string name="title_activity_profile_display">ProfileDisplayActivity</string>
     <string name="title_activity_result">ResultActivity</string>
+    <string name="title_activity_display_offer">DisplayOfferActivity</string>
+
+
+    <!-- activity elements -->
+    <!--text views-->
+    <string name="browse_tv">Browse</string>
+    <string name="create_tv">Create/ Edit</string>
     <string name="create_edit_tv">Create/ Edit</string>
     <string name="result_tv">Result</string>
     <string name="account_tv">Account</string>
@@ -35,14 +29,37 @@
     <string name="place_of_residence_tv">Place of Residence</string>
     <string name="phone_number_tv">Phone Number</string>
     <string name="email_address_tv">Email Address</string>
-    <string name="edit_latest_offer">Edit latest Offer</string>
-    <string name="create_offer">Show or create offers</string>
     <string name="title_tv">Title</string>
     <string name="best_before_tv">Best Before</string>
     <string name="detailed_description_tv">Detailed Description</string>
+    <string name="create_offer_tv">Create offer</string>
+    <string name="get_location_tv">Location</string>
+    <string name="contact_info_tv">Contact Information</string>
+    <string name="edit_latest_offer_tv">Edit latest Offer</string>
+
+
+    <!--buttons-->
+    <string name="items">Items</string>
+    <string name="category_btn">categories</string>
+    <string name="location_btn">location</string>
+    <string name="profiles_btn">profiles</string>
+    <string name="placed_offers_btn">placed offers</string>
+    <string name="profile_btn">profile</string>
+    <string name="new_offer_btn">new offer</string>
+
+
     <string name="show_location_btn">Show Location</string>
-    <string name="show_contact_information">Show Contact Info</string>
+    <string name="show_contact_information_btn">Show Contact Info</string>
     <string name="place_order_btn">Place Order</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="choose_contact_info">Choose Contact Info</string>
+    <string name="publish_offer_btn">Publish Offer</string>
+    <string name="get_location_btn">Get Location</string>
+    <string name="edit_offer_btn">Edit Offer</string>
+
+    <!--edit texts-->
+    <string name="title_et">Title</string>
+    <string name="best_before_et">Best Before</string>
+    <string name="detailed_description_et">Detailed Description</string>
+
 
 </resources>

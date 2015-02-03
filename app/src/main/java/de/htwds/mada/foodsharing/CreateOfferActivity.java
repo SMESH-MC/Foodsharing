@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 
-public class CreateOffer extends Activity {
+public class CreateOfferActivity extends Activity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView photo;
     private Bitmap bitmap;
