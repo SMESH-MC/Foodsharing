@@ -1,12 +1,16 @@
 package de.htwds.mada.foodsharing;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 
-public class BrowseCreateEdit extends ActionBarActivity {
+public class BrowseCreateEdit extends Activity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +22,7 @@ public class BrowseCreateEdit extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_browse, menu);
+        getMenuInflater().inflate(R.menu.menu_browse_create, menu);
         return true;
     }
 
@@ -36,4 +40,6 @@ public class BrowseCreateEdit extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

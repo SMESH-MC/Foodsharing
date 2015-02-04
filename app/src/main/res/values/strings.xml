@@ -40,12 +40,12 @@
 
     <!--buttons-->
     <string name="items">Items</string>
-    <string name="category_btn">categories</string>
-    <string name="location_btn">location</string>
-    <string name="profiles_btn">profiles</string>
-    <string name="placed_offers_btn">placed offers</string>
-    <string name="profile_btn">profile</string>
-    <string name="new_offer_btn">new offer</string>
+    <string name="search_location_btn">location</string>
+    <string name="search_category_btn">Category</string>
+    <string name="existing_offers_btn">Existing offers</string>
+    <string name="search_profile_btn">Profile</string>
+    <string name="edit_create_profile_btn">Profile</string>
+    <string name="new_offer_btn">New Offer</string>
 
 
     <string name="show_location_btn">Show Location</string>
@@ -55,11 +55,13 @@
     <string name="publish_offer_btn">Publish Offer</string>
     <string name="get_location_btn">Get Location</string>
     <string name="edit_offer_btn">Edit Offer</string>
+    <string name="edit_existing_offer_btn">Edit Offer</string>
 
     <!--edit texts-->
     <string name="title_et">Title</string>
     <string name="best_before_et">Best Before</string>
     <string name="detailed_description_et">Detailed Description</string>
+    <string name="searching_for_hint">Searching for...</string>
 
 
 </resources>

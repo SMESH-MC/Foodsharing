@@ -21,7 +21,18 @@
             android:text="@string/browse_tv"
             android:id="@+id/textView"
             android:textSize="25sp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/abc_secondary_text_material_light" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/searching_for_hint"
+            android:hint="@string/searching_for_hint"
+            android:textColorHint="@color/secondary_text_default_material_light"
+            />
+
+
 
     </LinearLayout>
 
@@ -29,27 +40,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center_horizontal"
         android:layout_weight="0">
+
         <Button
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/search_text_button"
+            android:layout_height="fill_parent"
+            android:id="@+id/button"
             android:layout_weight="1"
-            android:text="@string/items" />
+            android:text="@string/existing_offers_btn"
+            />
+
         <Button
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/search_cats_button"
+            android:layout_height="fill_parent"
+            android:id="@+id/button2"
             android:layout_weight="1"
-            android:text="@string/category_btn" />
+            android:text="@string/search_category_btn"
+            />
+
         <Button
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/search_location_button"
+            android:layout_height="fill_parent"
+            android:id="@+id/button3"
             android:layout_weight="1"
-            android:text="@string/location_btn" />
-        </LinearLayout>
+            android:text="@string/search_location_btn"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,14 +77,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/search_profiles_button"
-            android:text="@string/profiles_btn"
-            android:layout_weight="1" />
+            android:text="@string/search_profile_btn"
+            android:layout_weight="1"
+            />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"></LinearLayout>
+        android:layout_weight="2">
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -92,28 +112,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
         android:layout_weight="0">
-
         <Button
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/button"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_exsisting_offer_btn"
             android:layout_weight="1"
-            android:text="@string/placed_offers_btn" />
-
+            android:text="@string/edit_existing_offer_btn" />
         <Button
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/button2"
-            android:layout_weight="1"
-            android:text="@string/profile_btn" />
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/button3"
+            android:layout_height="wrap_content"
+            android:id="@+id/new_offer_btn"
             android:layout_weight="1"
             android:text="@string/new_offer_btn" />
-    </LinearLayout>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_create_profile"
+            android:layout_weight="1"
+            android:text="@string/edit_create_profile_btn" />
+        </LinearLayout>
+
 
 </LinearLayout>
