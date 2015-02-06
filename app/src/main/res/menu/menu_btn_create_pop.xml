@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/new_offer_item" android:title="@string/new_offer_btn" android:orderInCategory="1"></item>
+    <item android:id="@+id/new_profile_item" android:title="@string/new_profile_btn" android:orderInCategory="2"></item>
+    <item android:id="@+id/edit_offer_item" android:title="@string/edit_offer_btn" android:orderInCategory="3"></item>
+    <item android:id="@+id/edit_profile_item" android:title="@string/edit_profile_btn" android:orderInCategory="4"></item>
+</menu>
