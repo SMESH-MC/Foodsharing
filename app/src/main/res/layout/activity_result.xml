@@ -22,22 +22,20 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:id="@+id/scrollView"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/textView12"
-            android:layout_toRightOf="@+id/textView12"
-            android:layout_alignParentLeft="true"
             android:layout_marginBottom="30dp"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:background="@color/accent_material_light"
+            android:padding="1dp"
+            android:visibility="visible">
 
             <ListView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/listView2"
-                android:layout_below="@+id/textView12"
-                android:layout_toEndOf="@+id/textView12"
                 android:layout_marginTop="44dp"
-                android:layout_alignLeft="@+id/scrollView"
-                android:layout_alignStart="@+id/scrollView" />
+                android:visibility="visible"
+                android:nestedScrollingEnabled="false"
+                android:choiceMode="singleChoice" />
         </ScrollView>
     </LinearLayout>
 

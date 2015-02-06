@@ -1,13 +1,14 @@
 package de.htwds.mada.foodsharing;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
-public class DisplayOfferActivity extends Activity {
+public class OfferDisplayActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,5 +37,10 @@ public class DisplayOfferActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void editOffer(View view){
+        Intent i = new Intent(getApplicationContext(), OfferEditActivity.class);
+        startActivity(i);
     }
 }

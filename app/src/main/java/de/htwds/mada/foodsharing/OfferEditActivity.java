@@ -8,10 +8,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 
-public class CreateOfferActivity extends Activity {
+public class OfferEditActivity extends Activity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView photo;
     private Bitmap bitmap;
@@ -21,6 +22,19 @@ public class CreateOfferActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_offer);
         photo = (ImageView)findViewById(R.id.offeringPhoto);
+        Button publishOfferBtn = (Button) findViewById(R.id.publish_offer_btn);
+
+        publishOfferBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+
+                Intent i = new Intent(getApplicationContext(), OfferDisplayActivity.class);
+                startActivity(i);
+
+            }
+        });
     }
 
     @Override

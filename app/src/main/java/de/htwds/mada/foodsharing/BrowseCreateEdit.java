@@ -4,19 +4,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.PopupMenu;
 
 
 public class BrowseCreateEdit extends Activity {
+    PopupMenu pop;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_create_edit);
-    }
+        }
+
+
 
 
     @Override
@@ -42,4 +46,75 @@ public class BrowseCreateEdit extends Activity {
     }
 
 
+    public void browsePopUp(View view) {
+        pop = new PopupMenu(this, view);
+        pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.search_existing_offer_item:
+                        fillIntent(OfferDisplayActivity.class);
+
+                        return true;
+                    case R.id.search_category_item:
+                        fillIntent(ResultActivity.class);
+
+                        return true;
+                    case R.id.search_location_item:
+                        fillIntent(ResultActivity.class);
+
+                        return true;
+                    case R.id.search_profile_item:
+                        fillIntent(ProfileDisplayActivity.class);
+
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+        MenuInflater inf = pop.getMenuInflater();
+        inf.inflate(R.menu.menu_btn_browse_pop, pop.getMenu());
+        pop.show();
+    }
+
+    public void browseEditPopUp(View view){
+        pop = new PopupMenu(this, view);
+        pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.edit_offer_item:
+                        fillIntent(OfferEditActivity.class);
+
+                        return true;
+                    case R.id.edit_profile_item:
+                        fillIntent(ProfileDisplayActivity.class);
+
+                        return true;
+                    case R.id.new_offer_item:
+                        fillIntent(OfferEditActivity.class);
+
+                        return true;
+                    case R.id.new_profile_item:
+                        fillIntent(ProfileEditActivity.class);
+
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+        MenuInflater inf = pop.getMenuInflater();
+        inf.inflate(R.menu.menu_btn_create_pop, pop.getMenu());
+        pop.show();
+    }
+
+    protected void fillIntent(Class activity){
+        Intent i;
+        i = new Intent(getApplicationContext(), activity);
+        startActivity(i);
+    }
+
 }
+

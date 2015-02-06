@@ -19,7 +19,7 @@
     <string name="browse_tv">Browse</string>
     <string name="create_tv">Create/ Edit</string>
     <string name="create_edit_tv">Create/ Edit</string>
-    <string name="result_tv">Result</string>
+    <string name="result_tv">Matches</string>
     <string name="account_tv">Account</string>
     <string name="last_name_tv">Last Name</string>
     <string name="first_name_tv">Given Name</string>
@@ -40,12 +40,14 @@
 
     <!--buttons-->
     <string name="items">Items</string>
-    <string name="search_location_btn">location</string>
+    <string name="search_location_btn">Location</string>
     <string name="search_category_btn">Category</string>
     <string name="existing_offers_btn">Existing offers</string>
-    <string name="search_profile_btn">Profile</string>
-    <string name="edit_create_profile_btn">Profile</string>
+    <string name="search_profile_btn">Profiles</string>
+    <string name="edit_profile_btn">Change Profile</string>
     <string name="new_offer_btn">New Offer</string>
+    <string name="browse_btn">Search in</string>
+
 
 
     <string name="show_location_btn">Show Location</string>
@@ -55,13 +57,15 @@
     <string name="publish_offer_btn">Publish Offer</string>
     <string name="get_location_btn">Get Location</string>
     <string name="edit_offer_btn">Edit Offer</string>
-    <string name="edit_existing_offer_btn">Edit Offer</string>
+
 
     <!--edit texts-->
     <string name="title_et">Title</string>
     <string name="best_before_et">Best Before</string>
     <string name="detailed_description_et">Detailed Description</string>
-    <string name="searching_for_hint">Searching for...</string>
+    <string name="searching_for_hint">Item</string>
+    <string name="new_profile_btn">New Profile</string>
+    <string name="browse_create">Item</string>
 
 
 </resources>

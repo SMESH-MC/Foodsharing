@@ -144,7 +144,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/edit_latest_offer_tv"
-                android:id="@+id/button8" />
+                android:id="@+id/button8"
+                android:onClick="editLatestOffer"/>
         </TableRow>
 
     </LinearLayout>

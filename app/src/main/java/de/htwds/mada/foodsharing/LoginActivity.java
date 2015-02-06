@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -378,6 +377,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
             if (success) {
                 finish();
+                signInSuccess();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -389,6 +389,11 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    public void signInSuccess(){
+        Intent i = new Intent(this, BrowseCreateEdit.class);
+        startActivity(i);
     }
 }
 
