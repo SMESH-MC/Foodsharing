@@ -8,22 +8,27 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
         android:layout_weight="1">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/profile_title_tv"
             android:id="@+id/textView3"
-            android:layout_marginTop="25dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp" />
+            android:layout_weight="1"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
 
         <TableLayout
             android:layout_width="fill_parent"
@@ -125,41 +130,48 @@
             </TableRow>
 
             <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="2">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:layout_weight="2"
+                android:paddingBottom="25dp">
+
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/profile_display_username_tv"
                     android:id="@+id/profile_display_username_tv"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:layout_gravity="top"
+                    android:singleLine="true" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/profile_display_password_tv"
                     android:id="@+id/profile_display_password_tv"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:layout_gravity="top"
+                    android:singleLine="true" />
             </TableRow>
 
         </TableLayout>
 
     </LinearLayout>
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="25dp">
-
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/profile_display_edit_btn"
             android:id="@+id/profile_display_edit_btn"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:onClick="profileDisplay"/>
 
         <Button
             android:layout_width="fill_parent"
@@ -167,16 +179,16 @@
             android:text="@string/profile_display_show_tr_history"
             android:id="@+id/profile_edit_show_tr_history"
             android:layout_weight="1"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:onClick="profileDisplay"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/profile_display_cancle_btn"
             android:id="@+id/profile_display_cancel_btn"
-            android:layout_weight="1" />
-
-
-    </TableRow>
+            android:layout_weight="1"
+            android:onClick="profileDisplay"/>
+    </LinearLayout>
 
 </LinearLayout>

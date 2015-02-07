@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="91dp"
+        android:layout_height="55dp"
         android:layout_gravity="center_horizontal">
 
         <TextView
@@ -25,7 +25,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="47dp">
+        android:layout_height="30dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,22 +39,26 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
+        android:layout_height="136dp"
         android:baselineAligned="false">
 
-        <ListView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/transaction_own_offers_lv"
-            android:layout_weight="1"
-            android:paddingBottom="10dp" />
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/scrollView4" >
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/transaction_own_offers_lv"
+                android:paddingBottom="10dp" />
+        </ScrollView>
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="47dp"
+        android:layout_height="30dp"
         android:gravity="center_vertical">
 
         <TextView
@@ -69,34 +73,76 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1">
+        android:layout_height="0dp"
+        android:layout_weight="0.74">
 
-        <ListView
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollView3" >
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/transaction_accepted_offers_lv" />
+        </ScrollView>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="32dp">
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/transaction_accepted_offers_lv" />
+            android:text="@string/transaction_edit_tv"
+            android:id="@+id/transaction_edit_tv"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="83dp"
+        android:layout_height="wrap_content"
         android:paddingTop="10dp">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/transaction_history_close_tr_btn"
-            android:id="@+id/transaction_history_close_tr_btn"
-            android:layout_weight="1" />
+            android:text="@string/transaction_close_tr_btn"
+            android:id="@+id/transaction_close_tr_btn"
+            android:layout_weight="1"
+            android:onClick="transactionEdit"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/transaction_history_cancel_btn"
-            android:id="@+id/transaction_history_cancel_btn"
-            android:layout_weight="1" />
+            android:text="@string/transaction_cancel_btn"
+            android:id="@+id/transaction_cancel_btn"
+            android:layout_weight="1"
+            android:onClick="transactionEdit"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/transaction_back_btn"
+            android:id="@+id/transaction_back"
+            android:layout_weight="1"
+            android:onClick="transactionEdit"/>
+
+
     </LinearLayout>
 
 

@@ -1,9 +1,12 @@
 package de.htwds.mada.foodsharing;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 public class ProfileDisplayActivity extends Activity {
@@ -35,5 +38,25 @@ public class ProfileDisplayActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void profileDisplay(View view){
+        Button btn = (Button) view;
+        switch (btn.getId()) {
+            case R.id.profile_display_edit_btn:
+                fillIntent(ProfileEditActivity.class);
+                break;
+            case R.id.profile_edit_show_tr_history:
+                fillIntent(TransactionHistoryActivity.class);
+                break;
+
+            default:
+                return;
+        }
+    }
+
+    protected void fillIntent(Class activity){
+        Intent i;
+        i = new Intent(getApplicationContext(), activity);
+        startActivity(i);
     }
 }

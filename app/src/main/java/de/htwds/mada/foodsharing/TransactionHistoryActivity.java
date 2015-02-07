@@ -1,12 +1,15 @@
 package de.htwds.mada.foodsharing;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
-public class TransactionHistoryActivity extends ActionBarActivity {
+public class TransactionHistoryActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,5 +38,28 @@ public class TransactionHistoryActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void transactionEdit(View view){
+        Button btn = (Button) view;
+        switch (btn.getId()) {
+            case R.id.transaction_cancel_btn:
+                fillIntent(TransactionHistoryActivity.class);
+                break;
+            case R.id.transaction_close_tr_btn:
+                fillIntent(TransactionHistoryActivity.class);
+                break;
+            case R.id.transaction_back:
+                fillIntent(ProfileDisplayActivity.class);
+                break;
+
+            default:
+                return;
+        }
+    }
+
+    protected void fillIntent(Class activity){
+        Intent i;
+        i = new Intent(getApplicationContext(), activity);
+        startActivity(i);
     }
 }

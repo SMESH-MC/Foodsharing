@@ -33,7 +33,7 @@
     <string name="title_tv">Title</string>
     <string name="best_before_tv">Best Before</string>
     <string name="detailed_description_tv">Detailed Description</string>
-    <string name="create_offer_tv">Create offer</string>
+    <string name="create_offer_tv">Create Offer</string>
     <string name="get_location_tv">Location</string>
     <string name="contact_info_tv">Contact Information</string>
     <string name="edit_latest_offer_tv">Edit latest Offer</string>
@@ -83,9 +83,13 @@
 
     <string name="profile_display_show_tr_history">Transactions</string>
     <string name="transaction_history_title_tv">Transactions</string>
-    <string name="transaction_history_close_tr_btn">Close</string>
-    <string name="transaction_history_cancel_btn">Cancel</string>
+    <string name="transaction_close_tr_btn">Close</string>
+    <string name="transaction_cancel_btn">Cancel</string>
     <string name="published_offers">My Offers</string>
     <string name="accepted_offers">Accepted Offers</string>
+    <string name="transaction_edit_tv">Edit Transaction</string>
+    <string name="transaction_back_btn">Back</string>
+    <string name="profile_edit_save_btn">Save</string>
+
 
 </resources>

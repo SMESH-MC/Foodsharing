@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 
 public class ProfileEditActivity extends Activity {
@@ -39,8 +40,24 @@ public class ProfileEditActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-        public void editLatestOffer(View view){
-             Intent i = new Intent(getApplicationContext(), OfferEditActivity.class);
-             startActivity(i);
-     }
+        public void editProfile(View view){
+            Button btn = (Button) view;
+            switch (btn.getId()) {
+                case R.id.profile_edit_offer_btn:
+                    fillIntent(OfferEditActivity.class);
+                    break;
+                case R.id.profile_edit_save_btn:
+                    fillIntent(ProfileDisplayActivity.class);
+                    break;
+
+                default:
+                    return;
+            }
+        }
+
+    protected void fillIntent(Class activity){
+        Intent i;
+        i = new Intent(getApplicationContext(), activity);
+        startActivity(i);
+    }
 }

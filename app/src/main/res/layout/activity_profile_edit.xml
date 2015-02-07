@@ -8,10 +8,11 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="0.2"
+        android:layout_gravity="center_horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -21,7 +22,15 @@
             android:id="@+id/textView3"
             android:layout_marginTop="25dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginBottom="10dp"
+            android:textSize="25sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <TableLayout
             android:layout_width="fill_parent"
@@ -140,18 +149,19 @@
             android:layout_weight="0">
 
             <Button
-                android:layout_width="225dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/edit_latest_offer_tv"
-                android:id="@+id/button8"
-                android:onClick="editLatestOffer" />
+                android:id="@+id/profile_edit_offer_btn"
+                android:onClick="editProfile"
+                android:layout_weight="1" />
 
             <Button
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="New Button"
-                android:id="@+id/button"
-                android:layout_weight="1.51" />
+                android:text="@string/profile_edit_save_btn"
+                android:id="@+id/profile_edit_save_btn"
+                android:layout_weight="1" />
         </LinearLayout>
 
         <TableRow
