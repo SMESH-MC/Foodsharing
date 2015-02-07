@@ -49,7 +49,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/title_tv"
-            android:hint="@string/title_et" />
+            android:hint="@string/title_et"
+            android:text="Bananen" />
     </LinearLayout>
 
     <LinearLayout
@@ -65,7 +66,8 @@
             android:id="@+id/best_before_tv"
             android:inputType="date"
             android:layout_weight="1"
-            android:hint="@string/best_before_et" />
+            android:hint="@string/best_before_et"
+            android:text="1123456" />
 
 
 
@@ -83,7 +85,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/detailed_description_tv"
             android:layout_weight="1"
-            android:hint="@string/detailed_description_et" />
+            android:hint="@string/detailed_description_et"
+            android:text="Feyne gelbe Bananen" />
 
     </LinearLayout>
 

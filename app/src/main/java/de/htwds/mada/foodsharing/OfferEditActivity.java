@@ -3,6 +3,7 @@ package de.htwds.mada.foodsharing;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +40,7 @@ public class OfferEditActivity extends Activity {
     private ImageView photo;
     private Bitmap bitmap;
 
+    final Handler handler = new Handler();
 
     private EditText titleInputField;
     private EditText bestBeforeDateInputField;
@@ -68,8 +70,9 @@ public class OfferEditActivity extends Activity {
                 */
 
 
-                makeQuery();
+                boolean querySuccessful=makeQuery();
 
+                /*
                 v.post(new Runnable() {
                     @Override
                     public void run() {
@@ -77,6 +80,7 @@ public class OfferEditActivity extends Activity {
                         finish();
                     }
                 });
+                */
             }
         });
     }
@@ -103,8 +107,9 @@ public class OfferEditActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void makeQuery()
+    private boolean makeQuery()
     {
+       boolean querySuccessful=false;
        Thread thread=new Thread(new Runnable() {
            @Override
            public void run() {
@@ -133,8 +138,16 @@ public class OfferEditActivity extends Activity {
                    keyValuePairsJson.put("bbd",Integer.parseInt(bestBeforeDateInputField.getText().toString().trim()));
                    keyValuePairsJson.put("date","0000-00-00 00:00:00");
                    keyValuePairsJson.put("valid_date",1423216493);
-               } catch (JSONException e) {
-                   Log.e(LOG, e.getLocalizedMessage());
+               } catch (Exception e) {
+                   final String errorMessage=e.getLocalizedMessage();
+                   Log.e(LOG, errorMessage);
+                   handler.post(new Runnable (){
+                       @Override
+                       public void run() {
+                           Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                       }
+                   });
+                   return;
                }
 
 
@@ -158,7 +171,14 @@ public class OfferEditActivity extends Activity {
                    HttpEntity entity = response.getEntity();
                    inputStream = entity.getContent();
                }catch(Exception e){
-                   Log.e(LOG, "Error in http connection " + e.getMessage());
+                   final String errorMessage=e.getLocalizedMessage();
+                   Log.e(LOG, "Error in http connection " + errorMessage);
+                   handler.post(new Runnable (){
+                       @Override
+                       public void run() {
+                           Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                       }
+                   });
                    return;
                }
                //convert response to string
@@ -173,7 +193,15 @@ public class OfferEditActivity extends Activity {
 
                    result=sb.toString();
                }catch(Exception e){
-                   Log.e(LOG, "Error converting result "+e.toString());
+                   final String errorMessage=e.getLocalizedMessage();
+                   Log.e(LOG, "Error converting result "+errorMessage);
+                   handler.post(new Runnable (){
+                       @Override
+                       public void run() {
+                           Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                       }
+                   });
+                   return;
                }
 
                Log.i(LOG, result);
@@ -193,9 +221,19 @@ public class OfferEditActivity extends Activity {
                }
                */
 
+               handler.post(new Runnable (){
+                   @Override
+                   public void run() {
+                       Toast.makeText(getBaseContext(), "Offering placed successfully!", Toast.LENGTH_LONG).show();
+                       finish();
+                   }
+               });
+
            }
        });
        thread.start();
+
+        return querySuccessful;
     }
 
     public void dispatchTakePictureIntent(View view) {
