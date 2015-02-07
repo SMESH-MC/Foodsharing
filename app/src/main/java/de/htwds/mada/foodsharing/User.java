@@ -3,9 +3,6 @@ package de.htwds.mada.foodsharing;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by SMESH on 07.02.2015.
- */
 public class User {
     private int uid;
     private String email;
@@ -14,7 +11,7 @@ public class User {
     //address infos
     private String street;
     private String houseNumber; //String because of possible house numbering like "109 - 111a"
-    private String addition;
+    private String additional;
     private int plz;  //0-99999
     private String city;
     private String country;
@@ -29,14 +26,16 @@ public class User {
     private static final String EMAIL_REGEXP = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                                               + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     //Exceptions
-    private static final String NO_NEGATIVE_NUMBER = "Only positive numbers allowed";
-    private static final String NO_VALID_EMAIL = "No valid email address";
-    private static final String NO_ARGUMENT = "No argument given";
+    private static final String NO_NEGATIVE_NUMBER = "Only positive numbers allowed!";
+    private static final String NO_VALID_EMAIL = "No valid email address!";
+    private static final String NO_ARGUMENT = "No argument given!";
+    private static final String NO_VALID_PLZ = "PLZ must be between 00000 and 99999!";
 
     public User() {    }
 
     public int getUid() {        return uid;    }
     public void setUid(int uid) {
+        //test if positive
         if (uid >= 0) {
             this.uid = uid;
         } else {
@@ -46,9 +45,11 @@ public class User {
 
     public String getEmail() {        return email;    }
     public void setEmail(String email) {
+        //test if not empty
         if (email.trim().isEmpty()) {
             throw new NullPointerException(NO_ARGUMENT);
         }
+        //test if it is a correct email address
         pattern = Pattern.compile(EMAIL_REGEXP);
         matcher = pattern.matcher(email);
         if (matcher.matches()) {
@@ -60,6 +61,7 @@ public class User {
 
     public char[] getPassword() {        return password;    }
     public void setPassword(char[] password) {
+        //test if not empty
         if (password[0] == '\0') {
             throw new NullPointerException(NO_ARGUMENT);
         }
@@ -68,39 +70,40 @@ public class User {
 
     public String getUsername() {        return username;    }
     public void setUsername(String username) {
+        //test if not empty
         if (username.trim().isEmpty()) {
             throw new NullPointerException(NO_ARGUMENT);
         }
-        this.username = username;
+        this.username = username.trim();
     }
 
     public String getStreet() {        return street;    }
     public void setStreet(String street) {
+        //test if not empty
         if (street.trim().isEmpty()) {
             throw new NullPointerException(NO_ARGUMENT);
         }
-        this.street = street;
+        this.street = street.trim();
     }
 
     public String getHouseNumber() {        return houseNumber;    }
     public void setHouseNumber(String houseNumber) {
+        //test if not empty
         if (houseNumber.trim().isEmpty()) {
             throw new NullPointerException(NO_ARGUMENT);
         }
-        this.houseNumber = houseNumber;
+        this.houseNumber = houseNumber.trim();
     }
 
-    public String getAddition() {        return addition;    }
-    public void setAddition(String addition) {
-        this.addition = addition;
+    public String getAdditional() {        return additional;    }
+    public void setAdditional(String additional) {
+        this.additional = additional.trim();
     }
 
     public int getPlz() {        return plz;    }
     public void setPlz(int plz) {
-        if (plz >= 0) {
-            this.plz = plz;
-        } else {
-            throw new NumberFormatException(NO_NEGATIVE_NUMBER);
+        if (plz < 0 ||  plz > 99999) {
+            throw new NumberFormatException(NO_VALID_PLZ);
         }
         this.plz = plz;
     }
@@ -110,13 +113,13 @@ public class User {
         if (city.trim().isEmpty()) {
             throw new NullPointerException(NO_ARGUMENT);
         }
-        this.city = city;
+        this.city = city.trim();
     }
 
     public String getCountry() {        return country;    }
     public void setCountry(String country) {
         this.country = "DE";
-        //this.country = country;
+        //this.country = country.trim();
     }
 
     public String getVorname() {        return vorname;    }
@@ -124,7 +127,7 @@ public class User {
         if (vorname.trim().isEmpty()) {
             throw new NullPointerException(NO_ARGUMENT);
         }
-        this.vorname = vorname;
+        this.vorname = vorname.trim();
     }
 
     public String getNachname() {        return nachname;    }
@@ -132,6 +135,6 @@ public class User {
         if (nachname.trim().isEmpty()) {
             throw new NullPointerException(NO_ARGUMENT);
         }
-        this.nachname = nachname;
+        this.nachname = nachname.trim();
     }
 }
