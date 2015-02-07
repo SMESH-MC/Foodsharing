@@ -391,6 +391,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         }
     }
 
+    // added for test login without user data
     public void signInSuccess(){
         Intent i = new Intent(this, BrowseCreateEdit.class);
         startActivity(i);

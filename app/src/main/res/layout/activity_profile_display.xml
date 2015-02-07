@@ -124,12 +124,46 @@
                     android:layout_gravity="center_vertical" />
             </TableRow>
 
-        </TableLayout>
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
 
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/listView" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_display_username_tv"
+                    android:id="@+id/profile_display_username_tv"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_display_password_tv"
+                    android:id="@+id/profile_display_password_tv"
+                    android:layout_weight="1" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:paddingTop="25dp">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_display_edit_btn"
+                    android:id="@+id/profile_display_edit_btn"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_display_cancle_btn"
+                    android:id="@+id/profile_display_cancel_btn"
+                    android:layout_weight="1" />
+            </TableRow>
+
+        </TableLayout>
 
     </LinearLayout>
 

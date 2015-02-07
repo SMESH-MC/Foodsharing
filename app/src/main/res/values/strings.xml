@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
     <string name="app_name">Foodsharing</string>
     <string name="action_settings">Settings</string>
     <!-- Titles -->
@@ -12,15 +11,17 @@
     <string name="title_activity_profile_display">ProfileDisplayActivity</string>
     <string name="title_activity_result">ResultActivity</string>
     <string name="title_activity_display_offer">DisplayOfferActivity</string>
+    <string name="title_activity_account_edit">AccountEditActivity</string>
+    <string name="title_activity_account_display">AccountDisplayActivity</string>
 
 
     <!-- activity elements -->
-    <!--text views-->
+    <!-- text views -->
     <string name="browse_tv">Browse</string>
     <string name="create_tv">Create/ Edit</string>
     <string name="create_edit_tv">Create/ Edit</string>
     <string name="result_tv">Matches</string>
-    <string name="account_tv">Account</string>
+    <string name="account_tv">Login</string>
     <string name="last_name_tv">Last Name</string>
     <string name="first_name_tv">Given Name</string>
     <string name="street_address_tv">Street Address</string>
@@ -36,9 +37,11 @@
     <string name="get_location_tv">Location</string>
     <string name="contact_info_tv">Contact Information</string>
     <string name="edit_latest_offer_tv">Edit latest Offer</string>
+    <string name="passwort_tv">Password</string>
+    <string name="username_tv">Username</string>
 
 
-    <!--buttons-->
+    <!-- buttons -->
     <string name="items">Items</string>
     <string name="search_location_btn">Location</string>
     <string name="search_category_btn">Category</string>
@@ -47,9 +50,6 @@
     <string name="edit_profile_btn">Change Profile</string>
     <string name="new_offer_btn">New Offer</string>
     <string name="browse_btn">Search in</string>
-
-
-
     <string name="show_location_btn">Show Location</string>
     <string name="show_contact_information_btn">Show Contact Info</string>
     <string name="place_order_btn">Place Order</string>
@@ -57,15 +57,25 @@
     <string name="publish_offer_btn">Publish Offer</string>
     <string name="get_location_btn">Get Location</string>
     <string name="edit_offer_btn">Edit Offer</string>
-
-
-    <!--edit texts-->
-    <string name="title_et">Title</string>
-    <string name="best_before_et">Best Before</string>
-    <string name="detailed_description_et">Detailed Description</string>
-    <string name="searching_for_hint">Item</string>
     <string name="new_profile_btn">New Profile</string>
-    <string name="browse_create">Item</string>
+    <string name="account_display_save_btn">Save</string>
+    <string name="account_display_cancel_btn">Cancel</string>
+    <string name="account_edit_save_btn">Save</string>
+    <string name="account_edit_cancel_btn">Cancel</string>
+    <string name="account_display_edit_btn">Edit</string>
+    <string name="offer_create_take_picture_btn">Take Picture</string>
 
+
+    <!-- edit texts -->
+    <string name="offer_create_title_et">Bananen</string>
+    <string name="best_before_et">1123456</string>
+    <string name="detailed_description_et">Feine gelbe Bananen"</string>
+    <string name="searching_for_hint">Item</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="username_et">Username</string>
+    <string name="profile_display_edit_btn">Edit Profile</string>
+    <string name="profile_display_cancle_btn">Cancel</string>
+    <string name="profile_display_username_tv">Username</string>
+    <string name="profile_display_password_tv">******</string>
 
 </resources>

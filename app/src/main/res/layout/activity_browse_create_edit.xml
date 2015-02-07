@@ -90,8 +90,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/browse_create"
             android:hint="@string/searching_for_hint"
-            android:textColorHint="@color/secondary_text_disabled_material_light"
-            android:text="@string/browse_create"
+            android:textColorHint="@color/secondary_text_default_material_light"
             android:textIsSelectable="true" />
 
     </LinearLayout>

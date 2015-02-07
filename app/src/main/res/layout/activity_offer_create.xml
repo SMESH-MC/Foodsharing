@@ -27,16 +27,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:id="@+id/offeringPhoto"
-            android:visibility="visible"
-            android:background="@drawable/abc_ic_menu_selectall_mtrl_alpha"
-            android:clickable="true"
-            android:nestedScrollingEnabled="false"
-            android:longClickable="false"
-            android:onClick="dispatchTakePictureIntent" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/offer_create_take_picture_btn"
+            android:id="@+id/button2"
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
     <LinearLayout
@@ -49,8 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/title_tv"
-            android:hint="@string/title_et"
-            android:text="Bananen" />
+            android:hint="@string/offer_create_title_et"
+            android:textColorHint="@color/secondary_text_default_material_light" />
     </LinearLayout>
 
     <LinearLayout
@@ -63,13 +59,10 @@
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/best_before_tv"
+            android:id="@+id/best_before_et"
             android:inputType="date"
             android:layout_weight="1"
-            android:hint="@string/best_before_et"
-            android:text="1123456" />
-
-
+            android:hint="@string/best_before_et" />
 
     </LinearLayout>
 
@@ -85,8 +78,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/detailed_description_tv"
             android:layout_weight="1"
-            android:hint="@string/detailed_description_et"
-            android:text="Feyne gelbe Bananen" />
+            android:hint="@string/detailed_description_et"/>
 
     </LinearLayout>
 
