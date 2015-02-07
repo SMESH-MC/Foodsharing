@@ -30,6 +30,7 @@ public class User {
     private static final String NO_VALID_EMAIL = "No valid email address!";
     private static final String NO_ARGUMENT = "No argument given!";
     private static final String NO_VALID_PLZ = "PLZ must be between 00000 and 99999!";
+    private static final String NO_VALID_COUNTRY = "The given country code is too long!";
 
     public User() {    }
 
@@ -118,8 +119,13 @@ public class User {
 
     public String getCountry() {        return country;    }
     public void setCountry(String country) {
+        /*if (country.trim().isEmpty()) {
+            throw new NullPointerException(NO_ARGUMENT);
+        } else if (country.trim().length() > 2) {
+            throw new IllegalArgumentException(NO_VALID_COUNTRY);
+        }
+        this.country = country.trim();*/
         this.country = "DE";
-        //this.country = country.trim();
     }
 
     public String getVorname() {        return vorname;    }
