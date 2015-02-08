@@ -116,12 +116,28 @@
                 android:layout_weight="2">
 
                 <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPostalAddress"
+                    android:ems="10"
+                    android:id="@+id/editText2"
+                    android:layout_weight="1"
+                    android:hint="@string/profile_edit_country_et" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="2">
+
+                <EditText
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
                     android:ems="10"
                     android:id="@+id/profile_edit_phone_et"
-                    android:hint="@string/profile_edit_phone_et" />
+                    android:hint="@string/profile_edit_phone_et"
+                    android:layout_weight="1" />
 
             </TableRow>
 
@@ -136,41 +152,35 @@
                     android:inputType="textEmailAddress"
                     android:ems="10"
                     android:id="@+id/profile_edit_email_et"
-                    android:hint="@string/profile_edit_email_et" />
+                    android:hint="@string/profile_edit_email_et"
+                    android:layout_weight="1" />
 
             </TableRow>
 
         </TableLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:orientation="horizontal">
+
+        <Button
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="0">
+            android:layout_height="wrap_content"
+            android:text="@string/edit_latest_offer_tv"
+            android:id="@+id/profile_edit_offer_btn"
+            android:onClick="editProfile"
+            android:layout_weight="1" />
 
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/edit_latest_offer_tv"
-                android:id="@+id/profile_edit_offer_btn"
-                android:onClick="editProfile"
-                android:layout_weight="1" />
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/profile_edit_save_btn"
-                android:id="@+id/profile_edit_save_btn"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <TableRow
+        <Button
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginTop="25dp">
-
-        </TableRow>
-
+            android:layout_height="wrap_content"
+            android:text="@string/profile_edit_save_btn"
+            android:id="@+id/profile_edit_save_btn"
+            android:layout_weight="1" />
     </LinearLayout>
 
 </LinearLayout>

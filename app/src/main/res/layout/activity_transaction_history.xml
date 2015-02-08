@@ -30,7 +30,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/published_offers"
+            android:text="@string/published_offers_tv"
             android:id="@+id/textView17"
             android:textSize="15sp" />
 
@@ -64,7 +64,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/accepted_offers"
+            android:text="@string/accepted_offers_tv"
             android:id="@+id/transaction_accepted_offers_tv"
             android:textSize="15sp" />
 

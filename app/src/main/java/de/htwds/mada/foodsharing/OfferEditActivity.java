@@ -17,25 +17,18 @@ import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class OfferEditActivity extends Activity {
@@ -53,7 +46,7 @@ public class OfferEditActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_offer_create);
+        setContentView(R.layout.activity_offer_edit);
         photo = (ImageView)findViewById(R.id.offeringPhoto);
 
         titleInputField = (EditText) findViewById(R.id.title_tv);
@@ -81,7 +74,7 @@ public class OfferEditActivity extends Activity {
                         Offer newOffer=new Offer();
                         newOffer.setOfferID(6);
                         newOffer.setTransactID(5);
-                        newOffer.setCategory("Obst");
+                        newOffer.setCategory(1); // exchanged "Obst" 2 test app
                         newOffer.setShortDescription(titleInputField.getText().toString().trim());
                         newOffer.setLongDescription(longDescriptionInputField.getText().toString().trim());
                         newOffer.setMhd(2015, 3, 3);

@@ -41,6 +41,11 @@
     <string name="username_tv">Username</string>
     <string name="profile_display_username_tv">Username</string>
     <string name="profile_display_password_tv">******</string>
+    <string name="transaction_history_title_tv">Transactions</string>
+    <string name="transaction_edit_tv">Edit Transaction</string>
+    <string name="profile_displ_country_tv">Country</string>
+    <string name="published_offers_tv">My Offers</string>
+    <string name="accepted_offers_tv">Accepted Offers</string>
 
     <!-- buttons -->
     <string name="items">Items</string>
@@ -65,11 +70,17 @@
     <string name="account_edit_cancel_btn">Cancel</string>
     <string name="account_display_edit_btn">Edit</string>
     <string name="offer_create_add_picture_btn">Add Picture</string>
+    <string name="transaction_close_tr_btn">Close</string>
+    <string name="transaction_cancel_btn">Cancel</string>
+    <string name="profile_display_edit_btn">Edit Profile</string>
+    <string name="profile_display_cancle_btn">Cancel</string>
+    <string name="transaction_back_btn">Back</string>
+    <string name="profile_edit_save_btn">Save</string>
 
     <!-- edit texts -->
-    <string name="offer_create_title_et">Bananen</string>
-    <string name="best_before_et">1123456</string>
-    <string name="detailed_description_et">Feine gelbe Bananen"</string>
+    <string name="offer_create_title_et">Item</string>
+    <string name="best_before_et">Best before</string>
+    <string name="detailed_description_et">Detailed Description"</string>
     <string name="searching_for_hint">Item</string>
     <string name="profile_edit_street_address_et">Street Address</string>
     <string name="profile_edit_street_address_no_et">No.</string>
@@ -78,18 +89,8 @@
     <string name="profile_edit_phone_et">Phone Number</string>
     <string name="profile_edit_email_et">Email Address</string>
     <string name="username_et">Username</string>
-    <string name="profile_display_edit_btn">Edit Profile</string>
-    <string name="profile_display_cancle_btn">Cancel</string>
-
     <string name="profile_display_show_tr_history">Transactions</string>
-    <string name="transaction_history_title_tv">Transactions</string>
-    <string name="transaction_close_tr_btn">Close</string>
-    <string name="transaction_cancel_btn">Cancel</string>
-    <string name="published_offers">My Offers</string>
-    <string name="accepted_offers">Accepted Offers</string>
-    <string name="transaction_edit_tv">Edit Transaction</string>
-    <string name="transaction_back_btn">Back</string>
-    <string name="profile_edit_save_btn">Save</string>
+    <string name="profile_edit_country_et">Country</string>
 
 
 </resources>
