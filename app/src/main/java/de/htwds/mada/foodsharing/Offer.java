@@ -8,7 +8,7 @@ public class Offer {
 
     private int offerID;
     private int transactID;
-    private String category;
+    private int category;
     private String shortDescription;
     private String longDescription;
     private File picture;
@@ -41,12 +41,12 @@ public class Offer {
         this.transactID = transactID;
     }
 
-    public String getCategory() {        return category;    }
-    public void setCategory(String category) {
-        if (category.trim().isEmpty()) {
-            throw new IllegalArgumentException(NO_ARGUMENT);
+    public int getCategory() {        return category;    }
+    public void setCategory(int category) {
+        if (category < 0) {
+            throw new NumberFormatException(NOT_NEGATIVE);
         }
-        this.category = category.trim();
+        this.category = category;
     }
 
     public String getShortDescription() {        return shortDescription;    }

@@ -10,8 +10,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="55dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -24,13 +23,12 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="55dp">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/offer_create_take_picture_btn"
+            android:text="@string/offer_create_add_picture_btn"
             android:id="@+id/button2"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
@@ -86,7 +84,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1">
@@ -96,23 +94,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/get_location_btn"
-            android:id="@+id/button5"
-            android:layout_gravity="center_horizontal" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-
+            android:id="@+id/get_location_btn"
+            android:layout_weight="1.45" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/choose_contact_info"
-            android:id="@+id/button6"
-            android:layout_gravity="center_horizontal" />
+            android:text="@string/add_contact_info"
+            android:id="@+id/add_contact_info"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -123,13 +113,12 @@
 
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/publish_offer_btn"
             android:id="@+id/publish_offer_btn"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
-
 
 
 </LinearLayout>

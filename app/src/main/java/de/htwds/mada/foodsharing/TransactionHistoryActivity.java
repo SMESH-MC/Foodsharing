@@ -9,19 +9,19 @@ import android.view.View;
 import android.widget.Button;
 
 
-public class ProfileEditActivity extends Activity {
+public class TransactionHistoryActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_edit);
+        setContentView(R.layout.activity_transaction_history);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_profile_edit, menu);
+        getMenuInflater().inflate(R.menu.menu_transaction_history, menu);
         return true;
     }
 
@@ -39,21 +39,23 @@ public class ProfileEditActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+    public void transactionEdit(View view){
+        Button btn = (Button) view;
+        switch (btn.getId()) {
+            case R.id.transaction_cancel_btn:
+                fillIntent(TransactionHistoryActivity.class);
+                break;
+            case R.id.transaction_close_tr_btn:
+                fillIntent(TransactionHistoryActivity.class);
+                break;
+            case R.id.transaction_back:
+                fillIntent(ProfileDisplayActivity.class);
+                break;
 
-        public void editProfile(View view){
-            Button btn = (Button) view;
-            switch (btn.getId()) {
-                case R.id.profile_edit_offer_btn:
-                    fillIntent(OfferEditActivity.class);
-                    break;
-                case R.id.profile_edit_save_btn:
-                    fillIntent(ProfileDisplayActivity.class);
-                    break;
-
-                default:
-                    return;
-            }
+            default:
+                return;
         }
+    }
 
     protected void fillIntent(Class activity){
         Intent i;

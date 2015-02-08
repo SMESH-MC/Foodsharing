@@ -8,22 +8,29 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="1">
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:layout_gravity="center_horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/account_tv"
+            android:text="@string/profile_title_tv"
             android:id="@+id/textView3"
             android:layout_marginTop="25dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginBottom="10dp"
+            android:textSize="25sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <TableLayout
             android:layout_width="fill_parent"
@@ -40,8 +47,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:ems="10"
-                    android:id="@+id/editText10"
-                    android:hint="@string/last_name_tv"
+                    android:id="@+id/profile_edit_last_name_et"
+                    android:hint="@string/profile_edit_last_name_tv"
                     android:layout_weight="1" />
 
                 <EditText
@@ -49,8 +56,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:ems="10"
-                    android:id="@+id/editText5"
-                    android:hint="@string/first_name_tv"
+                    android:id="@+id/profile_edit_first_name_et"
+                    android:hint="@string/profile_edit_first_name_tv"
                     android:layout_weight="1" />
 
             </TableRow>
@@ -63,8 +70,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/editText8"
-                    android:hint="@string/street_address_tv"
+                    android:id="@+id/profile_edit_street_address_ed"
+                    android:hint="@string/profile_edit_street_address_et"
                     android:layout_weight="1" />
 
                 <EditText
@@ -72,8 +79,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPostalAddress"
                     android:ems="10"
-                    android:id="@+id/editText7"
-                    android:hint="@string/no_tv"
+                    android:id="@+id/profile_edit_street_address_no_et"
+                    android:hint="@string/profile_edit_street_address_no_et"
                     android:layout_weight="2" />
 
             </TableRow>
@@ -88,8 +95,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPostalAddress"
                     android:ems="10"
-                    android:id="@+id/editText14"
-                    android:hint="@string/place_of_residence_tv"
+                    android:id="@+id/profile_edit_place_of_res_et"
+                    android:hint="@string/profile_edit_place_of_res_et"
                     android:layout_weight="1" />
 
                 <EditText
@@ -97,8 +104,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPostalAddress"
                     android:ems="10"
-                    android:id="@+id/editText9"
-                    android:hint="@string/zipcode_tv"
+                    android:id="@+id/profile_edit_zipcode_et"
+                    android:hint="@string/profile_edit_zipcode_et"
                     android:layout_weight="2" />
 
             </TableRow>
@@ -113,8 +120,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="phone"
                     android:ems="10"
-                    android:id="@+id/editText12"
-                    android:hint="@string/phone_number_tv" />
+                    android:id="@+id/profile_edit_phone_et"
+                    android:hint="@string/profile_edit_phone_et" />
 
             </TableRow>
 
@@ -128,24 +135,40 @@
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
                     android:ems="10"
-                    android:id="@+id/editText13"
-                    android:hint="@string/email_address_tv" />
+                    android:id="@+id/profile_edit_email_et"
+                    android:hint="@string/profile_edit_email_et" />
 
             </TableRow>
 
         </TableLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0">
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_latest_offer_tv"
+                android:id="@+id/profile_edit_offer_btn"
+                android:onClick="editProfile"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_edit_save_btn"
+                android:id="@+id/profile_edit_save_btn"
+                android:layout_weight="1" />
+        </LinearLayout>
 
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginTop="25dp">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/edit_latest_offer_tv"
-                android:id="@+id/button8"
-                android:onClick="editLatestOffer"/>
         </TableRow>
 
     </LinearLayout>
