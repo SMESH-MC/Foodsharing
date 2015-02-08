@@ -26,6 +26,8 @@ import java.util.List;
  */
 
 public class JSONParser {
+    public static final String LOG=JSONParser.class.getName();
+
     static InputStream is = null;
     static JSONObject jObj = null;
     static String json = "";
@@ -39,8 +41,8 @@ public class JSONParser {
     }
 
     public JSONObject makeHttpRequest(String url, String method, List<NameValuePair> params) {
-        try{
-            if(method.equals(POST)) {
+        try {
+            if (method.equals(POST)) {
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(url);
                 httpPost.setEntity(new UrlEncodedFormEntity(params));
@@ -48,7 +50,7 @@ public class JSONParser {
                 HttpResponse httpResponse = httpClient.execute(httpPost);
                 HttpEntity httpEntity = httpResponse.getEntity();
                 is = httpEntity.getContent();
-            }else if(method.equals(GET)) {
+            } else if (method.equals(GET)) {
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 String paramString = URLEncodedUtils.format(params, UTF);
                 url += "?" + paramString;
@@ -58,6 +60,16 @@ public class JSONParser {
                 HttpEntity httpEntity = httpResponse.getEntity();
                 is = httpEntity.getContent();
             }
+        } catch (Exception e) {
+            String errorMessage=e.getLocalizedMessage();
+            Log.e(LOG, "Error in http connection " + errorMessage);
+            try {
+                jObj.put("success", "false");
+                jObj.put("message", errorMessage);
+            } catch (JSONException e1) { }
+            return jObj;
+        }
+        /*
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
@@ -65,6 +77,7 @@ public class JSONParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
 
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, ISO), 8);

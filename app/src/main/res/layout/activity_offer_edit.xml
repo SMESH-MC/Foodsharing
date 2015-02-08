@@ -30,7 +30,8 @@
             android:layout_height="wrap_content"
             android:text="@string/offer_create_add_picture_btn"
             android:id="@+id/button2"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textAllCaps="false" />
     </LinearLayout>
 
     <LinearLayout
@@ -95,14 +96,16 @@
             android:layout_height="wrap_content"
             android:text="@string/get_location_btn"
             android:id="@+id/get_location_btn"
-            android:layout_weight="1.45" />
+            android:layout_weight="1.45"
+            android:textAllCaps="false" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_contact_info"
             android:id="@+id/add_contact_info"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textAllCaps="false" />
     </LinearLayout>
 
     <LinearLayout
@@ -117,7 +120,8 @@
             android:layout_height="wrap_content"
             android:text="@string/publish_offer_btn"
             android:id="@+id/publish_offer_btn"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textAllCaps="false" />
     </LinearLayout>
 
 

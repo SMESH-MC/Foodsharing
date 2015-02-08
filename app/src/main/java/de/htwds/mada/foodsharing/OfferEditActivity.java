@@ -17,10 +17,13 @@ import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
@@ -28,6 +31,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -73,7 +77,7 @@ public class OfferEditActivity extends Activity {
                     public void run() {
                         Offer newOffer=new Offer();
                         newOffer.setOfferID(6);
-                        newOffer.setTransactID(5);
+                        newOffer.setTransactID(1);
                         newOffer.setCategory(1); // exchanged "Obst" 2 test app
                         newOffer.setShortDescription(titleInputField.getText().toString().trim());
                         newOffer.setLongDescription(longDescriptionInputField.getText().toString().trim());
@@ -166,6 +170,15 @@ public class OfferEditActivity extends Activity {
                    return returnObject;
                }
 
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("transaction_id",String.valueOf(newOffer.getTransactID())));
+        nameValuePairs.add(new BasicNameValuePair("image_id","4"));
+        nameValuePairs.add(new BasicNameValuePair("title", newOffer.getShortDescription()));
+        nameValuePairs.add(new BasicNameValuePair("descr", newOffer.getLongDescription()));
+        nameValuePairs.add(new BasicNameValuePair("bbd", bestBeforeDateInputField.getText().toString().trim()));
+        Timestamp timestamp=new Timestamp(newOffer.getDateAdded().getTimeInMillis());
+        nameValuePairs.add(new BasicNameValuePair("date", timestamp.toString()));
+        nameValuePairs.add(new BasicNameValuePair("valid_date", "1423216493"));
 
 
                InputStream inputStream;
@@ -173,14 +186,17 @@ public class OfferEditActivity extends Activity {
                //http post
                try{
                    HttpClient httpclient = new DefaultHttpClient();
-                   //HttpPost httpPost = new HttpPost("http://odin.htw-saarland.de/create_offer.php");
-                   HttpPost httpPost = new HttpPost("http://odin.htw-saarland.de/create_offer_json.php");
+                   HttpPost httpPost = new HttpPost("http://odin.htw-saarland.de/create_offer.php");
+                   //HttpPost httpPost = new HttpPost("http://odin.htw-saarland.de/create_offer_json.php");
                    //HttpPost httpPost = new HttpPost("http://odin.htw-saarland.de/showPostEntities.php");
 
+                   /*
                    StringEntity entityForPost=new StringEntity(keyValuePairsJson.toString(), HTTP.UTF_8);
                    httpPost.setHeader("Content-type", "application/json;charset=UTF-8");
                    httpPost.setHeader("Accept", "application/json");
                    httpPost.setEntity(entityForPost);
+                   */
+                   httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                    Log.i(LOG, "Json: " + keyValuePairsJson.toString());
 
@@ -196,7 +212,7 @@ public class OfferEditActivity extends Activity {
                }
                //convert response to string
                try{
-                   BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"),8);
+                   BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"),8);
                    StringBuilder sb = new StringBuilder();
                    String line;
                    while ((line = reader.readLine()) != null) {
