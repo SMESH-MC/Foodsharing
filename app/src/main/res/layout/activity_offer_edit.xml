@@ -136,7 +136,7 @@
             android:layout_height="wrap_content"
             android:text="@string/publish_offer_btn"
             android:id="@+id/publish_offer_btn"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 
 
