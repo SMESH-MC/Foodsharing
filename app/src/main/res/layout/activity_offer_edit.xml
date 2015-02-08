@@ -30,7 +30,8 @@
             android:layout_height="wrap_content"
             android:text="@string/offer_create_add_picture_btn"
             android:id="@+id/button2"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textAllCaps="false" />
     </LinearLayout>
 
     <LinearLayout
@@ -136,7 +137,8 @@
             android:layout_height="wrap_content"
             android:text="@string/publish_offer_btn"
             android:id="@+id/publish_offer_btn"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:textAllCaps="false" />
     </LinearLayout>
 
 
