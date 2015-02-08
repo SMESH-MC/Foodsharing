@@ -17,15 +17,25 @@ import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class OfferEditActivity extends Activity {
@@ -63,9 +73,45 @@ public class OfferEditActivity extends Activity {
                 startActivity(i);
                 */
 
+                //Log.i(LOG,"Title: "+titleInputField.getText().toString().trim());
 
-                boolean querySuccessful=makeQuery();
+                Thread thread=new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Offer newOffer=new Offer();
+                        newOffer.setOfferID(6);
+                        newOffer.setTransactID(5);
+                        newOffer.setCategory("Obst");
+                        newOffer.setShortDescription(titleInputField.getText().toString().trim());
+                        newOffer.setLongDescription(longDescriptionInputField.getText().toString().trim());
+                        newOffer.setMhd(2015, 3, 3);
+                        newOffer.setDateAdded();
+                        newOffer.setPickupTimes("bla");
+                        final HashMap<String,String> returnObject=makeQuery(newOffer);
+                        if (returnObject.get("success").equals("true"))
+                        {
+                            handler.post(new Runnable (){
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getBaseContext(), "Offering placed successfully!", Toast.LENGTH_LONG).show();
+                                    finish();
+                                }
+                            });
+                        }
+                        else
+                        {
+                            final String errorMessage=returnObject.get("message");
+                            handler.post(new Runnable (){
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                                }
+                            });
 
+                        }
+                    }
+                });
+                thread.start();
                 /*
                 v.post(new Runnable() {
                     @Override
@@ -101,47 +147,30 @@ public class OfferEditActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean makeQuery()
+    private HashMap<String,String> makeQuery(Offer newOffer)
     {
-       boolean querySuccessful=false;
-       Thread thread=new Thread(new Runnable() {
-           @Override
-           public void run() {
-               String result = "";
+               HashMap<String,String> returnObject=new HashMap<String,String>();
+               String resultString = "";
 
-               /*
-               ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-               nameValuePairs.add(new BasicNameValuePair("transaction_id", 2));
-               nameValuePairs.add(new BasicNameValuePair("image_id",4));
-               nameValuePairs.add(new BasicNameValuePair("category",1));
-               nameValuePairs.add(new BasicNameValuePair("title",titleInputField.getText().toString().trim()));
-               nameValuePairs.add(new BasicNameValuePair("descr",longDescriptionInputField.getText().toString().trim()));
-               nameValuePairs.add(new BasicNameValuePair("bbd",bestBeforeDateInputField.getText().toString().trim()));
-               nameValuePairs.add(new BasicNameValuePair("date","0000-00-00 00:00:00"));
-               nameValuePairs.add(new BasicNameValuePair("valid_date",1423216493));
-               */
 
 
                JSONObject keyValuePairsJson=new JSONObject();
                try {
-                   keyValuePairsJson.put("transaction_id", 2);
-                   keyValuePairsJson.put("image_id",4);
-                   keyValuePairsJson.put("category","hmmm");
-                   keyValuePairsJson.put("title",titleInputField.getText().toString().trim());
-                   keyValuePairsJson.put("descr",longDescriptionInputField.getText().toString().trim());
+                   keyValuePairsJson.put("transaction_id", newOffer.getTransactID());
+                   keyValuePairsJson.put("image_id", 4);
+                   keyValuePairsJson.put("category", newOffer.getCategory());
+                   keyValuePairsJson.put("title",newOffer.getShortDescription());
+                   keyValuePairsJson.put("descr",newOffer.getLongDescription());
                    keyValuePairsJson.put("bbd",Integer.parseInt(bestBeforeDateInputField.getText().toString().trim()));
-                   keyValuePairsJson.put("date","0000-00-00 00:00:00");
+                   Timestamp timestamp=new Timestamp(newOffer.getDateAdded().getTimeInMillis());
+                   keyValuePairsJson.put("date", timestamp.toString());
+                   //keyValuePairsJson.put("date", timestamp.toString().replaceFirst("\\..*$", ""));
                    keyValuePairsJson.put("valid_date",1423216493);
                } catch (Exception e) {
-                   final String errorMessage=e.getLocalizedMessage();
-                   Log.e(LOG, errorMessage);
-                   handler.post(new Runnable (){
-                       @Override
-                       public void run() {
-                           Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
-                       }
-                   });
-                   return;
+                   String errorMessage=e.getLocalizedMessage();
+                   returnObject.put("success", "false");
+                   returnObject.put("message", errorMessage);
+                   return returnObject;
                }
 
 
@@ -151,29 +180,26 @@ public class OfferEditActivity extends Activity {
                //http post
                try{
                    HttpClient httpclient = new DefaultHttpClient();
-                   HttpPost httpPost = new HttpPost("http://odin.htw-saarland.de/create_offer.php");
+                   //HttpPost httpPost = new HttpPost("http://odin.htw-saarland.de/create_offer.php");
+                   HttpPost httpPost = new HttpPost("http://odin.htw-saarland.de/create_offer_json.php");
+                   //HttpPost httpPost = new HttpPost("http://odin.htw-saarland.de/showPostEntities.php");
 
-                   //httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-
-                   StringEntity entityForPost=new StringEntity(keyValuePairsJson.toString());
-                   httpPost.setHeader("content-type", "application/json");
+                   StringEntity entityForPost=new StringEntity(keyValuePairsJson.toString(), HTTP.UTF_8);
+                   httpPost.setHeader("Content-type", "application/json;charset=UTF-8");
+                   httpPost.setHeader("Accept", "application/json");
                    httpPost.setEntity(entityForPost);
 
+                   Log.i(LOG, "Json: " + keyValuePairsJson.toString());
+
                    HttpResponse response = httpclient.execute(httpPost);
-                   Log.i(LOG, "httpclient.execute");
-                   HttpEntity entity = response.getEntity();
-                   inputStream = entity.getContent();
+                   HttpEntity responseEntity = response.getEntity();
+                   inputStream = responseEntity.getContent();
                }catch(Exception e){
-                   final String errorMessage=e.getLocalizedMessage();
+                   String errorMessage=e.getLocalizedMessage();
                    Log.e(LOG, "Error in http connection " + errorMessage);
-                   handler.post(new Runnable (){
-                       @Override
-                       public void run() {
-                           Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
-                       }
-                   });
-                   return;
+                   returnObject.put("success", "false");
+                   returnObject.put("message", errorMessage);
+                   return returnObject;
                }
                //convert response to string
                try{
@@ -185,49 +211,42 @@ public class OfferEditActivity extends Activity {
                    }
                    inputStream.close();
 
-                   result=sb.toString();
+                   resultString=sb.toString();
                }catch(Exception e){
-                   final String errorMessage=e.getLocalizedMessage();
-                   Log.e(LOG, "Error converting result "+errorMessage);
-                   handler.post(new Runnable (){
-                       @Override
-                       public void run() {
-                           Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
-                       }
-                   });
-                   return;
+                   String errorMessage=e.getLocalizedMessage();
+                   Log.e(LOG, "Error converting result " + errorMessage);
+                   returnObject.put("success", "false");
+                   returnObject.put("message", errorMessage);
+                   return returnObject;
                }
 
-               Log.i(LOG, result);
+               Log.i(LOG, "Result: " + resultString);
 
                //parse json data
-               /*
                try{
-                   JSONArray jArray = new JSONArray(result);
-                   for(int i=0;i<jArray.length();i++){
-                       JSONObject json_data = jArray.getJSONObject(i);
-                       Log.i(LOG,"id: "+json_data.getInt("id")+
-                                       ", name: "+json_data.getString("name")
-                       );
+                   JSONObject resultJsonObject=new JSONObject(resultString);
+                   Log.i(LOG,"Success: "+resultJsonObject.getInt("success")+
+                           ", message: "+resultJsonObject.getString("message"));
+                   if (resultJsonObject.getInt("success") == 1) {
+                       returnObject.put("success", "true");
                    }
-               }catch(JSONException e){
-                   Log.e(LOG, "Error parsing data "+e.toString());
+                   else
+                   {
+                       String errorMessage=resultJsonObject.getString("message");
+                       returnObject.put("success", "false");
+                       returnObject.put("message", errorMessage);
+                   }
+               }catch(Exception e){
+                   String errorMessage=e.getLocalizedMessage();
+                   Log.e(LOG, "Error parsing result string " + resultString + " " + e.getLocalizedMessage());
+                   returnObject.put("success", "false");
+                   returnObject.put("message", errorMessage);
+                   return returnObject;
                }
-               */
 
-               handler.post(new Runnable (){
-                   @Override
-                   public void run() {
-                       Toast.makeText(getBaseContext(), "Offering placed successfully!", Toast.LENGTH_LONG).show();
-                       finish();
-                   }
-               });
 
-           }
-       });
-       thread.start();
+               return returnObject;
 
-        return querySuccessful;
     }
 
     public void dispatchTakePictureIntent(View view) {

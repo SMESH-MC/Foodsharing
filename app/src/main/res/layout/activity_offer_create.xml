@@ -46,7 +46,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/title_tv"
             android:hint="@string/offer_create_title_et"
-            android:textColorHint="@color/secondary_text_default_material_light" />
+            android:textColorHint="@color/secondary_text_default_material_light"
+            android:text="Bananen" />
     </LinearLayout>
 
     <LinearLayout
@@ -62,7 +63,8 @@
             android:id="@+id/best_before_et"
             android:inputType="date"
             android:layout_weight="1"
-            android:hint="@string/best_before_et" />
+            android:hint="@string/best_before_et"
+            android:text="1234567" />
 
     </LinearLayout>
 
@@ -78,7 +80,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/detailed_description_tv"
             android:layout_weight="1"
-            android:hint="@string/detailed_description_et"/>
+            android:hint="@string/detailed_description_et"
+            android:text="Feine gelbe Bananen" />
 
     </LinearLayout>
 
