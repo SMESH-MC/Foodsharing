@@ -9,9 +9,10 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:layout_gravity="left">
 
         <TextView
             android:layout_width="wrap_content"
@@ -25,7 +26,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="0">
 
         <ImageView
             android:layout_width="match_parent"
@@ -42,15 +43,45 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/offer_display_best_before_tv"
+            android:id="@+id/offer_display_best_before_tv"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/offer_display_pick_up_tv"
+            android:id="@+id/offer_display_pick_up_tv"
+            android:layout_weight="1"
+            android:gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/offer_category_tv"
+            android:id="@+id/offer_category_tv"
+            android:layout_weight="1"
+            android:gravity="right" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_weight="1">
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Short Description"
-            android:id="@+id/textView14"
+            android:text="@string/offer_display_short_description_tv"
+            android:id="@+id/offer_display_short_description_tv"
             android:textSize="15sp" />
 
     </LinearLayout>
@@ -58,21 +89,22 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_weight="1">
 
 
         <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/scrollView2" />
+            android:id="@+id/scrollView2" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Detailed Description"
-            android:id="@+id/textView15"
-            android:textSize="15sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/detailed_description_tv"
+                android:id="@+id/detailed_description_tv"
+                android:textSize="15sp" />
+        </ScrollView>
 
 
     </LinearLayout>
@@ -80,36 +112,36 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_weight="1">
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/get_location_tv"
-            android:id="@+id/textView18"
+            android:text="@string/offer_display_get_location_tv"
+            android:id="@+id/offer_display_get_location_tv"
             android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_weight="1">
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/contact_info_tv"
-            android:id="@+id/textView16"
+            android:text="@string/offer_display_contact_info_tv"
+            android:id="@+id/offer_display_contact_info_tv"
             android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_weight="1"
         android:orientation="vertical">
 
