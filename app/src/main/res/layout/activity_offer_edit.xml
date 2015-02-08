@@ -30,8 +30,7 @@
             android:layout_height="wrap_content"
             android:text="@string/offer_create_add_picture_btn"
             android:id="@+id/button2"
-            android:layout_gravity="center_horizontal"
-            android:textAllCaps="false" />
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,8 +44,20 @@
             android:layout_height="wrap_content"
             android:id="@+id/title_tv"
             android:hint="@string/offer_create_title_et"
-            android:textColorHint="@color/secondary_text_default_material_light"
-            android:text="Bananen" />
+            android:textColorHint="@color/secondary_text_default_material_light" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText3"
+            android:hint="Category" />
     </LinearLayout>
 
     <LinearLayout
@@ -57,13 +68,21 @@
 
 
         <EditText
-            android:layout_width="0dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/best_before_et"
             android:inputType="date"
             android:layout_weight="1"
-            android:hint="@string/best_before_et"
-            android:text="1234567" />
+            android:hint="@string/best_before_et" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/editText4"
+            android:hint="Pick Up Date"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -79,8 +98,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/detailed_description_tv"
             android:layout_weight="1"
-            android:hint="@string/detailed_description_et"
-            android:text="Feine gelbe Bananen" />
+            android:hint="@string/detailed_description_et" />
 
     </LinearLayout>
 
@@ -96,16 +114,14 @@
             android:layout_height="wrap_content"
             android:text="@string/get_location_btn"
             android:id="@+id/get_location_btn"
-            android:layout_weight="1.45"
-            android:textAllCaps="false" />
+            android:layout_weight="1.45" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_contact_info"
             android:id="@+id/add_contact_info"
-            android:layout_weight="1"
-            android:textAllCaps="false" />
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -120,8 +136,7 @@
             android:layout_height="wrap_content"
             android:text="@string/publish_offer_btn"
             android:id="@+id/publish_offer_btn"
-            android:layout_gravity="center_horizontal"
-            android:textAllCaps="false" />
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 
 
