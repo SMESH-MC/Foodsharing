@@ -49,13 +49,16 @@
         android:orientation="horizontal"
         android:layout_weight="0" >
 
-        <Button
-            android:layout_width="0dp"
+
+        <Spinner
+            android:id="@+id/browse_spinner"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/browse_btn"
-            android:text="@string/browse_btn"
-            android:layout_weight="1"
-            android:onClick="browsePopUp"/>
+            android:focusable="false"
+            android:clickable="false"
+            android:focusableInTouchMode="false"
+            android:spinnerMode="dropdown" />
+
     </LinearLayout>
 
     <LinearLayout

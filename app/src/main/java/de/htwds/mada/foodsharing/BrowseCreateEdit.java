@@ -6,21 +6,35 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.PopupMenu;
+import android.widget.Spinner;
 
 
-public class BrowseCreateEdit extends Activity {
-    PopupMenu pop;
-
+public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSelectedListener {
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_create_edit);
-        }
+
+        spinner = (android.widget.Spinner) findViewById(R.id.browse_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.planets_array, android.R.layout.simple_dropdown_item_1line);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+    }
 
 
     @Override
@@ -46,40 +60,8 @@ public class BrowseCreateEdit extends Activity {
     }
 
 
-    public void browsePopUp(View view) {
-        pop = new PopupMenu(this, view);
-        pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.search_existing_offer_item:
-                        fillIntent(OfferDisplayActivity.class);
-
-                        return true;
-                    case R.id.search_category_item:
-                        fillIntent(ResultActivity.class);
-
-                        return true;
-                    case R.id.search_location_item:
-                        fillIntent(ResultActivity.class);
-
-                        return true;
-                    case R.id.search_profile_item:
-                        fillIntent(ProfileDisplayActivity.class);
-
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        });
-        MenuInflater inf = pop.getMenuInflater();
-        inf.inflate(R.menu.menu_btn_browse_pop, pop.getMenu());
-        pop.show();
-    }
-
-    public void browseEditPopUp(View view){
-        pop = new PopupMenu(this, view);
+    public void browseEditPopUp(View view) {
+        PopupMenu pop = new PopupMenu(this, view);
         pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -110,11 +92,44 @@ public class BrowseCreateEdit extends Activity {
         pop.show();
     }
 
-    protected void fillIntent(Class activity){
+    protected void fillIntent(Class activity) {
         Intent i;
         i = new Intent(getApplicationContext(), activity);
         startActivity(i);
     }
 
+
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        final Intent i;
+
+            switch (parent.getSelectedItemPosition()) {
+                case 0:
+                     break;
+                case 1:
+                    i = new Intent(this, OfferDisplayActivity.class);
+                    startActivity(i);
+                    break;
+                case 2:
+                    i = new Intent(this, ResultActivity.class);
+                    startActivity(i);
+                    break;
+                case 3:
+                    i = new Intent(this, ResultActivity.class);
+                    startActivity(i);
+                    break;
+                case 4:
+                    i = new Intent(this, ProfileDisplayActivity.class);
+                    startActivity(i);
+                    break;
+                default:
+                    break;
+            }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
 

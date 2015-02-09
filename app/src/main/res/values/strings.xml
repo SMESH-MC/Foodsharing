@@ -80,7 +80,7 @@
     <!-- edit texts -->
     <string name="offer_create_title_et">Item</string>
     <string name="best_before_et">Best before</string>
-    <string name="detailed_description_et">Detailed Description"</string>
+    <string name="detailed_description_et">Detailed Description</string>
     <string name="searching_for_hint">Item</string>
     <string name="profile_edit_street_address_et">Street Address</string>
     <string name="profile_edit_street_address_no_et">No.</string>
@@ -95,6 +95,7 @@
     <string name="offer_display_best_before_tv">Best before</string>
     <string name="offer_display_pick_up_tv">Pick up Date</string>
     <string name="offer_category_tv">Category</string>
+    <string name="offer_short_description_et">Short Description</string>
 
 
 </resources>
