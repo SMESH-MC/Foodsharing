@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="planets_array">
+        <item>Search in ...</item>
+        <item>Offers</item>
+        <item>Categories</item>
+        <item>Locations</item>
+        <item>Profiles</item>
+    </string-array>
+</resources>
+
