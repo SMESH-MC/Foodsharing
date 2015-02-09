@@ -404,7 +404,6 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             public void run() {
                 User currentUser=new User();
                 currentUser.setUid(4);
-                Log.i(LOG, "Hallo");
                 if (currentUser.fillObjectFromDatabase())
                 {
                     handler.post(new Runnable (){
