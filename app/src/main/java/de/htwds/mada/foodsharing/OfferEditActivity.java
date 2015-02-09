@@ -41,7 +41,7 @@ public class OfferEditActivity extends Activity {
     private ImageView photo;
     private Bitmap bitmap;
 
-    final Handler handler = new Handler();
+    private final Handler handler = new Handler();
 
     private EditText titleInputField;
     private EditText bestBeforeDateInputField;

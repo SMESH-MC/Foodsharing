@@ -51,6 +51,7 @@
             android:ems="10"
             android:id="@+id/password_et"
             android:hint="Password" />
+
     </LinearLayout>
 
     <LinearLayout

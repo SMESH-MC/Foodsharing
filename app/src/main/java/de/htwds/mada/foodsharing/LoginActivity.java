@@ -12,8 +12,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,6 +25,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -41,6 +44,7 @@ import java.util.List;
  * and follow the steps in "Step 1" to create an OAuth 2.0 client for your package.
  */
 public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor> {
+    public static final String LOG=LoginActivity.class.getName();
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -393,8 +397,44 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
     // added for test login without user data
     public void signInSuccess(){
-        Intent i = new Intent(this, BrowseCreateEdit.class);
-        startActivity(i);
+
+        final Handler handler = new Handler();
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                User currentUser=new User();
+                currentUser.setUid(4);
+                Log.i(LOG, "Hallo");
+                if (currentUser.fillObjectFromDatabase())
+                {
+                    handler.post(new Runnable (){
+                        @Override
+                        public void run() {
+                            Toast.makeText(getBaseContext(), "User data fetched successfully!", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    Log.i(LOG, currentUser.getEmail());
+                }
+                else
+                {
+                    Log.e(LOG, currentUser.getErrorMessage());
+                    final String errorMessage=currentUser.getErrorMessage();
+
+                    handler.post(new Runnable (){
+                        @Override
+                        public void run() {
+                            Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                }
+
+
+                Intent i = new Intent(getApplicationContext(), BrowseCreateEdit.class);
+                startActivity(i);
+            }
+        });
+        thread.start();
     }
 }
 

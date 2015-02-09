@@ -29,7 +29,7 @@ public class JSONParser {
     public static final String LOG=JSONParser.class.getName();
 
     static InputStream is = null;
-    static JSONObject jObj = null;
+    static JSONObject jObj = new JSONObject();
     static String json = "";
 
     private static final String POST = "POST";
@@ -64,9 +64,9 @@ public class JSONParser {
             String errorMessage=e.getLocalizedMessage();
             Log.e(LOG, "Error in http connection " + errorMessage);
             try {
-                jObj.put("success", "false");
+                jObj.put("success", false);
                 jObj.put("message", errorMessage);
-            } catch (JSONException e1) { }
+            } catch (JSONException ignored) { }
             return jObj;
         }
         /*
@@ -84,18 +84,41 @@ public class JSONParser {
             StringBuilder sb = new StringBuilder();
             String line = null;
             while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+                sb.append(line).append("\n");
             }
             is.close();
             json = sb.toString();
         } catch (Exception e) {
-            Log.e("Buffer Error", "Error converting result " + e.toString());
+            String errorMessage=e.getLocalizedMessage();
+            Log.e(LOG, "Error converting result " + errorMessage);
+            try {
+                jObj.put("success", false);
+                jObj.put("message", errorMessage);
+            } catch (JSONException ignored) { }
+            return jObj;
         }
 
         try{
             jObj = new JSONObject(json);
+            Log.i(LOG,"Success: "+jObj.optInt("success", -1)+
+                    ", message: "+jObj.optString("message") + " " + json);
+            if (jObj.getInt("success") == 1) {
+                jObj.put("success", true);
+            }
+            else
+            {
+                String errorMessage=jObj.getString("message");
+                jObj.put("success", false);
+                jObj.put("message", errorMessage);
+            }
         } catch (JSONException e) {
-            Log.e("JSON Parser", "Error parsing data " + e.toString());
+            String errorMessage=e.getLocalizedMessage();
+            Log.e(LOG, "Error parsing result string " + json + " " + errorMessage);
+            try {
+                jObj.put("success", "false");
+                jObj.put("message", errorMessage);
+            } catch (JSONException ignored) { }
+            return jObj;
         }
 
         return jObj;

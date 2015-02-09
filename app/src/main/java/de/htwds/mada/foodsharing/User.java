@@ -1,5 +1,10 @@
 package de.htwds.mada.foodsharing;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,6 +12,7 @@ public class User {
     private int uid;
     private String email;
     private char[] password; //char[] because of a better security (nullable)
+    /* http://stackoverflow.com/questions/10393951/getting-a-char-array-from-the-user-without-using-a-string */
     private String username;
     //address infos
     private String street;
@@ -143,4 +149,73 @@ public class User {
         }
         this.nachname = nachname.trim();
     }
+
+
+    private String errorMessage;
+    public String getErrorMessage() {return errorMessage; }
+
+
+    public boolean fillObjectFromDatabase()
+    {
+        errorMessage="";
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("uid", String.valueOf(this.getUid())));
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject returnObject = jsonParser.makeHttpRequest("http://odin.htw-saarland.de/get_user_details.php", "GET", nameValuePairs);
+
+        if (returnObject.optBoolean("success"))
+        {
+            JSONObject userJSONObject=returnObject.optJSONObject("0");
+            if (userJSONObject != null)
+            {
+                this.setEmail(userJSONObject.optString("email"));
+                this.setVorname(userJSONObject.optString("vorname"));
+                this.setUsername(userJSONObject.optString("username"));
+                this.setNachname(userJSONObject.optString("nachname"));
+                this.setStreet(userJSONObject.optString("strasse"));
+                this.setHouseNumber(userJSONObject.optString("hausnummer"));
+                this.setAdditional(userJSONObject.optString("zusatz"));
+                this.setPlz(userJSONObject.optInt("plz"));
+                this.setCity(userJSONObject.optString("ort"));
+                this.setCountry(userJSONObject.optString("land"));
+            }
+            else
+            {
+               errorMessage="Could not retrieve user info!";
+                return false;
+            }
+        }
+
+        if (!returnObject.optBoolean("success"))
+            errorMessage=returnObject.optString("message");
+
+        return returnObject.optBoolean("success");
+    }
+
+    public boolean saveObjectToDatabase()
+    {
+        errorMessage="";
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("email", this.getEmail()));
+        nameValuePairs.add(new BasicNameValuePair("password", this.getPassword().toString()));
+        nameValuePairs.add(new BasicNameValuePair("username", this.getUsername()));
+        nameValuePairs.add(new BasicNameValuePair("vorname", this.getVorname()));
+        nameValuePairs.add(new BasicNameValuePair("nachname", this.getNachname()));
+        nameValuePairs.add(new BasicNameValuePair("strasse", this.getStreet()));
+        nameValuePairs.add(new BasicNameValuePair("hausnummer", this.getHouseNumber()));
+        nameValuePairs.add(new BasicNameValuePair("zusatz", this.getAdditional()));
+        nameValuePairs.add(new BasicNameValuePair("plz", String.valueOf(this.getPlz())));
+        nameValuePairs.add(new BasicNameValuePair("ort", this.getCity()));
+        nameValuePairs.add(new BasicNameValuePair("land", this.getCountry()));
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject returnObject = jsonParser.makeHttpRequest("http://odin.htw-saarland.de/create_user.php", "POST", nameValuePairs);
+
+        if (!returnObject.optBoolean("success"))
+            errorMessage=returnObject.optString("message");
+
+        return returnObject.optBoolean("success");
+    }
+
 }
