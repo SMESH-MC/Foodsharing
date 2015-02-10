@@ -46,7 +46,7 @@
     <string name="search_category_btn">Category</string>
     <string name="existing_offers_btn">Existing offers</string>
     <string name="search_profile_btn">Profiles</string>
-    <string name="edit_profile_btn">Change Profile</string>
+    <string name="edit_profile_btn">Edit Profile</string>
     <string name="new_offer_btn">New Offer</string>
     <string name="browse_btn">Search in</string>
     <string name="show_location_btn">Show Location</string>
