@@ -398,42 +398,9 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     // added for test login without user data
     public void signInSuccess(){
 
-        final Handler handler = new Handler();
-        Thread thread=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                User currentUser=new User();
-                currentUser.setUid(4);
-                if (currentUser.fillObjectFromDatabase())
-                {
-                    handler.post(new Runnable (){
-                        @Override
-                        public void run() {
-                            Toast.makeText(getBaseContext(), "User data fetched successfully!", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    Log.i(LOG, currentUser.getEmail());
-                }
-                else
-                {
-                    Log.e(LOG, currentUser.getErrorMessage());
-                    final String errorMessage=currentUser.getErrorMessage();
-
-                    handler.post(new Runnable (){
-                        @Override
-                        public void run() {
-                            Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-                }
-
-
-                Intent i = new Intent(getApplicationContext(), BrowseCreateEdit.class);
-                startActivity(i);
-            }
-        });
-        thread.start();
+        User currentUser=new User(this,4);
+        Intent i = new Intent(getApplicationContext(), BrowseCreateEdit.class);
+        startActivity(i);
     }
 }
 

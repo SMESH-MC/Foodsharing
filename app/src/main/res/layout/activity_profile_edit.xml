@@ -173,7 +173,8 @@
             android:text="@string/edit_latest_offer_tv"
             android:id="@+id/profile_edit_offer_btn"
             android:onClick="editProfile"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textAllCaps="false" />
 
         <Button
             android:layout_width="fill_parent"
@@ -181,7 +182,8 @@
             android:text="@string/profile_edit_save_btn"
             android:id="@+id/profile_edit_save_btn"
             android:layout_weight="1"
-            android:onClick="editProfile" />
+            android:onClick="editProfile"
+            android:textAllCaps="false" />
     </LinearLayout>
 
 </LinearLayout>

@@ -10,6 +10,7 @@ import android.widget.Button;
 
 
 public class ProfileDisplayActivity extends Activity {
+    private static final String LOG=ProfileDisplayActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

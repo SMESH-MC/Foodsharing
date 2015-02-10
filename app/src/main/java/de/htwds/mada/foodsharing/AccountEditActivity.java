@@ -86,7 +86,7 @@ public class AccountEditActivity extends Activity {
         Thread thread=new Thread(new Runnable() {
             @Override
             public void run() {
-                User accountUser=new User();
+                User accountUser=new User(AccountEditActivity.this);
                 accountUser.setVorname("Willi");
                 accountUser.setNachname("Winzig");
                 accountUser.setUsername(usernameInputField.getText().toString().trim());

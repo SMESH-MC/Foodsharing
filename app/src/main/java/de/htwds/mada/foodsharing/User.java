@@ -1,5 +1,9 @@
 package de.htwds.mada.foodsharing;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
@@ -38,7 +42,18 @@ public class User {
     private static final String NO_VALID_PLZ = "PLZ must be between 00000 and 99999!";
     private static final String NO_VALID_COUNTRY = "The given country code is too long!";
 
-    public User() {    }
+    private static final String currentUserIdKey="de.htwds.mada.foodsharing.currentuserid";
+
+    public User(Context context)
+    {
+        setUid(PreferenceManager.getDefaultSharedPreferences(context).getInt(currentUserIdKey, -1));
+    }
+
+    public User(Context context, int uid)
+    {
+        setUid(uid);
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(currentUserIdKey, getUid()).apply();
+    }
 
     public int getUid() {        return uid;    }
     public void setUid(int uid) {
@@ -213,7 +228,7 @@ public class User {
         JSONObject returnObject = jsonParser.makeHttpRequest("http://odin.htw-saarland.de/create_user.php", "POST", nameValuePairs);
 
         if (!returnObject.optBoolean("success"))
-            errorMessage=returnObject.optString("message");
+            errorMessage=returnObject.optString("message", "Unknown error!");
 
         return returnObject.optBoolean("success");
     }

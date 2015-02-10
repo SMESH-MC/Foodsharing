@@ -1,6 +1,13 @@
 package de.htwds.mada.foodsharing;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -90,5 +97,66 @@ public class Offer {
             throw new IllegalArgumentException(NO_ARGUMENT);
         }
         this.pickupTimes = pickupTimes.trim();
+    }
+
+    private String errorMessage;
+    public String getErrorMessage() {return errorMessage; }
+
+
+    public boolean fillObjectFromDatabase() {
+        errorMessage = "";
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("oid", String.valueOf(this.getOfferID())));
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject returnObject = jsonParser.makeHttpRequest("http://odin.htw-saarland.de/get_offer_details.php", "GET", nameValuePairs);
+
+        if (returnObject.optBoolean("success"))
+        {
+            JSONArray offerJSONArray=returnObject.optJSONArray("offer");
+            JSONObject offerJSONObject=offerJSONArray.optJSONObject(0);
+            if (offerJSONObject != null)
+            {
+                this.setTransactID(offerJSONObject.optInt("transaction_id", -1));
+                //TODO: this.setPicture();
+                this.setShortDescription(offerJSONObject.optString("title"));
+                this.setLongDescription(offerJSONObject.optString("descr"));
+                //TODO: this.setMhd(userJSONObject.optString("bbd"));
+                //TODO: this.setDateAdded(userJSONObject.optString("date"));
+                //TODO: this.setValidDate(userJSONObject.optString("valid_date"));
+            }
+            else
+            {
+                errorMessage="Could not retrieve offer info!";
+                return false;
+            }
+        }
+
+        if (!returnObject.optBoolean("success"))
+            errorMessage=returnObject.optString("message");
+
+        return returnObject.optBoolean("success");
+    }
+
+    public boolean saveObjectToDatabase()
+    {
+        errorMessage="";
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("transaction_id",String.valueOf(this.getTransactID())));
+        nameValuePairs.add(new BasicNameValuePair("image_id","4"));
+        nameValuePairs.add(new BasicNameValuePair("title", this.getShortDescription()));
+        nameValuePairs.add(new BasicNameValuePair("descr", this.getLongDescription()));
+        nameValuePairs.add(new BasicNameValuePair("bbd", this.getMhd().toString()));
+        Timestamp timestamp=new Timestamp(this.getDateAdded().getTimeInMillis());
+        nameValuePairs.add(new BasicNameValuePair("date", timestamp.toString()));
+        nameValuePairs.add(new BasicNameValuePair("valid_date", "1423216493"));
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject returnObject = jsonParser.makeHttpRequest("http://odin.htw-saarland.de/create_offer.php", "POST", nameValuePairs);
+
+        if (!returnObject.optBoolean("success"))
+            errorMessage=returnObject.optString("message", "Unknown error!");
+
+        return returnObject.optBoolean("success");
     }
 }

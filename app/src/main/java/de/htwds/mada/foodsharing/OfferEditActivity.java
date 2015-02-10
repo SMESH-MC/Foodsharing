@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -36,7 +37,11 @@ import java.util.HashMap;
 
 
 public class OfferEditActivity extends Activity {
-    public static final String LOG=OfferEditActivity.class.getName();
+    private static final String LOG=OfferEditActivity.class.getName();
+
+    private TextView activityTitle;
+
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView photo;
     private Bitmap bitmap;
@@ -47,19 +52,69 @@ public class OfferEditActivity extends Activity {
     private EditText bestBeforeDateInputField;
     private EditText longDescriptionInputField;
 
+    private Button publishOfferButton;
+
+    private boolean isNewOffer=false;
+    private Offer currentOffer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_edit);
+
+        activityTitle=(TextView)findViewById(R.id.offerEditActivityTitle);
+
+
         photo = (ImageView)findViewById(R.id.offeringPhoto);
 
         titleInputField = (EditText) findViewById(R.id.title_tv);
         bestBeforeDateInputField = (EditText) findViewById(R.id.best_before_et);
         longDescriptionInputField = (EditText) findViewById(R.id.detailed_description_tv);
 
+        publishOfferButton = (Button) findViewById(R.id.publish_offer_btn);
 
-        Button publishOfferBtn = (Button) findViewById(R.id.publish_offer_btn);
-        publishOfferBtn.setOnClickListener(new View.OnClickListener() {
+        //TODO: activity bekommt über einen Intent mitgeteilt, welche id das aktuelle Offer hat
+        //ist diese leer, wird eine neue Offer angelegt, und die Überschrift auf "Create Offer" gesetzt
+        //ansonsten auf "Edit Offer"
+        currentOffer=new Offer();
+        activityTitle.setText("Create offer");
+
+        if (!isNewOffer) {
+            currentOffer.setOfferID(1);
+            activityTitle.setText("Edit offer");
+            publishOfferButton.setEnabled(false);
+            final Handler handler = new Handler();
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if (currentOffer.fillObjectFromDatabase()) {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                titleInputField.setText(currentOffer.getShortDescription());
+                                longDescriptionInputField.setText(currentOffer.getLongDescription());
+                                publishOfferButton.setEnabled(true);
+                                Toast.makeText(getBaseContext(), "Offer data fetched successfully!", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    } else {
+                        Log.e(LOG, currentOffer.getErrorMessage());
+                        final String errorMessage = currentOffer.getErrorMessage();
+
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                    }
+                }
+            });
+            thread.start();
+        }
+
+        publishOfferButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -72,32 +127,34 @@ public class OfferEditActivity extends Activity {
 
                 //Log.i(LOG,"Title: "+titleInputField.getText().toString().trim());
 
+
+
+                final Handler handler = new Handler();
                 Thread thread=new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Offer newOffer=new Offer();
-                        newOffer.setOfferID(6);
-                        newOffer.setTransactID(1);
-                        newOffer.setCategory(1); // exchanged "Obst" 2 test app
-                        newOffer.setShortDescription(titleInputField.getText().toString().trim());
-                        newOffer.setLongDescription(longDescriptionInputField.getText().toString().trim());
-                        newOffer.setMhd(2015, 3, 3);
-                        newOffer.setDateAdded();
-                        newOffer.setPickupTimes("bla");
-                        final HashMap<String,String> returnObject=makeQuery(newOffer);
-                        if (returnObject.get("success").equals("true"))
+                        currentOffer.setShortDescription(titleInputField.getText().toString().trim());
+                        currentOffer.setLongDescription(longDescriptionInputField.getText().toString().trim());
+                        currentOffer.setOfferID(6);
+                        currentOffer.setTransactID(1);
+                        currentOffer.setCategory(1); // exchanged "Obst" 2 test app
+                        currentOffer.setMhd(2015, 3, 3);
+                        //currentOffer.setDateAdded();
+                        currentOffer.setPickupTimes("bla");
+
+                        if (currentOffer.saveObjectToDatabase())
                         {
                             handler.post(new Runnable (){
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getBaseContext(), "Offering placed successfully!", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getBaseContext(), "Offer edited successfully!", Toast.LENGTH_LONG).show();
                                     finish();
                                 }
                             });
                         }
                         else
                         {
-                            final String errorMessage=returnObject.get("message");
+                            final String errorMessage=currentOffer.getErrorMessage();
                             handler.post(new Runnable (){
                                 @Override
                                 public void run() {
@@ -109,15 +166,9 @@ public class OfferEditActivity extends Activity {
                     }
                 });
                 thread.start();
-                /*
-                v.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getBaseContext(), "Successful!", Toast.LENGTH_LONG).show();
-                        finish();
-                    }
-                });
-                */
+
+
+
             }
         });
     }
@@ -144,119 +195,6 @@ public class OfferEditActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private HashMap<String,String> makeQuery(Offer newOffer)
-    {
-               HashMap<String,String> returnObject=new HashMap<String,String>();
-               String resultString = "";
-
-
-
-               JSONObject keyValuePairsJson=new JSONObject();
-               try {
-                   keyValuePairsJson.put("transaction_id", newOffer.getTransactID());
-                   keyValuePairsJson.put("image_id", 4);
-                   keyValuePairsJson.put("category", newOffer.getCategory());
-                   keyValuePairsJson.put("title",newOffer.getShortDescription());
-                   keyValuePairsJson.put("descr",newOffer.getLongDescription());
-                   keyValuePairsJson.put("bbd",Integer.parseInt(bestBeforeDateInputField.getText().toString().trim()));
-                   Timestamp timestamp=new Timestamp(newOffer.getDateAdded().getTimeInMillis());
-                   keyValuePairsJson.put("date", timestamp.toString());
-                   //keyValuePairsJson.put("date", timestamp.toString().replaceFirst("\\..*$", ""));
-                   keyValuePairsJson.put("valid_date",1423216493);
-               } catch (Exception e) {
-                   String errorMessage=e.getLocalizedMessage();
-                   returnObject.put("success", "false");
-                   returnObject.put("message", errorMessage);
-                   return returnObject;
-               }
-
-        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("transaction_id",String.valueOf(newOffer.getTransactID())));
-        nameValuePairs.add(new BasicNameValuePair("image_id","4"));
-        nameValuePairs.add(new BasicNameValuePair("title", newOffer.getShortDescription()));
-        nameValuePairs.add(new BasicNameValuePair("descr", newOffer.getLongDescription()));
-        nameValuePairs.add(new BasicNameValuePair("bbd", bestBeforeDateInputField.getText().toString().trim()));
-        Timestamp timestamp=new Timestamp(newOffer.getDateAdded().getTimeInMillis());
-        nameValuePairs.add(new BasicNameValuePair("date", timestamp.toString()));
-        nameValuePairs.add(new BasicNameValuePair("valid_date", "1423216493"));
-
-
-               InputStream inputStream;
-
-               //http post
-               try{
-                   HttpClient httpclient = new DefaultHttpClient();
-                   HttpPost httpPost = new HttpPost("http://odin.htw-saarland.de/create_offer.php");
-                   //HttpPost httpPost = new HttpPost("http://odin.htw-saarland.de/create_offer_json.php");
-                   //HttpPost httpPost = new HttpPost("http://odin.htw-saarland.de/showPostEntities.php");
-
-                   /*
-                   StringEntity entityForPost=new StringEntity(keyValuePairsJson.toString(), HTTP.UTF_8);
-                   httpPost.setHeader("Content-type", "application/json;charset=UTF-8");
-                   httpPost.setHeader("Accept", "application/json");
-                   httpPost.setEntity(entityForPost);
-                   */
-                   httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                   Log.i(LOG, "Json: " + keyValuePairsJson.toString());
-
-                   HttpResponse response = httpclient.execute(httpPost);
-                   HttpEntity responseEntity = response.getEntity();
-                   inputStream = responseEntity.getContent();
-               }catch(Exception e){
-                   String errorMessage=e.getLocalizedMessage();
-                   Log.e(LOG, "Error in http connection " + errorMessage);
-                   returnObject.put("success", "false");
-                   returnObject.put("message", errorMessage);
-                   return returnObject;
-               }
-               //convert response to string
-               try{
-                   BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"),8);
-                   StringBuilder sb = new StringBuilder();
-                   String line;
-                   while ((line = reader.readLine()) != null) {
-                       sb.append(line + "\n");
-                   }
-                   inputStream.close();
-
-                   resultString=sb.toString();
-               }catch(Exception e){
-                   String errorMessage=e.getLocalizedMessage();
-                   Log.e(LOG, "Error converting result " + errorMessage);
-                   returnObject.put("success", "false");
-                   returnObject.put("message", errorMessage);
-                   return returnObject;
-               }
-
-               Log.i(LOG, "Result: " + resultString);
-
-               //parse json data
-               try{
-                   JSONObject resultJsonObject=new JSONObject(resultString);
-                   Log.i(LOG,"Success: "+resultJsonObject.getInt("success")+
-                           ", message: "+resultJsonObject.getString("message"));
-                   if (resultJsonObject.getInt("success") == 1) {
-                       returnObject.put("success", "true");
-                   }
-                   else
-                   {
-                       String errorMessage=resultJsonObject.getString("message");
-                       returnObject.put("success", "false");
-                       returnObject.put("message", errorMessage);
-                   }
-               }catch(Exception e){
-                   String errorMessage=e.getLocalizedMessage();
-                   Log.e(LOG, "Error parsing result string " + resultString + " " + e.getLocalizedMessage());
-                   returnObject.put("success", "false");
-                   returnObject.put("message", errorMessage);
-                   return returnObject;
-               }
-
-
-               return returnObject;
-
-    }
 
     public void dispatchTakePictureIntent(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
