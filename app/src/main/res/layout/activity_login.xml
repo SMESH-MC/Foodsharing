@@ -20,7 +20,7 @@
         android:fontFamily="serif"
         android:textStyle="bold|italic"
         android:textSize="50sp"
-        android:paddingTop="20sp"
+        android:paddingTop="50sp"
         android:paddingBottom="20sp" />
 
     <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
