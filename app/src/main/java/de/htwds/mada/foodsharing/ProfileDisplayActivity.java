@@ -35,7 +35,7 @@ public class ProfileDisplayActivity extends Activity {
         cityDisplayField=(TextView) findViewById(R.id.profile_edit_place_of_res_et);
         streetDisplayField=(TextView) findViewById(R.id.profile_edit_street_address_et);
         houseNumberDisplayField=(TextView) findViewById(R.id.profile_edit_street_address_no_et);
-        zipcodeDisplayField=(TextView) findViewById(R.id.profile_edit_zipcode_et);
+        //zipcodeDisplayField=(TextView) findViewById(R.id.profile_edit_zipcode_et);
         countryDisplayField=(TextView) findViewById(R.id.profile_displ_country_tv);
     }
 
