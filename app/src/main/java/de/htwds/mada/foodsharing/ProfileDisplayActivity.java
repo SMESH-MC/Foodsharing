@@ -7,15 +7,36 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 public class ProfileDisplayActivity extends Activity {
     private static final String LOG=ProfileDisplayActivity.class.getName();
 
+    private TextView firstNameDisplayField;
+    private TextView lastNameDisplayField;
+    private TextView emailDisplayField;
+    private TextView phoneDisplayField;
+    private TextView cityDisplayField;
+    private TextView streetDisplayField;
+    private TextView houseNumberDisplayField;
+    private TextView zipcodeDisplayField;
+    private TextView countryDisplayField;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_display);
+
+        firstNameDisplayField = (TextView) findViewById(R.id.profile_edit_first_name_tv);
+        lastNameDisplayField = (TextView) findViewById(R.id.profile_edit_last_name_tv);
+        emailDisplayField=(TextView) findViewById(R.id.profile_edit_email_et);
+        phoneDisplayField=(TextView) findViewById(R.id.profile_edit_phone_et);
+        cityDisplayField=(TextView) findViewById(R.id.profile_edit_place_of_res_et);
+        streetDisplayField=(TextView) findViewById(R.id.profile_edit_street_address_et);
+        houseNumberDisplayField=(TextView) findViewById(R.id.profile_edit_street_address_no_et);
+        zipcodeDisplayField=(TextView) findViewById(R.id.profile_edit_zipcode_et);
+        countryDisplayField=(TextView) findViewById(R.id.profile_displ_country_tv);
     }
 
 
