@@ -27,7 +27,7 @@ public class ResultActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        listAdapter = new ArrayAdapter<>(this);
+        listAdapter = new ArrayAdapter<Offer>(this,android.R.layout.simple_list_item_1);
         resultListView = (ListView) findViewById(R.id.activity_result_listview);
         ViewStub vs = (ViewStub) findViewById(R.id.todoview_empty);
         resultListView.setEmptyView(vs);
