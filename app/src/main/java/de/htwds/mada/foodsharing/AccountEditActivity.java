@@ -124,7 +124,7 @@ public class AccountEditActivity extends Activity {
                     handler.post(new Runnable (){
                         @Override
                         public void run() {
-                            Toast.makeText(getBaseContext(), "Updated account successfully!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), Constants.ACCOUNT_UPDATED, Toast.LENGTH_LONG).show();
                             finish();
                         }
                     });

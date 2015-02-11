@@ -21,28 +21,22 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-/**
- * Created by Arax on 06.02.2015.
- */
-
 public class JSONParser {
     public static final String LOG=JSONParser.class.getName();
 
-    static InputStream is = null;
-    static JSONObject jObj = new JSONObject();
-    static String json = "";
+    static InputStream is;// = null;
+    static JSONObject jObj;// = new JSONObject();
+    static String json;// = "";
 
-    private static final String POST = "POST";
-    private static final String GET = "GET";
-    private static final String UTF = "utf-8";
-    private static final String ISO = "iso-8859-1";
-
-    public JSONParser() {
+      public JSONParser() {
+          is = null;
+          jObj = new JSONObject();
+          json ="";
     }
 
     public JSONObject makeHttpRequest(String url, String method, List<NameValuePair> params) {
         try {
-            if (method.equals(POST)) {
+            if (method.equals(Constants.JSON_POST)) {
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(url);
                 httpPost.setEntity(new UrlEncodedFormEntity(params));
@@ -50,10 +44,10 @@ public class JSONParser {
                 HttpResponse httpResponse = httpClient.execute(httpPost);
                 HttpEntity httpEntity = httpResponse.getEntity();
                 is = httpEntity.getContent();
-            } else if (method.equals(GET)) {
+            } else if (method.equals(Constants.JSON_GET)) {
                 DefaultHttpClient httpClient = new DefaultHttpClient();
-                String paramString = URLEncodedUtils.format(params, UTF);
-                url += "?" + paramString;
+                String paramString = URLEncodedUtils.format(params, Constants.JSON_UTF);
+                url += Constants.QUESTIONMARK + paramString;
                 HttpGet httpGet = new HttpGet(url);
 
                 HttpResponse httpResponse = httpClient.execute(httpGet);
@@ -62,10 +56,10 @@ public class JSONParser {
             }
         } catch (Exception e) {
             String errorMessage=e.getLocalizedMessage();
-            Log.e(LOG, "Error in http connection " + errorMessage);
+            Log.e(LOG, Constants.HTTP_ERROR + errorMessage);
             try {
-                jObj.put("success", false);
-                jObj.put("message", errorMessage);
+                jObj.put(Constants.SUCCESS_WORD, false);
+                jObj.put(Constants.MESSAGE_WORD, errorMessage);
             } catch (JSONException ignored) { }
             return jObj;
         }
@@ -80,43 +74,43 @@ public class JSONParser {
         */
 
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, ISO), 8);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, Constants.JSON_ISO), 8);
             StringBuilder sb = new StringBuilder();
             String line = null;
             while ((line = reader.readLine()) != null) {
-                sb.append(line).append("\n");
+                sb.append(line).append(Constants.NEWLINE);
             }
             is.close();
             json = sb.toString();
         } catch (Exception e) {
             String errorMessage=e.getLocalizedMessage();
-            Log.e(LOG, "Error converting result " + errorMessage);
+            Log.e(LOG, Constants.CONVERTING_ERROR + errorMessage);
             try {
-                jObj.put("success", false);
-                jObj.put("message", errorMessage);
+                jObj.put(Constants.SUCCESS_WORD, false);
+                jObj.put(Constants.MESSAGE_WORD, errorMessage);
             } catch (JSONException ignored) { }
             return jObj;
         }
 
         try{
             jObj = new JSONObject(json);
-            Log.i(LOG,"Success: "+jObj.optInt("success", -1)+
-                    ", message: "+jObj.optString("message") + " " + json);
-            if (jObj.getInt("success") == 1) {
-                jObj.put("success", true);
+            Log.i(LOG,Constants.LOG_SUCCESS+jObj.optInt(Constants.SUCCESS_WORD, -1)+
+                    Constants.LOG_MESSAGE+jObj.optString(Constants.MESSAGE_WORD) + Constants.SPACE + json);
+            if (jObj.getInt(Constants.SUCCESS_WORD) == 1) {
+                jObj.put(Constants.SUCCESS_WORD, true);
             }
             else
             {
-                String errorMessage=jObj.getString("message");
-                jObj.put("success", false);
-                jObj.put("message", errorMessage);
+                String errorMessage=jObj.getString(Constants.MESSAGE_WORD);
+                jObj.put(Constants.SUCCESS_WORD, false);
+                jObj.put(Constants.MESSAGE_WORD, errorMessage);
             }
         } catch (JSONException e) {
             String errorMessage=e.getLocalizedMessage();
-            Log.e(LOG, "Error parsing result string " + json + " " + errorMessage);
+            Log.e(LOG, Constants.STRING_PARSING_ERROR + json + Constants.SPACE + errorMessage);
             try {
-                jObj.put("success", "false");
-                jObj.put("message", errorMessage);
+                jObj.put(Constants.SUCCESS_WORD, false);
+                jObj.put(Constants.MESSAGE_WORD, errorMessage);
             } catch (JSONException ignored) { }
             return jObj;
         }
