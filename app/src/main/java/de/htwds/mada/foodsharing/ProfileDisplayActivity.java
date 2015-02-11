@@ -61,7 +61,7 @@ public class ProfileDisplayActivity extends Activity {
                             houseNumberDisplayField.setText(displayedUser.getHouseNumber());
                             //TODO: zipcodeDisplayField.setText(displayedUser.getPlz());
                             countryDisplayField.setText(displayedUser.getCountry());
-                            Toast.makeText(getBaseContext(), "User data fetched successfully!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), Constants.USER_FETCHED, Toast.LENGTH_LONG).show();
                         }
                     });
                 }

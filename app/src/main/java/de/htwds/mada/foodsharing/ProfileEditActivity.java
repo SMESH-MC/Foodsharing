@@ -67,7 +67,7 @@ public class ProfileEditActivity extends Activity {
                             //TODO: zipcodeInputField.setText(currentUser.getPlz());
                             countryInputField.setText(currentUser.getCountry());
                             profileEditSaveButton.setEnabled(true);
-                            Toast.makeText(getBaseContext(), "User data fetched successfully!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), Constants.USER_FETCHED, Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -184,7 +184,7 @@ public class ProfileEditActivity extends Activity {
                     handler.post(new Runnable (){
                         @Override
                         public void run() {
-                            Toast.makeText(getBaseContext(), "Updated account successfully!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), Constants.ACCOUNT_UPDATED, Toast.LENGTH_LONG).show();
                             finish();
                         }
                     });

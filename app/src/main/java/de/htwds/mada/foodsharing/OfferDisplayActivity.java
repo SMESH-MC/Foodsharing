@@ -41,7 +41,7 @@ public class OfferDisplayActivity extends Activity {
                         public void run() {
                             titleDisplayField.setText(currentOffer.getShortDescription());
                             longDescriptionDisplayField.setText(currentOffer.getLongDescription());
-                            Toast.makeText(getBaseContext(), "Offer data fetched successfully!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
                         }
                     });
                 } else {

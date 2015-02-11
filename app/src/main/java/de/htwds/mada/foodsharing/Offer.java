@@ -109,7 +109,7 @@ public class Offer {
         nameValuePairs.add(new BasicNameValuePair(Constants.OFFER_ID_ABK, String.valueOf(this.getOfferID())));
 
         JSONParser jsonParser = new JSONParser();
-        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_REQUEST_URL, Constants.JSON_GET, nameValuePairs);
+        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_OFFER, Constants.JSON_GET, nameValuePairs);
 
         if (returnObject.optBoolean(Constants.SUCCESS_WORD))
         {
@@ -119,44 +119,45 @@ public class Offer {
             {
                 this.setTransactID(offerJSONObject.optInt(Constants.JSON_TRANS_ID, -1));
                 //TODO: this.setPicture();
-                this.setShortDescription(offerJSONObject.optString("title"));
-                this.setLongDescription(offerJSONObject.optString("descr"));
+                this.setShortDescription(offerJSONObject.optString(Constants.TITLE_WORD));
+                this.setLongDescription(offerJSONObject.optString(Constants.DESCRIPTION_ABK));
                 //TODO: this.setMhd(userJSONObject.optString("bbd"));
                 //TODO: this.setDateAdded(userJSONObject.optString("date"));
                 //TODO: this.setValidDate(userJSONObject.optString("valid_date"));
             }
             else
             {
-                errorMessage="Could not retrieve offer info!";
+                errorMessage=Constants.OFFER_INFO_RETRIEVING_ERROR;
                 return false;
             }
         }
 
-        if (!returnObject.optBoolean("success"))
-            errorMessage=returnObject.optString("message");
+        if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
+            errorMessage=returnObject.optString(Constants.MESSAGE_WORD);
 
-        return returnObject.optBoolean("success");
+        return returnObject.optBoolean(Constants.SUCCESS_WORD);
     }
 
     public boolean saveObjectToDatabase()
     {
         errorMessage="";
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("transaction_id",String.valueOf(this.getTransactID())));
-        nameValuePairs.add(new BasicNameValuePair("image_id","4"));
-        nameValuePairs.add(new BasicNameValuePair("title", this.getShortDescription()));
-        nameValuePairs.add(new BasicNameValuePair("descr", this.getLongDescription()));
+        nameValuePairs.add(new BasicNameValuePair(Constants.JSON_TRANS_ID,String.valueOf(this.getTransactID())));
+        nameValuePairs.add(new BasicNameValuePair(Constants.JSON_IMAGE_ID,"4"));
+        nameValuePairs.add(new BasicNameValuePair(Constants.TITLE_WORD, this.getShortDescription()));
+        nameValuePairs.add(new BasicNameValuePair(Constants.DESCRIPTION_ABK, this.getLongDescription()));
         nameValuePairs.add(new BasicNameValuePair("bbd", this.getMhd().toString()));
         Timestamp timestamp=new Timestamp(this.getDateAdded().getTimeInMillis());
-        nameValuePairs.add(new BasicNameValuePair("date", timestamp.toString()));
-        nameValuePairs.add(new BasicNameValuePair("valid_date", "1423216493"));
+        nameValuePairs.add(new BasicNameValuePair(Constants.DATE_WORD, timestamp.toString()));
+        nameValuePairs.add(new BasicNameValuePair(Constants.JSON_VALID_DATE, "1423216493"));
+        nameValuePairs.add(new BasicNameValuePair(Constants.JSON_VALID_DATE, "1423216493"));
 
         JSONParser jsonParser = new JSONParser();
-        JSONObject returnObject = jsonParser.makeHttpRequest("http://odin.htw-saarland.de/create_offer.php", "POST", nameValuePairs);
+        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_CREATE_OFFER, Constants.JSON_POST, nameValuePairs);
 
-        if (!returnObject.optBoolean("success"))
-            errorMessage=returnObject.optString("message", "Unknown error!");
+        if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
+            errorMessage=returnObject.optString(Constants.MESSAGE_WORD, Constants.UNKNOWN_ERROR);
 
-        return returnObject.optBoolean("success");
+        return returnObject.optBoolean(Constants.SUCCESS_WORD);
     }
 }
