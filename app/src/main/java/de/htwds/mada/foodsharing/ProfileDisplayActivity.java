@@ -3,11 +3,14 @@ package de.htwds.mada.foodsharing;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class ProfileDisplayActivity extends Activity {
@@ -23,6 +26,8 @@ public class ProfileDisplayActivity extends Activity {
     private TextView zipcodeDisplayField;
     private TextView countryDisplayField;
 
+    private User displayedUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +42,45 @@ public class ProfileDisplayActivity extends Activity {
         houseNumberDisplayField=(TextView) findViewById(R.id.profile_edit_street_address_no_et);
         //zipcodeDisplayField=(TextView) findViewById(R.id.profile_edit_zipcode_et);
         countryDisplayField=(TextView) findViewById(R.id.profile_displ_country_tv);
+
+        displayedUser=new User(this, getIntent().getIntExtra(Constants.keyUserID, -1));
+        final Handler handler = new Handler();
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (displayedUser.fillObjectFromDatabase())
+                {
+                    handler.post(new Runnable (){
+                        @Override
+                        public void run() {
+                            firstNameDisplayField.setText(displayedUser.getVorname());
+                            lastNameDisplayField.setText(displayedUser.getNachname());
+                            emailDisplayField.setText(displayedUser.getEmail());
+                            cityDisplayField.setText(displayedUser.getCity());
+                            streetDisplayField.setText(displayedUser.getStreet());
+                            houseNumberDisplayField.setText(displayedUser.getHouseNumber());
+                            //TODO: zipcodeDisplayField.setText(displayedUser.getPlz());
+                            countryDisplayField.setText(displayedUser.getCountry());
+                            Toast.makeText(getBaseContext(), "User data fetched successfully!", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                else
+                {
+                    Log.e(LOG, displayedUser.getErrorMessage());
+                    final String errorMessage=displayedUser.getErrorMessage();
+
+                    handler.post(new Runnable (){
+                        @Override
+                        public void run() {
+                            Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                }
+            }
+        });
+        thread.start();
     }
 
 

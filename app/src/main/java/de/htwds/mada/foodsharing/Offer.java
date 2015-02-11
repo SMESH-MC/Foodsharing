@@ -34,9 +34,11 @@ public class Offer {
 
     public int getOfferID() {        return offerID;    }
     public void setOfferID(int offerID) {
+        /*
         if (offerID < 0) {
             throw new NumberFormatException(NOT_NEGATIVE);
         }
+        */
         this.offerID = offerID;
     }
 

@@ -54,7 +54,6 @@ public class OfferEditActivity extends Activity {
 
     private Button publishOfferButton;
 
-    private boolean isNewOffer=false;
     private Offer currentOffer;
 
     @Override
@@ -64,7 +63,6 @@ public class OfferEditActivity extends Activity {
 
         activityTitle=(TextView)findViewById(R.id.offerEditActivityTitle);
 
-
         photo = (ImageView)findViewById(R.id.offeringPhoto);
 
         titleInputField = (EditText) findViewById(R.id.title_tv);
@@ -73,14 +71,13 @@ public class OfferEditActivity extends Activity {
 
         publishOfferButton = (Button) findViewById(R.id.publish_offer_btn);
 
-        //TODO: activity bekommt über einen Intent mitgeteilt, welche id das aktuelle Offer hat
-        //ist diese leer, wird eine neue Offer angelegt, und die Überschrift auf "Create Offer" gesetzt
-        //ansonsten auf "Edit Offer"
+
         currentOffer=new Offer();
+        currentOffer.setOfferID(getIntent().getIntExtra(Constants.keyOfferID, -1));
         activityTitle.setText("Create offer");
 
-        if (!isNewOffer) {
-            currentOffer.setOfferID(1);
+        if (currentOffer.getOfferID() >= 0) {
+            //currentOffer.setOfferID(1);
             activityTitle.setText("Edit offer");
             publishOfferButton.setEnabled(false);
             final Handler handler = new Handler();

@@ -31,8 +31,7 @@ public class OfferDisplayActivity extends Activity {
         longDescriptionDisplayField = (TextView) findViewById(R.id.detailed_description_tv);
 
         currentOffer=new Offer();
-        //TODO: activity bekommt über einen Intent mitgeteilt, welche id das aktuelle Offer hat
-        currentOffer.setOfferID(1);
+        currentOffer.setOfferID(getIntent().getIntExtra(Constants.keyOfferID, -1));
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {

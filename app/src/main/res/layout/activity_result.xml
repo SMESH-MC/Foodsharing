@@ -31,7 +31,7 @@
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/listView2"
+                android:id="@+id/activity_result_listview"
                 android:layout_marginTop="44dp"
                 android:visibility="visible"
                 android:nestedScrollingEnabled="false"
