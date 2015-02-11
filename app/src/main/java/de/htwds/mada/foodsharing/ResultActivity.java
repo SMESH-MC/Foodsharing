@@ -26,7 +26,7 @@ public class ResultActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-
+/*
         listAdapter = new ArrayAdapter<Offer>(this,android.R.layout.simple_list_item_1);
         resultListView = (ListView) findViewById(R.id.activity_result_listview);
         ViewStub vs = (ViewStub) findViewById(R.id.todoview_empty);
@@ -73,6 +73,7 @@ public class ResultActivity extends Activity {
             }
         });
         thread.start();
+        */
 
     }
 
