@@ -14,19 +14,34 @@ public class Constants {
     public static final String QUESTIONMARK = "?";
     public static final String AT_SIGN = "@";
 
+    public static final String NOT_NEGATIVE = "No negative numbers!";
+    public static final String NO_ARGUMENT = "No or empty object given!";
+
+    public static final String OFFER_ID_ABK = "oid";
+
+    public static final String HTTP_REQUEST_URL = "http://odin.htw-saarland.de/get_offer_details.php";
+
+
     public static final String JSON_POST = "POST";
     public static final String JSON_GET = "GET";
     public static final String JSON_UTF = "utf-8";
     public static final String JSON_ISO = "iso-8859-1";
+    public static final String JSON_TRANS_ID = "transaction_id";
 
-    public static final String HTTP_ERROR = "Error in http connection ";
+    //single words
     public static final String SUCCESS_WORD = "success";
     public static final String MESSAGE_WORD = "message";
+    public static final String OFFER_WORD = "offer";
+    public static final String TITLE_WORD= "title";
+
+    public static final String HTTP_ERROR = "Error in http connection ";
     public static final String CONVERTING_ERROR = "Error converting result ";
     public static final String STRING_PARSING_ERROR = "Error parsing result string ";
 
     public static final String LOG_SUCCESS = "Success: ";
     public static final String LOG_MESSAGE = ", message: ";
+
+
 
 
 }

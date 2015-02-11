@@ -25,8 +25,6 @@ public class Offer {
 
 
     //Exceptions
-    private static final String NOT_NEGATIVE = "No negative numbers!";
-    private static final String NO_ARGUMENT = "No or empty object given!";
 
     public Offer() {
         mhd = new GregorianCalendar();
@@ -45,7 +43,7 @@ public class Offer {
     public int getTransactID() {        return transactID;    }
     public void setTransactID(int transactID) {
         if (transactID < 0) {
-            throw new NumberFormatException(NOT_NEGATIVE);
+            throw new NumberFormatException(Constants.NOT_NEGATIVE);
         }
         this.transactID = transactID;
     }
@@ -53,7 +51,7 @@ public class Offer {
     public int getCategory() {        return category;    }
     public void setCategory(int category) {
         if (category < 0) {
-            throw new NumberFormatException(NOT_NEGATIVE);
+            throw new NumberFormatException(Constants.NOT_NEGATIVE);
         }
         this.category = category;
     }
@@ -61,7 +59,7 @@ public class Offer {
     public String getShortDescription() {        return shortDescription;    }
     public void setShortDescription(String shortDescription) {
         if (shortDescription.trim().isEmpty()) {
-            throw new IllegalArgumentException(NO_ARGUMENT);
+            throw new IllegalArgumentException(Constants.NO_ARGUMENT);
         }
         this.shortDescription = shortDescription.trim();
     }
@@ -69,7 +67,7 @@ public class Offer {
     public String getLongDescription() {        return longDescription;    }
     public void setLongDescription(String longDescription) {
         if (longDescription.trim().isEmpty()) {
-            throw new IllegalArgumentException(NO_ARGUMENT);
+            throw new IllegalArgumentException(Constants.NO_ARGUMENT);
         }
         this.longDescription = longDescription.trim();
     }
@@ -77,7 +75,7 @@ public class Offer {
     public File getPicture() {        return picture;    }
     public void setPicture(File picture) {
         if (picture == null) {
-            throw new IllegalArgumentException(NO_ARGUMENT);
+            throw new IllegalArgumentException(Constants.NO_ARGUMENT);
         }
         this.picture = picture;
     }
@@ -96,7 +94,7 @@ public class Offer {
     public String getPickupTimes() {        return pickupTimes;    }
     public void setPickupTimes(String pickupTimes) {
         if (pickupTimes.trim().isEmpty()) {
-            throw new IllegalArgumentException(NO_ARGUMENT);
+            throw new IllegalArgumentException(Constants.NO_ARGUMENT);
         }
         this.pickupTimes = pickupTimes.trim();
     }
@@ -108,18 +106,18 @@ public class Offer {
     public boolean fillObjectFromDatabase() {
         errorMessage = "";
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("oid", String.valueOf(this.getOfferID())));
+        nameValuePairs.add(new BasicNameValuePair(Constants.OFFER_ID_ABK, String.valueOf(this.getOfferID())));
 
         JSONParser jsonParser = new JSONParser();
-        JSONObject returnObject = jsonParser.makeHttpRequest("http://odin.htw-saarland.de/get_offer_details.php", "GET", nameValuePairs);
+        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_REQUEST_URL, Constants.JSON_GET, nameValuePairs);
 
-        if (returnObject.optBoolean("success"))
+        if (returnObject.optBoolean(Constants.SUCCESS_WORD))
         {
-            JSONArray offerJSONArray=returnObject.optJSONArray("offer");
+            JSONArray offerJSONArray=returnObject.optJSONArray(Constants.OFFER_WORD);
             JSONObject offerJSONObject=offerJSONArray.optJSONObject(0);
             if (offerJSONObject != null)
             {
-                this.setTransactID(offerJSONObject.optInt("transaction_id", -1));
+                this.setTransactID(offerJSONObject.optInt(Constants.JSON_TRANS_ID, -1));
                 //TODO: this.setPicture();
                 this.setShortDescription(offerJSONObject.optString("title"));
                 this.setLongDescription(offerJSONObject.optString("descr"));
