@@ -1,6 +1,7 @@
 package de.htwds.mada.foodsharing;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Handler;
@@ -67,7 +68,7 @@ public class OfferEditActivity extends Activity {
         photo = (ImageView)findViewById(R.id.offeringPhoto);
 
         titleInputField = (EditText) findViewById(R.id.title_tv);
-        bestBeforeDateInputField = (DatePicker)findViewById(R.id.best_before_et);
+      //  bestBeforeDateInputField = (DatePicker)findViewById(R.id.);
         longDescriptionInputField = (EditText) findViewById(R.id.detailed_description_tv);
 
         publishOfferButton = (Button) findViewById(R.id.publish_offer_btn);
@@ -212,4 +213,8 @@ public class OfferEditActivity extends Activity {
     }
 
 
+    public void showDatePickerDialog(View view) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getFragmentManager(), "datePicker");
+    }
 }

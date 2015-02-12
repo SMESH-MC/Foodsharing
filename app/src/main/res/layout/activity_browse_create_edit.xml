@@ -106,12 +106,14 @@
             android:layout_height="wrap_content"
             android:text="@string/browse_create_new_offer_btn"
             android:id="@+id/browse_create_new_offer_btn"
-            android:layout_weight="1"
             android:background="@color/blue06"
             android:textStyle="bold"
             android:textColor="@color/abc_primary_text_material_dark"
             android:onClick="createEdit"
-            android:elevation="2dp" />
+            android:elevation="2dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
 
         <Button
             android:layout_width="wrap_content"
@@ -123,7 +125,9 @@
             android:textStyle="bold"
             android:textColor="@color/abc_primary_text_material_dark"
             android:onClick="createEdit"
-            android:elevation="2dp" />
+            android:elevation="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
 
         <Button
             android:layout_width="wrap_content"
@@ -135,7 +139,9 @@
             android:textColor="@color/abc_primary_text_material_dark"
             android:layout_weight="1"
             android:onClick="createEdit"
-            android:elevation="2dp" />
+            android:elevation="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
     </LinearLayout>
 
 

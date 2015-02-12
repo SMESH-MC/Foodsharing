@@ -93,6 +93,7 @@
             android:name=".OfferEditActivity"
             android:label="@string/title_activity_edit_offer"
             android:parentActivityName=".BrowseCreateEdit" >
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.htwds.mada.foodsharing.BrowseCreateEdit" />

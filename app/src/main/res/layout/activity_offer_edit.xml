@@ -77,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
+            android:text="[ausgewählte Kat]"
             android:id="@+id/textView7"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical" />
@@ -101,13 +101,14 @@
             android:textStyle="bold"
             android:textAllCaps="false"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:onClick="showDatePickerDialog"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
+            android:text="[gewähltes Datum]"
             android:id="@+id/textView8"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp" />
@@ -122,7 +123,7 @@
 
 
         <EditText
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/detailed_description_tv"
             android:layout_weight="1"
