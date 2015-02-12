@@ -30,6 +30,20 @@ public class Offer {
         mhd = new GregorianCalendar();
     }
 
+    public Offer(JSONObject offerJSONObject)
+    {
+        mhd = new GregorianCalendar();
+
+        this.setOfferID(offerJSONObject.optInt("id", -1));
+        this.setTransactID(offerJSONObject.optInt("transaction_id", -1));
+        //TODO: this.setPicture();
+        this.setShortDescription(offerJSONObject.optString("title"));
+        this.setLongDescription(offerJSONObject.optString("descr"));
+        //TODO: this.setMhd(userJSONObject.optString("bbd"));
+        //TODO: this.setDateAdded(userJSONObject.optString("date"));
+        //TODO: this.setValidDate(userJSONObject.optString("valid_date"));
+    }
+
     public int getOfferID() {        return offerID;    }
     public void setOfferID(int offerID) {
         /*
@@ -159,5 +173,12 @@ public class Offer {
             errorMessage=returnObject.optString(Constants.MESSAGE_WORD, Constants.UNKNOWN_ERROR);
 
         return returnObject.optBoolean(Constants.SUCCESS_WORD);
+    }
+
+
+
+    public String toString()
+    {
+        return getShortDescription() + "\n" + getLongDescription();
     }
 }

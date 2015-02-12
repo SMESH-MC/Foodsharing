@@ -24,14 +24,16 @@ import java.util.List;
 public class JSONParser {
     public static final String LOG=JSONParser.class.getName();
 
-    static InputStream is;// = null;
-    static JSONObject jObj;// = new JSONObject();
-    static String json;// = "";
+    static InputStream is = null;
+    static JSONObject jObj = new JSONObject();
+    static String json = "";
 
-      public JSONParser() {
-          is = null;
-          jObj = new JSONObject();
-          json ="";
+    private static final String POST = "POST";
+    private static final String GET = "GET";
+    private static final String UTF = "utf-8";
+    private static final String ISO = "iso-8859-1";
+
+    public JSONParser() {
     }
 
     public JSONObject makeHttpRequest(String url, String method, List<NameValuePair> params) {

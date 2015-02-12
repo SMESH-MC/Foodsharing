@@ -32,6 +32,7 @@ public class OfferDisplayActivity extends Activity {
 
         currentOffer=new Offer();
         currentOffer.setOfferID(getIntent().getIntExtra(Constants.keyOfferID, -1));
+        Log.i(LOG, "Offer id: " + currentOffer.getOfferID());
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
