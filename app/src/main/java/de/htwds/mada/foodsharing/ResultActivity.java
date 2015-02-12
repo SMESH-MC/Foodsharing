@@ -29,12 +29,12 @@ public class ResultActivity extends Activity {
 
         listAdapter = new ArrayAdapter<Offer>(this,android.R.layout.simple_list_item_1);
         resultListView = (ListView) findViewById(R.id.activity_result_listview);
-        ViewStub vs = (ViewStub) findViewById(R.id.todoview_empty);
-        resultListView.setEmptyView(vs);
+//        ViewStub vs = (ViewStub) findViewById(R.id.todoview_empty);
+//        resultListView.setEmptyView(vs);
 
         listAdapter.clear();
-        List<Offer> offerList = todoDao.queryForAll();
-        listAdapter.addAll(offerList);
+//        List<Offer> offerList = todoDao.queryForAll();
+//        listAdapter.addAll(offerList);
         listAdapter.notifyDataSetChanged();
         if (listAdapter.getCount() != 0) {
             resultListView.setAdapter(listAdapter);
@@ -56,18 +56,18 @@ public class ResultActivity extends Activity {
                     JSONObject offerJSONObject=offerJSONArray.optJSONObject(0);
                     if (offerJSONObject != null)
                     {
-                        this.setTransactID(offerJSONObject.optInt("transaction_id", -1));
-                        //TODO: this.setPicture();
-                        this.setShortDescription(offerJSONObject.optString("title"));
-                        this.setLongDescription(offerJSONObject.optString("descr"));
+//                        this.setTransactID(offerJSONObject.optInt("transaction_id", -1));
+//                        //TODO: this.setPicture();
+//                        this.setShortDescription(offerJSONObject.optString("title"));
+//                        this.setLongDescription(offerJSONObject.optString("descr"));
                         //TODO: this.setMhd(userJSONObject.optString("bbd"));
                         //TODO: this.setDateAdded(userJSONObject.optString("date"));
                         //TODO: this.setValidDate(userJSONObject.optString("valid_date"));
                     }
                     else
                     {
-                        errorMessage="Could not retrieve offer info!";
-                        return false;
+//                        errorMessage="Could not retrieve offer info!";
+//                        return false;
                     }
                 }
             }

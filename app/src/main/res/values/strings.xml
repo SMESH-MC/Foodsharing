@@ -13,6 +13,10 @@
     <string name="title_activity_profile_display">ProfileDisplayActivity</string>
     <string name="title_activity_account_edit">AccountEditActivity</string>
     <string name="title_activity_account_display">AccountDisplayActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_edit_search">EditSearchActivity</string>
+
+
 
     <!-- activity elements -->
     <!-- text views -->
@@ -88,8 +92,12 @@
     <string name="offer_display_best_before_tv">Best before</string>
     <string name="offer_display_pick_up_tv">Pick up Date</string>
     <string name="offer_category_tv">Category</string>
-    <string name="title_activity_splash">SplashActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="logo">logo</string>
+    <string name="edit_search_go_btn">Go!</string>
+    <string name="edit_search_et">Searching for...</string>
+    <string name="browse_create_new_offer_btn">New Offer</string>
+    <string name="browse_create_edit_offer_btn">Edit Offer</string>
+    <string name="browse_create_edit_profile_btn">Profile</string>
 
 </resources>
