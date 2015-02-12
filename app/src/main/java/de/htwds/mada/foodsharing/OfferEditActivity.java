@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,7 +50,7 @@ public class OfferEditActivity extends Activity {
     private final Handler handler = new Handler();
 
     private EditText titleInputField;
-    private EditText bestBeforeDateInputField;
+    private DatePicker bestBeforeDateInputField;
     private EditText longDescriptionInputField;
 
     private Button publishOfferButton;
@@ -66,7 +67,7 @@ public class OfferEditActivity extends Activity {
         photo = (ImageView)findViewById(R.id.offeringPhoto);
 
         titleInputField = (EditText) findViewById(R.id.title_tv);
-        bestBeforeDateInputField = (EditText) findViewById(R.id.best_before_et);
+        bestBeforeDateInputField = (DatePicker)findViewById(R.id.best_before_et);
         longDescriptionInputField = (EditText) findViewById(R.id.detailed_description_tv);
 
         publishOfferButton = (Button) findViewById(R.id.publish_offer_btn);

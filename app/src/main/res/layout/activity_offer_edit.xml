@@ -87,17 +87,6 @@
             android:textColorHint="@color/abc_primary_text_material_dark"
             android:textStyle="bold" />
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="date"
-            android:ems="10"
-            android:id="@+id/editText4"
-            android:hint="Pick Up Date"
-            android:layout_weight="1"
-            android:textColorHint="@color/abc_primary_text_material_dark"
-            android:textStyle="bold" />
-
     </LinearLayout>
 
     <LinearLayout
