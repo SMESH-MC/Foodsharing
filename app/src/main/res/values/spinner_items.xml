@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="planets_array">
-        <item>Search in ...</item>
+    <string-array name="items_array">
+        <item><b>Search in ...</b></item>
         <item>Offers</item>
         <item>Categories</item>
         <item>Locations</item>

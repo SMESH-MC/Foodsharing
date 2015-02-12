@@ -4,31 +4,31 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.PopupMenu;
+import android.widget.Button;
 import android.widget.Spinner;
 
 
 public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSelectedListener {
     Spinner spinner;
+    Intent i;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_create_edit);
-
         spinner = (android.widget.Spinner) findViewById(R.id.browse_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
+
+        // Creates an ArrayAdapter using the string array and customized spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.planets_array, android.R.layout.simple_dropdown_item_1line);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.items_array, R.layout.spinner_layout);
+        // Adds customised layout to use when the list of choices appears
+        adapter.setDropDownViewResource(R.layout.spinner_items_layout);
 
 
         // Apply the adapter to the spinner
@@ -60,47 +60,39 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
     }
 
 
-    public void browseEditPopUp(View view) {
-        PopupMenu pop = new PopupMenu(this, view);
-        pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.edit_offer_item:
-                        fillIntent(OfferEditActivity.class);
+    public void createEdit(View view) {
+        Button btn = (Button) view;
 
-                        return true;
-                    case R.id.edit_profile_item:
-                        fillIntent(ProfileDisplayActivity.class);
+                //switch to pass an intent for distinct search
+                switch (btn.getId()) {
+                    case R.id.browse_create_new_offer_btn:
+                        fillIntent(EditSearchActivity.class);
+//                        this.getIntent().putExtra();
+                        break;
 
-                        return true;
-                    case R.id.new_offer_item:
-                        fillIntent(OfferEditActivity.class);
+                    case R.id.browse_create_edit_offer_btn:
+                        fillIntent(EditSearchActivity.class);
+//                        this.getIntent().putExtra();
+                        break;
 
-                        return true;
-                    case R.id.new_profile_item:
-                        fillIntent(ProfileEditActivity.class);
+                    case R.id.browse_edit_profile_btn:
+                        fillIntent(EditSearchActivity.class);
+//                        this.getIntent().putExtra();
+                        break;
 
-                        return true;
                     default:
-                        return false;
+                        break;
                 }
             }
-        });
-        MenuInflater inf = pop.getMenuInflater();
-        inf.inflate(R.menu.menu_btn_create_pop, pop.getMenu());
-        pop.show();
-    }
+
 
     protected void fillIntent(Class activity) {
-        Intent i;
         i = new Intent(getApplicationContext(), activity);
         startActivity(i);
     }
 
 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        final Intent i;
 
             switch (parent.getSelectedItemPosition()) {
                 case 0:
@@ -129,7 +121,7 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
+        // Do nothing.
     }
 }
 
