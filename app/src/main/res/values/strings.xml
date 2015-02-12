@@ -77,7 +77,7 @@
     <!-- edit texts -->
     <string name="offer_create_title_et">Item</string>
     <string name="best_before_et">Best before</string>
-    <string name="detailed_description_et">Detailed Description"</string>
+    <string name="detailed_description_et">Detailed Description</string>
     <string name="searching_for_hint">Item</string>
     <string name="profile_edit_street_address_et">Street Address</string>
     <string name="profile_edit_street_address_no_et">No.</string>
@@ -99,5 +99,7 @@
     <string name="browse_create_new_offer_btn">New Offer</string>
     <string name="browse_create_edit_offer_btn">Edit Offer</string>
     <string name="browse_create_edit_profile_btn">Profile</string>
+    <string name="choose_category_btn">Choose\nCategory</string>
+    <string name="choose_mhd_btn">Choose\nbest-before\ndate</string>
 
 </resources>
