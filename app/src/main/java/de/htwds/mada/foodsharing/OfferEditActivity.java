@@ -51,7 +51,7 @@ public class OfferEditActivity extends Activity {
     private final Handler handler = new Handler();
 
     private EditText titleInputField;
-    private DatePicker bestBeforeDateInputField;
+    //private DatePicker bestBeforeDateInputField;
     private EditText longDescriptionInputField;
 
     private Button publishOfferButton;
@@ -106,8 +106,7 @@ public class OfferEditActivity extends Activity {
                                 Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
                             }
                         });
-
-                    }
+                   }
                 }
             });
             thread.start();
@@ -126,9 +125,7 @@ public class OfferEditActivity extends Activity {
 
                 //Log.i(LOG,"Title: "+titleInputField.getText().toString().trim());
 
-
-
-                final Handler handler = new Handler();
+               final Handler handler = new Handler();
                 Thread thread=new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -160,15 +157,11 @@ public class OfferEditActivity extends Activity {
                                     Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
                                 }
                             });
-
                         }
                     }
                 });
                 thread.start();
-
-
-
-            }
+           }
         });
     }
 
@@ -214,7 +207,7 @@ public class OfferEditActivity extends Activity {
 
 
     public void showDatePickerDialog(View view) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getFragmentManager(), "datePicker");
+        DialogFragment datePickerFragment = new DatePickerFragment();
+        datePickerFragment.show(getFragmentManager(), "datePicker");
     }
 }

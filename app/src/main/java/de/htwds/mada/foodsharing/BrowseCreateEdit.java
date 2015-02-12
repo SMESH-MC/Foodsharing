@@ -66,7 +66,7 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
                 //switch to pass an intent for distinct search
                 switch (btn.getId()) {
                     case R.id.browse_create_new_offer_btn:
-                        fillIntent(EditSearchActivity.class);
+                        fillIntent(OfferEditActivity.class);
 //                        this.getIntent().putExtra();
                         break;
 
@@ -84,6 +84,7 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
                         break;
                 }
             }
+
 
 
     protected void fillIntent(Class activity) {
