@@ -76,7 +76,7 @@
 
     <!-- edit texts -->
     <string name="offer_create_title_et">Item</string>
-    <string name="best_before_et">Best before</string>
+    <string name="best_before_date_edit">Best before</string>
     <string name="detailed_description_et">Detailed Description</string>
     <string name="searching_for_hint">Item</string>
     <string name="profile_edit_street_address_et">Street Address</string>
