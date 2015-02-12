@@ -79,7 +79,8 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
 
                         return true;
                     case R.id.new_profile_item:
-                        fillIntent(ProfileEditActivity.class);
+                        //fillIntent(ProfileEditActivity.class);
+                        fillIntent(ResultActivity.class);
 
                         return true;
                     default:

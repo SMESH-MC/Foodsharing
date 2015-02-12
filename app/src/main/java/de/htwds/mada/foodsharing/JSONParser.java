@@ -115,7 +115,7 @@ public class JSONParser {
             String errorMessage=e.getLocalizedMessage();
             Log.e(LOG, "Error parsing result string " + json + " " + errorMessage);
             try {
-                jObj.put("success", "false");
+                jObj.put("success", false);
                 jObj.put("message", errorMessage);
             } catch (JSONException ignored) { }
             return jObj;
