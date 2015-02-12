@@ -137,7 +137,7 @@ public class OfferEditActivity extends Activity {
                         currentOffer.setCategory(1); // exchanged "Obst" 2 test app
                         currentOffer.setMhd(2015, 3, 3);
                         //currentOffer.setDateAdded();
-                        currentOffer.setPickupTimes("bla");
+                        currentOffer.setPickupTimes(Constants.BLA_WORD); //uebergabe muss ausgelesen werden von wo?
 
                         if (currentOffer.saveObjectToDatabase())
                         {

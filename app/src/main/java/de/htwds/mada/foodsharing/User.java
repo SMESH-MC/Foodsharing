@@ -33,26 +33,16 @@ public class User {
     //email regexp test
     private Pattern pattern;
     private Matcher matcher;
-    private static final String EMAIL_REGEXP = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                                              + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    /*/Exceptions
-    private static final String NO_NEGATIVE_NUMBER = "Only positive numbers allowed!";
-    private static final String NO_VALID_EMAIL = "No valid email address!";
-    private static final String NO_ARGUMENT = "No argument given!";
-    private static final String NO_VALID_PLZ = "PLZ must be between 00000 and 99999!";
-    private static final String NO_VALID_COUNTRY = "The given country code is too long!";*/
-
-    private static final String currentUserIdKey="de.htwds.mada.foodsharing.currentuserid";
 
     public User(Context context)
     {
-        setUid(PreferenceManager.getDefaultSharedPreferences(context).getInt(currentUserIdKey, -1));
+        setUid(PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.currentUserIdKey, -1));
     }
 
     public User(Context context, int uid)
     {
         setUid(uid);
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(currentUserIdKey, getUid()).apply();
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(Constants.currentUserIdKey, getUid()).apply();
     }
 
     public int getUid() {        return uid;    }
@@ -72,7 +62,7 @@ public class User {
             throw new NullPointerException(Constants.NO_ARGUMENT);
         }
         //test if it is a correct email address
-        pattern = Pattern.compile(EMAIL_REGEXP);
+        pattern = Pattern.compile(Constants.EMAIL_REGEXP);
         matcher = pattern.matcher(email);
         if (matcher.matches()) {
             this.email = email;
@@ -146,7 +136,7 @@ public class User {
             throw new IllegalArgumentException(Constants.NO_VALID_COUNTRY);
         }
         this.country = country.trim();*/
-        this.country = "DE";
+        this.country = Constants.COUNTRY_CODE_STANDARD;
     }
 
     public String getVorname() {        return vorname;    }
@@ -172,28 +162,28 @@ public class User {
 
     public boolean fillObjectFromDatabase()
     {
-        errorMessage="";
+        errorMessage = Constants.EMPTY_STRING;
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("uid", String.valueOf(this.getUid())));
+        nameValuePairs.add(new BasicNameValuePair(Constants.USER_ID_ABK, String.valueOf(this.getUid())));
 
         JSONParser jsonParser = new JSONParser();
         JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_USER, Constants.JSON_GET, nameValuePairs);
 
         if (returnObject.optBoolean(Constants.SUCCESS_WORD))
         {
-            JSONObject userJSONObject=returnObject.optJSONObject("0");
+            JSONObject userJSONObject=returnObject.optJSONObject(Constants.NUMBER_0);
             if (userJSONObject != null)
             {
-                this.setEmail(userJSONObject.optString("email"));
-                this.setVorname(userJSONObject.optString("vorname"));
-                this.setUsername(userJSONObject.optString("username"));
-                this.setNachname(userJSONObject.optString("nachname"));
-                this.setStreet(userJSONObject.optString("strasse"));
-                this.setHouseNumber(userJSONObject.optString("hausnummer"));
-                this.setAdditional(userJSONObject.optString("zusatz"));
-                this.setPlz(userJSONObject.optInt("plz"));
-                this.setCity(userJSONObject.optString("ort"));
-                this.setCountry(userJSONObject.optString("land"));
+                this.setEmail(userJSONObject.optString(Constants.EMAIL_WORD));
+                this.setVorname(userJSONObject.optString(Constants.VORNAME_WORD));
+                this.setUsername(userJSONObject.optString(Constants.USERNAME_WORD));
+                this.setNachname(userJSONObject.optString(Constants.NACHNAME_WORD));
+                this.setStreet(userJSONObject.optString(Constants.STRASSE_WORD));
+                this.setHouseNumber(userJSONObject.optString(Constants.HAUSNUMMER_WORD));
+                this.setAdditional(userJSONObject.optString(Constants.ZUSATZ_WORD));
+                this.setPlz(userJSONObject.optInt(Constants.PLZ_WORD));
+                this.setCity(userJSONObject.optString(Constants.ORT_WORD));
+                this.setCountry(userJSONObject.optString(Constants.LAND_WORD));
             }
             else
             {
@@ -210,19 +200,19 @@ public class User {
 
     public boolean saveObjectToDatabase()
     {
-        errorMessage="";
+        errorMessage=Constants.EMPTY_STRING;
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("email", this.getEmail()));
-        nameValuePairs.add(new BasicNameValuePair("password", this.getPassword().toString()));
-        nameValuePairs.add(new BasicNameValuePair("username", this.getUsername()));
-        nameValuePairs.add(new BasicNameValuePair("vorname", this.getVorname()));
-        nameValuePairs.add(new BasicNameValuePair("nachname", this.getNachname()));
-        nameValuePairs.add(new BasicNameValuePair("strasse", this.getStreet()));
-        nameValuePairs.add(new BasicNameValuePair("hausnummer", this.getHouseNumber()));
-        nameValuePairs.add(new BasicNameValuePair("zusatz", this.getAdditional()));
-        nameValuePairs.add(new BasicNameValuePair("plz", String.valueOf(this.getPlz())));
-        nameValuePairs.add(new BasicNameValuePair("ort", this.getCity()));
-        nameValuePairs.add(new BasicNameValuePair("land", this.getCountry()));
+        nameValuePairs.add(new BasicNameValuePair(Constants.EMAIL_WORD, this.getEmail()));
+        nameValuePairs.add(new BasicNameValuePair(Constants.PASSWORD_WORD, this.getPassword().toString()));
+        nameValuePairs.add(new BasicNameValuePair(Constants.USERNAME_WORD, this.getUsername()));
+        nameValuePairs.add(new BasicNameValuePair(Constants.VORNAME_WORD, this.getVorname()));
+        nameValuePairs.add(new BasicNameValuePair(Constants.NACHNAME_WORD, this.getNachname()));
+        nameValuePairs.add(new BasicNameValuePair(Constants.STRASSE_WORD, this.getStreet()));
+        nameValuePairs.add(new BasicNameValuePair(Constants.HAUSNUMMER_WORD, this.getHouseNumber()));
+        nameValuePairs.add(new BasicNameValuePair(Constants.ZUSATZ_WORD, this.getAdditional()));
+        nameValuePairs.add(new BasicNameValuePair(Constants.PLZ_WORD, String.valueOf(this.getPlz())));
+        nameValuePairs.add(new BasicNameValuePair(Constants.ORT_WORD, this.getCity()));
+        nameValuePairs.add(new BasicNameValuePair(Constants.LAND_WORD, this.getCountry()));
 
         JSONParser jsonParser = new JSONParser();
         JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_CREATE_USER, Constants.JSON_POST, nameValuePairs);

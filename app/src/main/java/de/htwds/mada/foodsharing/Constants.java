@@ -4,8 +4,10 @@ package de.htwds.mada.foodsharing;
  * Created by Katha on 04.02.2015.
  */
 public class Constants {
-    public static final String keyOfferID=Constants.class.getName() + "keyOfferID";
-    public static final String keyUserID=Constants.class.getName() + "keyUserID";
+    public static final String EMPTY_STRING = "";
+    public static final String keyOfferID = Constants.class.getName() + "keyOfferID";
+    public static final String keyUserID = Constants.class.getName() + "keyUserID";
+    public static final String currentUserIdKey = "de.htwds.mada.foodsharing.currentuserid";
 
     //success messages
     public static final String ACCOUNT_UPDATED = "Account updated successfully!";
@@ -28,17 +30,23 @@ public class Constants {
     public static final String QUESTIONMARK = "?";
     public static final String AT_SIGN = "@";
 
-
+    public static final String EMAIL_REGEXP = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     //abkuerzings
+    public static final String ID_ABK = "id";
     public static final String OFFER_ID_ABK = "oid";
+    public static final String USER_ID_ABK = "oid";
     public static final String DESCRIPTION_ABK = "descr";
+    public static final String COUNTRY_CODE_STANDARD = "DE";
 
+    //URIs
     public static final String HTTP_BASE_URL = "http://odin.htw-saarland.de/";
     public static final String URL_CREATE_OFFER = "create_offer.php";
     public static final String URL_GET_OFFER = "get_offer_details.php";
     public static final String URL_CREATE_USER = "create_user.php";
     public static final String URL_GET_USER = "get_user_details.php";
+    public static final String URL_GET_ALL_OFFERS = "get_all_offers.php";
 
     //JSON stuff
     public static final String JSON_POST = "POST";
@@ -53,15 +61,34 @@ public class Constants {
     public static final String SUCCESS_WORD = "success";
     public static final String MESSAGE_WORD = "message";
     public static final String OFFER_WORD = "offer";
+    public static final String OFFERS_WORD = "offers";
     public static final String TITLE_WORD= "title";
     public static final String DATE_WORD = "date";
     public static final String DATA_WORD = "data";
+    public static final String BLA_WORD = "bla";
+    //address words
+    public static final String EMAIL_WORD = "email";
+    public static final String VORNAME_WORD = "vorname";
+    public static final String USERNAME_WORD = "username";
+    public static final String NACHNAME_WORD = "nachname";
+    public static final String STRASSE_WORD = "strasse";
+    public static final String HAUSNUMMER_WORD = "hausnummer";
+    public static final String ZUSATZ_WORD = "zusatz";
+    public static final String PLZ_WORD = "plz";
+    public static final String ORT_WORD = "ort";
+    public static final String LAND_WORD = "land";
+    public static final String PASSWORD_WORD = "password";
 
     //multiple words
     public static final String LOG_SUCCESS = "Success: ";
     public static final String LOG_MESSAGE = ", message: ";
     public static final String CREATE_OFFER = "create offer";
     public static final String EDIT_OFFER =  "Edit offer";
+    public static final String OFFER_ID = "Offer id: ";
+
+    //Numbers
+    public static final String NUMBER_0 = "0";
+    public static final int EXAMPLE_PLZ = 12345;
 
     //Errors
     public static final String HTTP_ERROR = "Error in http connection ";
@@ -70,6 +97,7 @@ public class Constants {
     public static final String OFFER_INFO_RETRIEVING_ERROR = "Could not retrieve offer info!";
     public static final String USER_INFO_RETRIEVING_ERROR = "Could not retrieve user info!";
     public static final String UNKNOWN_ERROR = "Unknown error!";
+
 
 
 }

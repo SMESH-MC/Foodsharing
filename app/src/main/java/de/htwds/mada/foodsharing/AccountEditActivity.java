@@ -99,27 +99,27 @@ public class AccountEditActivity extends Activity {
                 accountUser.setStreet("Winzigstraße");
                 accountUser.setHouseNumber("23");
                 accountUser.setAdditional("Nichts ist wie es scheint.");
-                accountUser.setPlz(23542);
+                accountUser.setPlz(Constants.EXAMPLE_PLZ);
                 accountUser.setCity("Hintertupfingen");
-                accountUser.setCountry("DE");
+                accountUser.setCountry(Constants.COUNTRY_CODE_STANDARD);
 
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-                nameValuePairs.add(new BasicNameValuePair("email", accountUser.getEmail()));
-                nameValuePairs.add(new BasicNameValuePair("password", accountUser.getPassword().toString()));
-                nameValuePairs.add(new BasicNameValuePair("username", accountUser.getUsername()));
-                nameValuePairs.add(new BasicNameValuePair("vorname", accountUser.getVorname()));
-                nameValuePairs.add(new BasicNameValuePair("nachname", accountUser.getNachname()));
-                nameValuePairs.add(new BasicNameValuePair("strasse", accountUser.getStreet()));
-                nameValuePairs.add(new BasicNameValuePair("hausnummer", accountUser.getHouseNumber()));
-                nameValuePairs.add(new BasicNameValuePair("zusatz", accountUser.getAdditional()));
-                nameValuePairs.add(new BasicNameValuePair("plz", String.valueOf(accountUser.getPlz())));
-                nameValuePairs.add(new BasicNameValuePair("ort", accountUser.getCity()));
-                nameValuePairs.add(new BasicNameValuePair("land", accountUser.getCountry()));
+                nameValuePairs.add(new BasicNameValuePair(Constants.EMAIL_WORD, accountUser.getEmail()));
+                nameValuePairs.add(new BasicNameValuePair(Constants.PASSWORD_WORD, accountUser.getPassword().toString()));
+                nameValuePairs.add(new BasicNameValuePair(Constants.USERNAME_WORD, accountUser.getUsername()));
+                nameValuePairs.add(new BasicNameValuePair(Constants.VORNAME_WORD, accountUser.getVorname()));
+                nameValuePairs.add(new BasicNameValuePair(Constants.NACHNAME_WORD, accountUser.getNachname()));
+                nameValuePairs.add(new BasicNameValuePair(Constants.STRASSE_WORD, accountUser.getStreet()));
+                nameValuePairs.add(new BasicNameValuePair(Constants.HAUSNUMMER_WORD, accountUser.getHouseNumber()));
+                nameValuePairs.add(new BasicNameValuePair(Constants.ZUSATZ_WORD, accountUser.getAdditional()));
+                nameValuePairs.add(new BasicNameValuePair(Constants.PLZ_WORD, String.valueOf(accountUser.getPlz())));
+                nameValuePairs.add(new BasicNameValuePair(Constants.ORT_WORD, accountUser.getCity()));
+                nameValuePairs.add(new BasicNameValuePair(Constants.LAND_WORD, accountUser.getCountry()));
 
 
                 JSONParser jsonParser = new JSONParser();
-                JSONObject returnObject = jsonParser.makeHttpRequest("http://odin.htw-saarland.de/create_user.php", "POST", nameValuePairs);
-                if (returnObject.optBoolean("success"))
+                JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_CREATE_USER, Constants.JSON_POST, nameValuePairs);
+                if (returnObject.optBoolean(Constants.SUCCESS_WORD))
                 {
                     handler.post(new Runnable (){
                         @Override
@@ -131,7 +131,7 @@ public class AccountEditActivity extends Activity {
                 }
                 else
                 {
-                    final String errorMessage=returnObject.optString("message", "Unknown error!");
+                    final String errorMessage=returnObject.optString(Constants.MESSAGE_WORD, Constants.UNKNOWN_ERROR);
                     handler.post(new Runnable (){
                         @Override
                         public void run() {

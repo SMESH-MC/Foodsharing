@@ -39,7 +39,7 @@ public class ResultActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Offer offer = (Offer) parent.getItemAtPosition(position);
-                Log.i(LOG, "Offer id: " + offer.getOfferID());
+                Log.i(LOG, Constants.OFFER_ID + offer.getOfferID());
                 Intent intent = new Intent(ResultActivity.this, OfferDisplayActivity.class);
                 intent.putExtra(Constants.keyOfferID, offer.getOfferID());
                 startActivity(intent);
@@ -53,14 +53,14 @@ public class ResultActivity extends Activity {
             public void run() {
 
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-                nameValuePairs.add(new BasicNameValuePair("transaction_id","bla"));
+                nameValuePairs.add(new BasicNameValuePair(Constants.JSON_TRANS_ID,Constants.BLA_WORD));
 
                 JSONParser jsonParser = new JSONParser();
-                JSONObject returnObject = jsonParser.makeHttpRequest("http://odin.htw-saarland.de/get_all_offers.php", "GET", nameValuePairs);
+                JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_ALL_OFFERS, Constants.JSON_GET, nameValuePairs);
 
-                if (returnObject.optBoolean("success"))
+                if (returnObject.optBoolean(Constants.SUCCESS_WORD))
                 {
-                    JSONArray offerJSONArray=returnObject.optJSONArray("offers");
+                    JSONArray offerJSONArray=returnObject.optJSONArray(Constants.OFFERS_WORD);
                     //TODO: if (offerJSONArray == null)
                     JSONObject offerJSONObject;
                     for (int i=0; i<offerJSONArray.length(); i++) {
@@ -79,7 +79,7 @@ public class ResultActivity extends Activity {
                     public void run() {
                         listAdapter.notifyDataSetChanged();
                         resultListView.setAdapter(listAdapter);
-                        Toast.makeText(getBaseContext(), "Fetched offers successfully!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
                     }
                 });
             }

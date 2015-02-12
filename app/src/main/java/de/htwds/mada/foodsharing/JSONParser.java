@@ -26,12 +26,7 @@ public class JSONParser {
 
     static InputStream is = null;
     static JSONObject jObj = new JSONObject();
-    static String json = "";
-
-    private static final String POST = "POST";
-    private static final String GET = "GET";
-    private static final String UTF = "utf-8";
-    private static final String ISO = "iso-8859-1";
+    static String json = Constants.EMPTY_STRING;
 
     public JSONParser() {
     }
