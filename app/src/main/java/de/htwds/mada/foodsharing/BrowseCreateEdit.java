@@ -78,11 +78,6 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
                         fillIntent(OfferEditActivity.class);
 
                         return true;
-                    case R.id.new_profile_item:
-                        //fillIntent(ProfileEditActivity.class);
-                        fillIntent(ResultActivity.class);
-
-                        return true;
                     default:
                         return false;
                 }
@@ -107,7 +102,7 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
                 case 0:
                      break;
                 case 1:
-                    i = new Intent(this, OfferDisplayActivity.class);
+                    i = new Intent(this, ResultActivity.class);
                     startActivity(i);
                     break;
                 case 2:
