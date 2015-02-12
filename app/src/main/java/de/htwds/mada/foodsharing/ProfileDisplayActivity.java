@@ -116,7 +116,6 @@ public class ProfileDisplayActivity extends Activity {
                 break;
 
             default:
-                return;
         }
     }
 

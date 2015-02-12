@@ -26,7 +26,8 @@
             android:paddingLeft="10sp"
             android:paddingRight="10sp"
             android:scaleType="fitCenter"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo"
+            android:contentDescription="Photo of the offering" />
 
         <TextView
             android:id="@+id/textView4"

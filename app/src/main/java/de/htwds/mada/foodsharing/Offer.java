@@ -19,21 +19,18 @@ public class Offer {
     private String shortDescription;
     private String longDescription;
     private File picture;
-    private Calendar mhd;
+
     private Calendar dateAdded;
     private String pickupTimes; //too complex to use date or time types
-
+    private final Calendar mhd = new GregorianCalendar();
 
     //Exceptions
 
     public Offer() {
-        mhd = new GregorianCalendar();
     }
 
     public Offer(JSONObject offerJSONObject)
     {
-        mhd = new GregorianCalendar();
-
         this.setOfferID(offerJSONObject.optInt(Constants.ID_ABK, -1));
         this.setTransactID(offerJSONObject.optInt(Constants.JSON_TRANS_ID, -1));
         //TODO: this.setPicture();
@@ -119,7 +116,7 @@ public class Offer {
 
     public boolean fillObjectFromDatabase() {
         errorMessage = Constants.EMPTY_STRING;
-        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
         nameValuePairs.add(new BasicNameValuePair(Constants.OFFER_ID_ABK, String.valueOf(this.getOfferID())));
 
         JSONParser jsonParser = new JSONParser();
@@ -155,7 +152,7 @@ public class Offer {
     public boolean saveObjectToDatabase()
     {
         errorMessage= Constants.EMPTY_STRING;
-        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
         nameValuePairs.add(new BasicNameValuePair(Constants.JSON_TRANS_ID,String.valueOf(this.getTransactID())));
         nameValuePairs.add(new BasicNameValuePair(Constants.JSON_IMAGE_ID,"4")); //was macht die 4 hier?
         nameValuePairs.add(new BasicNameValuePair(Constants.TITLE_WORD, this.getShortDescription()));

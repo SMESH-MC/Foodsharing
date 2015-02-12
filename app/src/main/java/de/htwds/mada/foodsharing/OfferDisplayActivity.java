@@ -89,4 +89,9 @@ public class OfferDisplayActivity extends Activity {
         Intent i = new Intent(getApplicationContext(), OfferEditActivity.class);
         startActivity(i);
     }
+
+    public void dispatchTakePictureIntent(View view) {
+        Toast.makeText(getBaseContext(), "test", Toast.LENGTH_LONG).show();
+
+    }
 }

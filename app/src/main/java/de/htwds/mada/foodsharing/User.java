@@ -163,7 +163,7 @@ public class User {
     public boolean fillObjectFromDatabase()
     {
         errorMessage = Constants.EMPTY_STRING;
-        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
         nameValuePairs.add(new BasicNameValuePair(Constants.USER_ID_ABK, String.valueOf(this.getUid())));
 
         JSONParser jsonParser = new JSONParser();
@@ -201,9 +201,9 @@ public class User {
     public boolean saveObjectToDatabase()
     {
         errorMessage=Constants.EMPTY_STRING;
-        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
         nameValuePairs.add(new BasicNameValuePair(Constants.EMAIL_WORD, this.getEmail()));
-        nameValuePairs.add(new BasicNameValuePair(Constants.PASSWORD_WORD, this.getPassword().toString()));
+        nameValuePairs.add(new BasicNameValuePair(Constants.PASSWORD_WORD, String.valueOf(this.getPassword())));
         nameValuePairs.add(new BasicNameValuePair(Constants.USERNAME_WORD, this.getUsername()));
         nameValuePairs.add(new BasicNameValuePair(Constants.VORNAME_WORD, this.getVorname()));
         nameValuePairs.add(new BasicNameValuePair(Constants.NACHNAME_WORD, this.getNachname()));

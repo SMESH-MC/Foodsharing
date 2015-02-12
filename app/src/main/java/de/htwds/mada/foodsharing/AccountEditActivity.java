@@ -21,7 +21,7 @@ import java.util.Arrays;
 
 
 public class AccountEditActivity extends Activity {
-    public static final String LOG=AccountEditActivity.class.getName();
+    public static final String LOG = AccountEditActivity.class.getName();
 
     private EditText usernameInputField;
     private EditText passwordInputField;
@@ -70,7 +70,6 @@ public class AccountEditActivity extends Activity {
                 break;
 
             default:
-                return;
         }
     }
 
@@ -103,9 +102,9 @@ public class AccountEditActivity extends Activity {
                 accountUser.setCity("Hintertupfingen");
                 accountUser.setCountry(Constants.COUNTRY_CODE_STANDARD);
 
-                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new BasicNameValuePair(Constants.EMAIL_WORD, accountUser.getEmail()));
-                nameValuePairs.add(new BasicNameValuePair(Constants.PASSWORD_WORD, accountUser.getPassword().toString()));
+                nameValuePairs.add(new BasicNameValuePair(Constants.PASSWORD_WORD, String.valueOf(accountUser.getPassword())));
                 nameValuePairs.add(new BasicNameValuePair(Constants.USERNAME_WORD, accountUser.getUsername()));
                 nameValuePairs.add(new BasicNameValuePair(Constants.VORNAME_WORD, accountUser.getVorname()));
                 nameValuePairs.add(new BasicNameValuePair(Constants.NACHNAME_WORD, accountUser.getNachname()));

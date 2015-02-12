@@ -40,7 +40,8 @@
             android:clickable="true"
             android:nestedScrollingEnabled="false"
             android:longClickable="false"
-            android:onClick="dispatchTakePictureIntent" />
+            android:onClick="dispatchTakePictureIntent"
+            android:contentDescription="Photo of the offering" />
     </LinearLayout>
 
     <LinearLayout

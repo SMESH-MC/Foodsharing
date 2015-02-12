@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 public class SplashActivity extends ActionBarActivity {
 
-    private static int SPLASH_TIME_OUT = 3000;
+    private static final int SPLASH_TIME_OUT = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -95,7 +95,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="logo">logo</string>
     <string name="edit_search_go_btn">Go!</string>
-    <string name="edit_search_et">Searching for...</string>
+    <string name="edit_search_et">Searching for…</string>
     <string name="browse_create_new_offer_btn">New Offer</string>
     <string name="browse_create_edit_offer_btn">Edit Offer</string>
     <string name="browse_create_edit_profile_btn">Profile</string>

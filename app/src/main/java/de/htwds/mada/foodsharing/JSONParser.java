@@ -73,7 +73,7 @@ public class JSONParser {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, Constants.JSON_ISO), 8);
             StringBuilder sb = new StringBuilder();
-            String line = null;
+            String line;
             while ((line = reader.readLine()) != null) {
                 sb.append(line).append(Constants.NEWLINE);
             }

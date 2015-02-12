@@ -136,7 +136,6 @@ public class ProfileEditActivity extends Activity {
                     break;
 
                 default:
-                    return;
             }
         }
 

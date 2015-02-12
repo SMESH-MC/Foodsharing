@@ -25,7 +25,7 @@
             android:layout_gravity="center_vertical"
             android:textColor="@color/abc_primary_text_material_dark"
             android:textStyle="bold"
-            android:textSize="25dp" />
+            android:textSize="25sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -35,7 +35,7 @@
         android:layout_weight="1">
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/username_tv"
             android:layout_weight="1"
@@ -43,7 +43,7 @@
             android:text="@string/username_tv"
             android:textColor="@color/abc_primary_text_material_dark"
             android:textStyle="bold"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -61,7 +61,7 @@
             android:textColor="@color/abc_primary_text_material_dark"
             android:textStyle="bold"
             android:text="@string/passwort_tv"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -80,7 +80,7 @@
             android:textColor="@color/abc_primary_text_material_dark"
             android:textStyle="bold"
             android:background="@color/blue06"
-            android:textSize="15dp" />
+            android:textSize="15sp" />
 
 
         <Button
@@ -93,7 +93,7 @@
             android:textColor="@color/abc_primary_text_material_dark"
             android:textStyle="bold"
             android:background="@color/blue06"
-            android:textSize="15dp" />
+            android:textSize="15sp" />
 
     </LinearLayout>
 

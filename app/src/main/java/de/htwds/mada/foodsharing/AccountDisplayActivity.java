@@ -51,7 +51,6 @@ public class AccountDisplayActivity extends Activity {
                 break;
 
             default:
-                return;
         }
     }
 

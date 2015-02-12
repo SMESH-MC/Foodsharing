@@ -53,7 +53,6 @@ public class TransactionHistoryActivity extends Activity {
                 break;
 
             default:
-                return;
         }
     }
 

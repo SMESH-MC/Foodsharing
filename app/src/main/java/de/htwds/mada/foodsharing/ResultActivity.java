@@ -33,7 +33,7 @@ public class ResultActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        listAdapter = new ArrayAdapter<Offer>(this,android.R.layout.simple_list_item_1);
+        listAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1);
         resultListView = (ListView) findViewById(R.id.activity_result_listview);
         resultListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -52,7 +52,7 @@ public class ResultActivity extends Activity {
             @Override
             public void run() {
 
-                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new BasicNameValuePair(Constants.JSON_TRANS_ID,Constants.BLA_WORD));
 
                 JSONParser jsonParser = new JSONParser();
