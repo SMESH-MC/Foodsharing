@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="[ausgewählte Kat]"
-            android:id="@+id/textView7"
+            android:id="@+id/chosenCategory"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="20" />
@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="[gewähltes Datum]"
-            android:id="@+id/textView8"
+            android:id="@+id/chosenDate"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp" />
 

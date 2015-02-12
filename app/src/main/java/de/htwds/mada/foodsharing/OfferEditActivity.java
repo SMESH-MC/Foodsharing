@@ -1,6 +1,7 @@
 package de.htwds.mada.foodsharing;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -35,6 +36,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 
@@ -52,6 +54,7 @@ public class OfferEditActivity extends Activity {
 
     private EditText titleInputField;
     //private DatePicker bestBeforeDateInputField;
+    private static Calendar bestBeforeDate;
     private EditText longDescriptionInputField;
 
     private Button publishOfferButton;
@@ -207,7 +210,43 @@ public class OfferEditActivity extends Activity {
 
 
     public void showDatePickerDialog(View view) {
-        DialogFragment datePickerFragment = new DatePickerFragment();
-        datePickerFragment.show(getFragmentManager(), "datePicker");
+        DialogFragment df1 = new DatePickerFragment();
+        df1.show(getFragmentManager(), "datePicker");
+       // df1.setTargetFragment();
+
     }
+
+    public void returnDate(String date) {
+        Toast.makeText(this, date, Toast.LENGTH_LONG).show();
+        TextView tv = (TextView)findViewById(R.id.chosenDate);
+        tv.setText(date);
+        Toast.makeText(this, date, Toast.LENGTH_LONG).show();
+    }
+
+  /*  public void setBestBeforeDate (Calendar cal) {
+        bestBeforeDate = cal;
+        Toast.makeText(OfferEditActivity.this, bestBeforeDate.toString(), Toast.LENGTH_LONG).show();
+    }
+
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+
+            /*
+            // set selected date into textview
+            tvDisplayDate.setText(new StringBuilder().append(month + 1)
+                    .append("-").append(day).append("-").append(year)
+                    .append(" "));
+
+            // set selected date into datepicker also
+            bestBeforeDate.set(selectedYear, selectedMonth, selectedDay);
+
+
+        }
+    };*/
+
+
+
 }
