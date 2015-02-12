@@ -55,7 +55,6 @@ public class OfferEditActivity extends Activity {
     private final FragmentManager fragMan = getFragmentManager();
 
     private EditText titleInputField;
-    //private DatePicker bestBeforeDateInputField;
     private static Calendar bestBeforeDate;
     private EditText editDate;
     private EditText longDescriptionInputField;
@@ -75,7 +74,6 @@ public class OfferEditActivity extends Activity {
 
         titleInputField = (EditText) findViewById(R.id.title_tv);
 
-      //  bestBeforeDateInputField = (DatePicker)findViewById(R.id.);
         bestBeforeDate = Calendar.getInstance();
         editDate = (EditText)findViewById(R.id.best_before_date_edit);
         changeDateEditOnClickListener();
@@ -104,7 +102,7 @@ public class OfferEditActivity extends Activity {
                             public void run() {
                                 titleInputField.setText(currentOffer.getShortDescription());
                                 longDescriptionInputField.setText(currentOffer.getLongDescription());
-                                //editDate.setText(bestBeforeDate.toString());
+
                                 publishOfferButton.setEnabled(true);
                                 Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
                             }
@@ -204,7 +202,7 @@ public class OfferEditActivity extends Activity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 bestBeforeDate.set(year, monthOfYear, dayOfMonth);
-                editDate.setText(String.format("%tF", bestBeforeDate));
+                editDate.setText(Constants.BEST_BEFORE + String.format("%tF", bestBeforeDate));
             }
         };
         dateFragment.show(fragMan, "datePicker");
