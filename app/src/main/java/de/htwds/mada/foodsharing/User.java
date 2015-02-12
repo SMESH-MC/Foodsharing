@@ -35,12 +35,12 @@ public class User {
     private Matcher matcher;
     private static final String EMAIL_REGEXP = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                                               + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    //Exceptions
+    /*/Exceptions
     private static final String NO_NEGATIVE_NUMBER = "Only positive numbers allowed!";
     private static final String NO_VALID_EMAIL = "No valid email address!";
     private static final String NO_ARGUMENT = "No argument given!";
     private static final String NO_VALID_PLZ = "PLZ must be between 00000 and 99999!";
-    private static final String NO_VALID_COUNTRY = "The given country code is too long!";
+    private static final String NO_VALID_COUNTRY = "The given country code is too long!";*/
 
     private static final String currentUserIdKey="de.htwds.mada.foodsharing.currentuserid";
 
@@ -61,7 +61,7 @@ public class User {
         if (uid >= 0) {
             this.uid = uid;
         } else {
-            throw new NumberFormatException(NO_NEGATIVE_NUMBER);
+            throw new NumberFormatException(Constants.NO_NEGATIVE_NUMBER);
         }
     }
 
@@ -69,7 +69,7 @@ public class User {
     public void setEmail(String email) {
         //test if not empty
         if (email.trim().isEmpty()) {
-            throw new NullPointerException(NO_ARGUMENT);
+            throw new NullPointerException(Constants.NO_ARGUMENT);
         }
         //test if it is a correct email address
         pattern = Pattern.compile(EMAIL_REGEXP);
@@ -77,7 +77,7 @@ public class User {
         if (matcher.matches()) {
             this.email = email;
         } else {
-            throw new IllegalArgumentException(NO_VALID_EMAIL);
+            throw new IllegalArgumentException(Constants.NO_VALID_EMAIL);
         }
     }
 
@@ -85,7 +85,7 @@ public class User {
     public void setPassword(char[] password) {
         //test if not empty
         if (password[0] == '\0') {
-            throw new NullPointerException(NO_ARGUMENT);
+            throw new NullPointerException(Constants.NO_ARGUMENT);
         }
         this.password = password;
     }
@@ -94,7 +94,7 @@ public class User {
     public void setUsername(String username) {
         //test if not empty
         if (username.trim().isEmpty()) {
-            throw new NullPointerException(NO_ARGUMENT);
+            throw new NullPointerException(Constants.NO_ARGUMENT);
         }
         this.username = username.trim();
     }
@@ -103,7 +103,7 @@ public class User {
     public void setStreet(String street) {
         //test if not empty
         if (street.trim().isEmpty()) {
-            throw new NullPointerException(NO_ARGUMENT);
+            throw new NullPointerException(Constants.NO_ARGUMENT);
         }
         this.street = street.trim();
     }
@@ -112,7 +112,7 @@ public class User {
     public void setHouseNumber(String houseNumber) {
         //test if not empty
         if (houseNumber.trim().isEmpty()) {
-            throw new NullPointerException(NO_ARGUMENT);
+            throw new NullPointerException(Constants.NO_ARGUMENT);
         }
         this.houseNumber = houseNumber.trim();
     }
@@ -125,7 +125,7 @@ public class User {
     public int getPlz() {        return plz;    }
     public void setPlz(int plz) {
         if (plz < 0 ||  plz > 99999) {
-            throw new NumberFormatException(NO_VALID_PLZ);
+            throw new NumberFormatException(Constants.NO_VALID_PLZ);
         }
         this.plz = plz;
     }
@@ -133,7 +133,7 @@ public class User {
     public String getCity() {        return city;    }
     public void setCity(String city) {
         if (city.trim().isEmpty()) {
-            throw new NullPointerException(NO_ARGUMENT);
+            throw new NullPointerException(Constants.NO_ARGUMENT);
         }
         this.city = city.trim();
     }
@@ -141,9 +141,9 @@ public class User {
     public String getCountry() {        return country;    }
     public void setCountry(String country) {
         /*if (country.trim().isEmpty()) {
-            throw new NullPointerException(NO_ARGUMENT);
+            throw new NullPointerException(Constants.NO_ARGUMENT);
         } else if (country.trim().length() > 2) {
-            throw new IllegalArgumentException(NO_VALID_COUNTRY);
+            throw new IllegalArgumentException(Constants.NO_VALID_COUNTRY);
         }
         this.country = country.trim();*/
         this.country = "DE";
@@ -152,7 +152,7 @@ public class User {
     public String getVorname() {        return vorname;    }
     public void setVorname(String vorname) {
         if (vorname.trim().isEmpty()) {
-            throw new NullPointerException(NO_ARGUMENT);
+            throw new NullPointerException(Constants.NO_ARGUMENT);
         }
         this.vorname = vorname.trim();
     }
@@ -160,7 +160,7 @@ public class User {
     public String getNachname() {        return nachname;    }
     public void setNachname(String nachname) {
         if (nachname.trim().isEmpty()) {
-            throw new NullPointerException(NO_ARGUMENT);
+            throw new NullPointerException(Constants.NO_ARGUMENT);
         }
         this.nachname = nachname.trim();
     }
@@ -177,9 +177,9 @@ public class User {
         nameValuePairs.add(new BasicNameValuePair("uid", String.valueOf(this.getUid())));
 
         JSONParser jsonParser = new JSONParser();
-        JSONObject returnObject = jsonParser.makeHttpRequest("http://odin.htw-saarland.de/get_user_details.php", "GET", nameValuePairs);
+        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_USER, Constants.JSON_GET, nameValuePairs);
 
-        if (returnObject.optBoolean("success"))
+        if (returnObject.optBoolean(Constants.SUCCESS_WORD))
         {
             JSONObject userJSONObject=returnObject.optJSONObject("0");
             if (userJSONObject != null)
@@ -197,15 +197,15 @@ public class User {
             }
             else
             {
-               errorMessage="Could not retrieve user info!";
+               errorMessage=Constants.USER_INFO_RETRIEVING_ERROR;
                 return false;
             }
         }
 
-        if (!returnObject.optBoolean("success"))
-            errorMessage=returnObject.optString("message");
+        if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
+            errorMessage=returnObject.optString(Constants.MESSAGE_WORD);
 
-        return returnObject.optBoolean("success");
+        return returnObject.optBoolean(Constants.SUCCESS_WORD);
     }
 
     public boolean saveObjectToDatabase()
@@ -225,12 +225,12 @@ public class User {
         nameValuePairs.add(new BasicNameValuePair("land", this.getCountry()));
 
         JSONParser jsonParser = new JSONParser();
-        JSONObject returnObject = jsonParser.makeHttpRequest("http://odin.htw-saarland.de/create_user.php", "POST", nameValuePairs);
+        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_CREATE_USER, Constants.JSON_POST, nameValuePairs);
 
-        if (!returnObject.optBoolean("success"))
-            errorMessage=returnObject.optString("message", "Unknown error!");
+        if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
+            errorMessage=returnObject.optString(Constants.MESSAGE_WORD, Constants.UNKNOWN_ERROR);
 
-        return returnObject.optBoolean("success");
+        return returnObject.optBoolean(Constants.SUCCESS_WORD);
     }
 
 }

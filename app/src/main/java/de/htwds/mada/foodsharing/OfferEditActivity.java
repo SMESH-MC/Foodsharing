@@ -74,11 +74,11 @@ public class OfferEditActivity extends Activity {
 
         currentOffer=new Offer();
         currentOffer.setOfferID(getIntent().getIntExtra(Constants.keyOfferID, -1));
-        activityTitle.setText("Create offer");
+        activityTitle.setText(Constants.CREATE_OFFER);
 
         if (currentOffer.getOfferID() >= 0) {
             //currentOffer.setOfferID(1);
-            activityTitle.setText("Edit offer");
+            activityTitle.setText(Constants.EDIT_OFFER);
             publishOfferButton.setEnabled(false);
             final Handler handler = new Handler();
             Thread thread = new Thread(new Runnable() {
@@ -91,7 +91,7 @@ public class OfferEditActivity extends Activity {
                                 titleInputField.setText(currentOffer.getShortDescription());
                                 longDescriptionInputField.setText(currentOffer.getLongDescription());
                                 publishOfferButton.setEnabled(true);
-                                Toast.makeText(getBaseContext(), "Offer data fetched successfully!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
                             }
                         });
                     } else {
@@ -144,7 +144,7 @@ public class OfferEditActivity extends Activity {
                             handler.post(new Runnable (){
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getBaseContext(), "Offer edited successfully!", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getBaseContext(), Constants.OFFER_EDITED, Toast.LENGTH_LONG).show();
                                     finish();
                                 }
                             });
@@ -205,7 +205,7 @@ public class OfferEditActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            bitmap = (Bitmap)extras.get("data");
+            bitmap = (Bitmap)extras.get(Constants.DATA_WORD);
             photo.setImageBitmap(bitmap);
         }
     }

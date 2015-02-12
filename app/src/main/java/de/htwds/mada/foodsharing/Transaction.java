@@ -15,15 +15,13 @@ public class Transaction {
     private int offererUID;
     private int ratingID;
 
-    //Exceptions
-    private static final String NOT_NEGATIVE = "No negative numbers!";
 
     public Transaction() {    }
 
     public int getId() {        return id;    }
     public void setId(int id) {
         if (id < 0) {
-            throw new NumberFormatException(NOT_NEGATIVE);
+            throw new NumberFormatException(Constants.NOT_NEGATIVE);
         }
         this.id = id;
     }
@@ -61,7 +59,7 @@ public class Transaction {
     public int getCustomerUID() {        return customerUID;    }
     public void setCustomerUID(int customerUID) {
         if (customerUID < 0) {
-            throw new NumberFormatException(NOT_NEGATIVE);
+            throw new NumberFormatException(Constants.NOT_NEGATIVE);
         }
         this.customerUID = customerUID;
     }
@@ -69,7 +67,7 @@ public class Transaction {
     public int getOffererUID() {        return offererUID;    }
     public void setOffererUID(int offererUID) {
         if (offererUID < 0) {
-            throw new NumberFormatException(NOT_NEGATIVE);
+            throw new NumberFormatException(Constants.NOT_NEGATIVE);
         }
         this.offererUID = offererUID;
     }
@@ -77,7 +75,7 @@ public class Transaction {
     public int getRatingID() {        return ratingID;    }
     public void setRatingID(int ratingID) {
         if (ratingID < 0) {
-            throw new NumberFormatException(NOT_NEGATIVE);
+            throw new NumberFormatException(Constants.NOT_NEGATIVE);
         }
         this.ratingID = ratingID;
     }
