@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,11 +29,23 @@ public class ResultActivity extends Activity {
     private ArrayAdapter<Offer> listAdapter;
     private ListView resultListView;
 
+    //stuff for side menu
+    private String[] mPlanetTitles;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+        //navdrawer
+        mPlanetTitles = getResources().getStringArray(R.array.nav_drawer_items);
+        mDrawerLayout= (DrawerLayout)findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView)findViewById(R.id.list_slidermenu);
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mPlanetTitles));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
+        //listadapter
         listAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1);
         resultListView = (ListView) findViewById(R.id.activity_result_listview);
         resultListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

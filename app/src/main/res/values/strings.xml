@@ -104,4 +104,10 @@
     <string name="offer_edit_choose_pick_date_btn">New Button</string>
     <string name="offer_category_edit">Category</string>
 
+    <!-- NavigationDrawer sidemenu items -->
+    <string-array name="nav_drawer_items">
+        <item>…attributes</item>
+        <item>…categories</item>
+    </string-array>
+
 </resources>
