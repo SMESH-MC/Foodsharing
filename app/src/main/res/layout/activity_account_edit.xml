@@ -41,7 +41,9 @@
             android:layout_weight="1"
             android:hint="Username"
             android:textStyle="bold"
-            android:textColorHint="@color/abc_primary_text_material_dark" />
+            android:textColorHint="@color/abc_primary_text_material_dark"
+            android:singleLine="true"
+            android:textColor="@color/abc_primary_text_material_dark" />
     </LinearLayout>
 
     <LinearLayout
@@ -58,7 +60,9 @@
             android:id="@+id/password_et"
             android:hint="Password"
             android:textStyle="bold"
-            android:textColorHint="@color/abc_primary_text_material_dark" />
+            android:textColorHint="@color/abc_primary_text_material_dark"
+            android:singleLine="true"
+            android:textColor="@color/abc_primary_text_material_dark" />
 
     </LinearLayout>
 

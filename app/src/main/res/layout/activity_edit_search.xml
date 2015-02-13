@@ -24,7 +24,9 @@ android:background="@android:color/holo_green_light">
     android:textStyle="bold"
     android:textAllCaps="false"
     android:textColorHint="@color/abc_primary_text_material_dark"
-    android:textSize="20sp" />
+    android:textSize="20sp"
+    android:singleLine="true"
+        android:textColor="@color/abc_primary_text_material_dark" />
 
 <Button
     style="?android:attr/buttonStyleSmall"
@@ -32,15 +34,14 @@ android:background="@android:color/holo_green_light">
     android:layout_height="wrap_content"
     android:text="@string/edit_search_go_btn"
     android:id="@+id/edit_search_go_btn"
-    android:layout_below="@+id/edit_search_et"
     android:layout_centerHorizontal="true"
-    android:layout_marginTop="34dp"
     android:background="@color/blue06"
     android:textStyle="bold"
     android:textAllCaps="false"
     android:textColor="@color/abc_primary_text_material_dark"
     android:textSize="20sp"
-    android:onClick="editSearch"/>
+    android:onClick="editSearch"
+    android:layout_below="@+id/edit_search_et" />
 
 </RelativeLayout>
 

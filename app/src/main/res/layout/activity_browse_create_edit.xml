@@ -31,11 +31,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/browse_tv"
-            android:id="@+id/textView"
+            android:id="@+id/browse_tv"
             android:textSize="25sp"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/abc_primary_text_material_dark"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:singleLine="false" />
 
         <EditText
             android:layout_width="match_parent"
@@ -44,7 +45,9 @@
             android:hint="@string/searching_for_hint"
             android:textColorHint="@color/abc_primary_text_material_dark"
             android:textStyle="bold"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:singleLine="true"
+            android:textColor="@color/abc_primary_text_material_dark" />
 
 
 
@@ -115,7 +118,8 @@
             android:textStyle="bold"
             android:textColor="@color/abc_primary_text_material_dark"
             android:onClick="createEdit"
-            android:elevation="2dp" />
+            android:elevation="2dp"
+            android:textAllCaps="false"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -127,7 +131,8 @@
             android:textStyle="bold"
             android:textColor="@color/abc_primary_text_material_dark"
             android:onClick="createEdit"
-            android:elevation="2dp" />
+            android:elevation="2dp"
+            android:textAllCaps="false"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -139,7 +144,8 @@
             android:textColor="@color/abc_primary_text_material_dark"
             android:layout_weight="1"
             android:onClick="createEdit"
-            android:elevation="2dp" />
+            android:elevation="2dp"
+            android:textAllCaps="false"/>
     </LinearLayout>
 
 

@@ -101,5 +101,7 @@
     <string name="browse_create_edit_profile_btn">Profile</string>
     <string name="choose_category_btn">Choose\nCategory</string>
     <string name="choose_mhd_btn">Choose\nbest-before\ndate</string>
+    <string name="offer_edit_choose_pick_date_btn">New Button</string>
+    <string name="offer_edit_category_et">Category</string>
 
 </resources>

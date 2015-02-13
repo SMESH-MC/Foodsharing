@@ -18,7 +18,7 @@ public class OfferDisplayActivity extends Activity {
     private static final String LOG=OfferDisplayActivity.class.getName();
     private final Handler handler = new Handler();
     private TextView titleDisplayField;
-    private TextView bestBeforeDateDisplayField;
+    public  static TextView bestBeforeDateDisplayField;
     private TextView longDescriptionDisplayField;
     private Offer currentOffer;
 

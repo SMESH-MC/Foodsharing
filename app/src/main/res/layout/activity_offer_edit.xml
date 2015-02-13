@@ -14,13 +14,14 @@
         android:layout_height="55dp">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/create_offer_tv"
             android:id="@+id/offerEditActivityTitle"
             android:textSize="25sp"
             android:textColor="@color/abc_primary_text_material_dark"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
     <LinearLayout
@@ -52,7 +53,9 @@
             android:id="@+id/title_tv"
             android:hint="@string/offer_create_title_et"
             android:textColorHint="@color/abc_primary_text_material_dark"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/abc_primary_text_material_dark"
+            android:singleLine="true" />
     </LinearLayout>
 
     <LinearLayout
@@ -64,10 +67,12 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText3"
-            android:hint="Category"
+            android:id="@+id/offer_edit_category_et"
+            android:hint="@string/offer_edit_category_et"
             android:textColorHint="@color/abc_primary_text_material_dark"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/abc_primary_text_material_dark"
+            android:singleLine="true" />
     </LinearLayout>
 
     <LinearLayout
@@ -86,7 +91,8 @@
             android:hint="@string/best_before_date_edit"
             android:textColorHint="@color/abc_primary_text_material_dark"
             android:textStyle="bold"
-            />
+            android:textColor="@color/abc_primary_text_material_dark"
+            android:singleLine="true" />
 
     </LinearLayout>
 
@@ -104,7 +110,9 @@
             android:layout_weight="1"
             android:hint="@string/detailed_description_et"
             android:textColorHint="@color/abc_primary_text_material_dark"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/abc_primary_text_material_dark"
+            android:singleLine="true" />
 
     </LinearLayout>
 

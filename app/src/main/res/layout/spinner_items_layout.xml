@@ -7,5 +7,4 @@
     android:background="#FFFFFFFF"
     android:textColor="#FF24ADDE"
     android:textSize="20sp"
-    android:layout_height="80dp"
-    android:singleLine="false" />
+    android:layout_height="90dp" />
