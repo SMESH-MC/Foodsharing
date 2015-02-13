@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories_array">
+        <item>test1</item>
+        <item>test987z</item>
+    </string-array>
+</resources>

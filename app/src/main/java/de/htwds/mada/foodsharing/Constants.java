@@ -90,6 +90,7 @@ public class Constants {
     public static final String EDIT_OFFER =  "Edit offer";
     public static final String OFFER_ID = "Offer id: ";
     public static final String BEST_BEFORE = "Best before ";
+    public static final String CATEGORY = "Category: ";
 
     //Numbers
     public static final String NUMBER_0 = "0";

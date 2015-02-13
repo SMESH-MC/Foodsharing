@@ -1,9 +1,9 @@
 package de.htwds.mada.foodsharing;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Handler;
@@ -17,28 +17,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 
 
 public class OfferEditActivity extends Activity {
@@ -55,8 +38,10 @@ public class OfferEditActivity extends Activity {
     private final FragmentManager fragMan = getFragmentManager();
 
     private EditText titleInputField;
+    private int chosenCategory;
+    private EditText editCategoryField;
     private static Calendar bestBeforeDate;
-    private EditText editDate;
+    private EditText editDateField;
     private EditText longDescriptionInputField;
 
     private Button publishOfferButton;
@@ -74,10 +59,16 @@ public class OfferEditActivity extends Activity {
 
         titleInputField = (EditText) findViewById(R.id.title_tv);
 
+
+        editCategoryField = (EditText)findViewById(R.id.offer_category_edit);
+        changeCategoryEditOnClickListener();
+        changeCategoryEditFocusChangeListener();
+
         bestBeforeDate = Calendar.getInstance();
-        editDate = (EditText)findViewById(R.id.best_before_date_edit);
+        editDateField = (EditText)findViewById(R.id.best_before_date_edit);
         changeDateEditOnClickListener();
         changeDateEditFocusChangeListener();
+        
         longDescriptionInputField = (EditText) findViewById(R.id.detailed_description_tv);
 
         publishOfferButton = (Button) findViewById(R.id.publish_offer_btn);
@@ -90,7 +81,7 @@ public class OfferEditActivity extends Activity {
         if (currentOffer.getOfferID() >= 0) {
             //currentOffer.setOfferID(1);
             activityTitle.setText(Constants.EDIT_OFFER);
-            editDate.setText(bestBeforeDate.toString());
+            //editDateField.setText(bestBeforeDate.toString());
             publishOfferButton.setEnabled(false);
             final Handler handler = new Handler();
             Thread thread = new Thread(new Runnable() {
@@ -102,7 +93,8 @@ public class OfferEditActivity extends Activity {
                             public void run() {
                                 titleInputField.setText(currentOffer.getShortDescription());
                                 longDescriptionInputField.setText(currentOffer.getLongDescription());
-
+                                editCategoryField.setText(currentOffer.getCategory());
+                                editDateField.setText(String.format("%tF", currentOffer.getMhd()));
                                 publishOfferButton.setEnabled(true);
                                 Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
                             }
@@ -176,9 +168,51 @@ public class OfferEditActivity extends Activity {
         });
     }
 
+    private void changeCategoryEditOnClickListener() {
+        editCategoryField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCategoryEditClick();
+            }
+        });
+    }
+
+    private void changeCategoryEditFocusChangeListener() {
+        editCategoryField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    onCategoryEditClick();
+                }
+            }
+        });
+    }
+
+    private void onCategoryEditClick () {
+        DialogFragment categoryFragment = new ChooseCategoryFragment() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                chosenCategory = which; //evtl +1?
+                editCategoryField.setText(/*Constants.CATEGORY+*/"test");
+            }
+        };
+
+
+        /*  DialogFragment dateFragment = new DatePickerFragment() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                bestBeforeDate.set(year, monthOfYear, dayOfMonth);
+                editDateField.setText(Constants.BEST_BEFORE + String.format("%tF", bestBeforeDate));
+            }
+        };
+        dateFragment.show(fragMan, "datePicker");    */
+
+        categoryFragment.show(fragMan,"categoryChooser");
+    }
+
 
     private void changeDateEditOnClickListener() {
-        editDate.setOnClickListener(new View.OnClickListener() {
+        editDateField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onDateEditClick();
@@ -187,7 +221,7 @@ public class OfferEditActivity extends Activity {
     }
 
     private void changeDateEditFocusChangeListener() {
-        editDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        editDateField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
@@ -202,7 +236,7 @@ public class OfferEditActivity extends Activity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 bestBeforeDate.set(year, monthOfYear, dayOfMonth);
-                editDate.setText(Constants.BEST_BEFORE + String.format("%tF", bestBeforeDate));
+                editDateField.setText(Constants.BEST_BEFORE + String.format("%tF", bestBeforeDate));
             }
         };
         dateFragment.show(fragMan, "datePicker");
