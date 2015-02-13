@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +25,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 
-public class OfferEditActivity extends Activity {
+public class OfferEditActivity extends Activity implements ChooseCategoryFragment.OnDialogSelectorListener {
     private static final String LOG=OfferEditActivity.class.getName();
 
     private TextView activityTitle;
@@ -40,6 +41,7 @@ public class OfferEditActivity extends Activity {
     private EditText titleInputField;
     private int chosenCategory;
     private EditText editCategoryField;
+
     private static Calendar bestBeforeDate;
     private EditText editDateField;
     private EditText longDescriptionInputField;
@@ -93,7 +95,7 @@ public class OfferEditActivity extends Activity {
                             public void run() {
                                 titleInputField.setText(currentOffer.getShortDescription());
                                 longDescriptionInputField.setText(currentOffer.getLongDescription());
-                                editCategoryField.setText(currentOffer.getCategory());
+                                editCategoryField.setText((currentOffer.getCategory())); //TODO: get name of category
                                 editDateField.setText(String.format("%tF", currentOffer.getMhd()));
                                 publishOfferButton.setEnabled(true);
                                 Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
@@ -168,6 +170,7 @@ public class OfferEditActivity extends Activity {
         });
     }
 
+
     private void changeCategoryEditOnClickListener() {
         editCategoryField.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,27 +192,23 @@ public class OfferEditActivity extends Activity {
     }
 
     private void onCategoryEditClick () {
-        DialogFragment categoryFragment = new ChooseCategoryFragment() {
+        final ChooseCategoryFragment ccf = ChooseCategoryFragment.newInstance(R.array.categories_array, 1);
+        ccf.show(fragMan, "categoryChooser");
+    /*    DialogFragment categoryFragment = new ChooseCategoryFragment() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 chosenCategory = which; //evtl +1?
-                editCategoryField.setText(/*Constants.CATEGORY+*/"test");
+                editCategoryField.setText(//*Constants.CATEGORY+*//*"test");
+                Toast.makeText(getBaseContext(), which, Toast.LENGTH_LONG).show();
             }
         };
-
-
-        /*  DialogFragment dateFragment = new DatePickerFragment() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                bestBeforeDate.set(year, monthOfYear, dayOfMonth);
-                editDateField.setText(Constants.BEST_BEFORE + String.format("%tF", bestBeforeDate));
-            }
-        };
-        dateFragment.show(fragMan, "datePicker");    */
-
-        categoryFragment.show(fragMan,"categoryChooser");
+       categoryFragment.show(fragMan,"categoryChooser");*/
     }
 
+    @Override
+    public void onSelectedOption(int selectedIndex) {
+        // do something with the newly selected index
+    }
 
     private void changeDateEditOnClickListener() {
         editDateField.setOnClickListener(new View.OnClickListener() {
@@ -282,5 +281,6 @@ public class OfferEditActivity extends Activity {
             photo.setImageBitmap(bitmap);
         }
     }
+
 
 }
