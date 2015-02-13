@@ -1,12 +1,7 @@
 package de.htwds.mada.foodsharing;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,17 +9,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 
 public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSelectedListener {
-    private Spinner spinner;
-    private Intent i;
-    private View browseLayout;
-    private ProgressDialog progress;
-
+    Spinner spinner;
+    Intent i;
 
 
     @Override
@@ -33,7 +23,6 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_create_edit);
         spinner = (android.widget.Spinner) findViewById(R.id.browse_spinner);
-        browseLayout = findViewById(R.id.browse_layout);
 
         // Creates an ArrayAdapter using the string array and customized spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -45,9 +34,6 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
-        // Add new progress bar
-        progress = new ProgressDialog(this);
-
     }
 
 
@@ -79,17 +65,16 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
 
                 //switch to pass an intent for distinct search
                 switch (btn.getId()) {
-                    // Opens OfferEdit to create new offer
                     case R.id.browse_create_new_offer_btn:
                         fillIntent(OfferEditActivity.class);
 //                        this.getIntent().putExtra();
                         break;
-                    // Opens EditSearch to enter offer which will be edited
+
                     case R.id.browse_create_edit_offer_btn:
                         fillIntent(EditSearchActivity.class);
 //                        this.getIntent().putExtra();
                         break;
-                    // Opens EditSearch to enter wanted profile
+
                     case R.id.browse_edit_profile_btn:
                         fillIntent(EditSearchActivity.class);
 //                        this.getIntent().putExtra();
@@ -111,47 +96,24 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
             switch (parent.getSelectedItemPosition()) {
-        /* ToDo show toast if editText is empty -> testInput doesn't work yet*/
-
                 case 0:
                      break;
-
                 case 1:
-//                    tests if user input is empty
-//                    testInput(view);
-
-                    //shows progress bar
-                    showProgress(view);
-                    //fills intent with params
-                    fillIntent(ResultActivity.class);
+                    i = new Intent(this, OfferDisplayActivity.class);
+                    startActivity(i);
                     break;
-
                 case 2:
-//                    testInput(view);
-
-                    //shows progress bar
-                    showProgress(view);
-                    //fills intent with params
-                    fillIntent(ResultActivity.class);
+                    i = new Intent(this, ResultActivity.class);
+                    startActivity(i);
                     break;
-
                 case 3:
-//                    testInput(view);
-
-                    //shows progress bar
-                    showProgress(view);
-                    //fills intent with params
-                    fillIntent(ResultActivity.class);
+                    i = new Intent(this, ResultActivity.class);
+                    startActivity(i);
                     break;
-
                 case 4:
-//                    testInput(view);
-                    //shows progress bar
-                    showProgress(view);
-                    //fills intent with params
-                    fillIntent(ResultActivity.class);
+                    i = new Intent(this, ProfileDisplayActivity.class);
+                    startActivity(i);
                     break;
-
                 default:
                     break;
             }
@@ -163,48 +125,6 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
         // Do nothing.
     }
 
-    private void testInput(View view){
-        EditText et = (EditText) view;
 
-        String input = et.getText().toString().trim();
-        if (input.isEmpty()){
-            Toast.makeText(getBaseContext(), Constants.NO_ARGUMENT, Toast.LENGTH_LONG).show();
-        }
-        showProgress(view);
-        Toast.makeText(getBaseContext(), Constants.WAIT_INFO, Toast.LENGTH_LONG).show();
-
-    }
-    public void showProgress(View view){
-        progress.setMessage("Please wait.");
-        progress.setProgressStyle(ProgressDialog.THEME_HOLO_LIGHT);
-        progress.setIndeterminate(true);
-        progress.setCancelable(true);
-        progress.show();
-
-        final int totalProgressTime = 600;
-
-        final Thread t = new Thread(){
-
-            @Override
-            public void run(){
-
-                int jumpTime = 0;
-                while(jumpTime < totalProgressTime){
-                    try {
-//                        sleep(200);
-                        jumpTime ++;
-                        progress.setProgress(jumpTime);
-                    } catch (Exception e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-
-                }
-
-            }
-        };
-        t.start();
-
-    }
 }
 
