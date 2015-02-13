@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/detailed_description_tv"
             android:layout_weight="1"
-            android:inputType="none"
+            android:inputType="textAutoCorrect"
             android:hint="@string/detailed_description_et"
             android:textColorHint="@color/abc_primary_text_material_dark"
             android:textStyle="bold"
