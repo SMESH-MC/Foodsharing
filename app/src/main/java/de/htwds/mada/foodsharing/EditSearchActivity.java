@@ -1,19 +1,26 @@
 package de.htwds.mada.foodsharing;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class EditSearchActivity extends ActionBarActivity {
+    private ProgressDialog progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_search);
+        progress = new ProgressDialog(this);
+
     }
 
 
@@ -40,9 +47,61 @@ public class EditSearchActivity extends ActionBarActivity {
     }
 
     public void editSearch(View view){
-            Intent i;
-            i = new Intent(getApplicationContext(), ResultActivity.class);
-            startActivity(i);
+        /* ToDo toast if editText is empty -> doesn't work yet*/
+
+//                if(testInput(view)){
+                    showProgress(view);
+
+                    Intent i  = new Intent(getApplicationContext(), ResultActivity.class);
+                    startActivity(i);
+//                };
+
+
+
+    }
+    private boolean testInput(View view){
+        EditText et = (EditText) view;
+
+        String input = et.getText().toString().trim();
+        if (input.isEmpty()){
+            Toast.makeText(getBaseContext(), Constants.NO_ARGUMENT, Toast.LENGTH_LONG).show();
+            return false;
+        }
+        Toast.makeText(getBaseContext(), Constants.WAIT_INFO, Toast.LENGTH_LONG).show();
+        return true;
+    }
+
+    public void showProgress(View view){
+
+        progress.setMessage("Please wait.");
+        progress.setProgressStyle(ProgressDialog.THEME_HOLO_LIGHT);
+        progress.setIndeterminate(true);
+        progress.setCancelable(true);
+        progress.show();
+
+        final int totalProgressTime = 600;
+
+        final Thread t = new Thread(){
+
+            @Override
+            public void run(){
+
+                int jumpTime = 0;
+                while(jumpTime < totalProgressTime){
+                    try {
+//                        sleep(200);
+                        jumpTime ++;
+                        progress.setProgress(jumpTime);
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+                }
+
+            }
+        };
+        t.start();
 
     }
 }

@@ -7,7 +7,8 @@
     android:orientation="vertical"
     android:weightSum="0"
     android:baselineAligned="false"
-    android:background="@android:color/holo_green_light">
+    android:background="@android:color/holo_green_light"
+    android:id="@+id/browse_layout">
 
     <ProgressBar android:id="@+id/browse_create_progress" style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -32,7 +33,7 @@
             android:layout_height="wrap_content"
             android:text="@string/browse_tv"
             android:id="@+id/browse_tv"
-            android:textSize="25sp"
+            android:textSize="30sp"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/abc_primary_text_material_dark"
             android:textStyle="bold"
@@ -47,7 +48,8 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:singleLine="true"
-            android:textColor="@color/abc_primary_text_material_dark" />
+            android:textColor="@color/abc_primary_text_material_dark"
+            />
 
 
 
@@ -88,7 +90,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="51dp"
+        android:layout_height="134dp"
         android:orientation="vertical">
 
         <TextView
