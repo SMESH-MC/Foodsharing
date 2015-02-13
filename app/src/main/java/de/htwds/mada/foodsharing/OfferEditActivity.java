@@ -3,6 +3,7 @@ package de.htwds.mada.foodsharing;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Handler;
@@ -51,10 +52,11 @@ public class OfferEditActivity extends Activity {
     private Bitmap bitmap;
 
     private final Handler handler = new Handler();
+    private final FragmentManager fragMan = getFragmentManager();
 
     private EditText titleInputField;
-    //private DatePicker bestBeforeDateInputField;
     private static Calendar bestBeforeDate;
+    private EditText editDate;
     private EditText longDescriptionInputField;
 
     private Button publishOfferButton;
@@ -71,7 +73,11 @@ public class OfferEditActivity extends Activity {
         photo = (ImageView)findViewById(R.id.offeringPhoto);
 
         titleInputField = (EditText) findViewById(R.id.title_tv);
-      //  bestBeforeDateInputField = (DatePicker)findViewById(R.id.);
+
+        bestBeforeDate = Calendar.getInstance();
+        editDate = (EditText)findViewById(R.id.best_before_date_edit);
+        changeDateEditOnClickListener();
+        changeDateEditFocusChangeListener();
         longDescriptionInputField = (EditText) findViewById(R.id.detailed_description_tv);
 
         publishOfferButton = (Button) findViewById(R.id.publish_offer_btn);
@@ -84,6 +90,7 @@ public class OfferEditActivity extends Activity {
         if (currentOffer.getOfferID() >= 0) {
             //currentOffer.setOfferID(1);
             activityTitle.setText(Constants.EDIT_OFFER);
+            editDate.setText(bestBeforeDate.toString());
             publishOfferButton.setEnabled(false);
             final Handler handler = new Handler();
             Thread thread = new Thread(new Runnable() {
@@ -95,6 +102,7 @@ public class OfferEditActivity extends Activity {
                             public void run() {
                                 titleInputField.setText(currentOffer.getShortDescription());
                                 longDescriptionInputField.setText(currentOffer.getLongDescription());
+
                                 publishOfferButton.setEnabled(true);
                                 Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
                             }
@@ -168,6 +176,39 @@ public class OfferEditActivity extends Activity {
         });
     }
 
+
+    private void changeDateEditOnClickListener() {
+        editDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onDateEditClick();
+            }
+        });
+    }
+
+    private void changeDateEditFocusChangeListener() {
+        editDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    onDateEditClick();
+                }
+            }
+        });
+    }
+
+    private void onDateEditClick() {
+        DialogFragment dateFragment = new DatePickerFragment() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                bestBeforeDate.set(year, monthOfYear, dayOfMonth);
+                editDate.setText(Constants.BEST_BEFORE + String.format("%tF", bestBeforeDate));
+            }
+        };
+        dateFragment.show(fragMan, "datePicker");
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -207,46 +248,5 @@ public class OfferEditActivity extends Activity {
             photo.setImageBitmap(bitmap);
         }
     }
-
-
-    public void showDatePickerDialog(View view) {
-        DialogFragment df1 = new DatePickerFragment();
-        df1.show(getFragmentManager(), "datePicker");
-       // df1.setTargetFragment();
-
-    }
-
-    public void returnDate(String date) {
-        Toast.makeText(this, date, Toast.LENGTH_LONG).show();
-        TextView tv = (TextView)findViewById(R.id.chosenDate);
-        tv.setText(date);
-        Toast.makeText(this, date, Toast.LENGTH_LONG).show();
-    }
-
-  /*  public void setBestBeforeDate (Calendar cal) {
-        bestBeforeDate = cal;
-        Toast.makeText(OfferEditActivity.this, bestBeforeDate.toString(), Toast.LENGTH_LONG).show();
-    }
-
-    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-
-        // when dialog box is closed, below method will be called.
-        public void onDateSet(DatePicker view, int selectedYear,
-                              int selectedMonth, int selectedDay) {
-
-            /*
-            // set selected date into textview
-            tvDisplayDate.setText(new StringBuilder().append(month + 1)
-                    .append("-").append(day).append("-").append(year)
-                    .append(" "));
-
-            // set selected date into datepicker also
-            bestBeforeDate.set(selectedYear, selectedMonth, selectedDay);
-
-
-        }
-    };*/
-
-
 
 }
