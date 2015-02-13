@@ -93,7 +93,7 @@ public class OfferEditActivity extends Activity {
                             public void run() {
                                 titleInputField.setText(currentOffer.getShortDescription());
                                 longDescriptionInputField.setText(currentOffer.getLongDescription());
-                                editCategoryField.setText(currentOffer.getCategory());
+                                editCategoryField.setText((currentOffer.getCategory())); //TODO: get name of category
                                 editDateField.setText(String.format("%tF", currentOffer.getMhd()));
                                 publishOfferButton.setEnabled(true);
                                 Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
@@ -194,20 +194,10 @@ public class OfferEditActivity extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 chosenCategory = which; //evtl +1?
                 editCategoryField.setText(/*Constants.CATEGORY+*/"test");
+                Toast.makeText(getBaseContext(), which, Toast.LENGTH_LONG).show();
             }
         };
-
-
-        /*  DialogFragment dateFragment = new DatePickerFragment() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                bestBeforeDate.set(year, monthOfYear, dayOfMonth);
-                editDateField.setText(Constants.BEST_BEFORE + String.format("%tF", bestBeforeDate));
-            }
-        };
-        dateFragment.show(fragMan, "datePicker");    */
-
-        categoryFragment.show(fragMan,"categoryChooser");
+       categoryFragment.show(fragMan,"categoryChooser");
     }
 
 
