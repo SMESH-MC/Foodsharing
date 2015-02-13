@@ -12,6 +12,7 @@ public class Constants {
     public static final String OFFER_EDITED = "Offer edited successfully!";
     public static final String SIGNED_OUT = "Sign out successful!";
     public static final String USER_FETCHED = "User data fetched successfully!";
+    public static final String WAIT_INFO = "Please wait.";
 
     //missing failures
     public static final String NO_NEGATIVE_NUMBER = "Only positive numbers allowed!";
