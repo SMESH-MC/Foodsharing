@@ -84,7 +84,6 @@ public class OfferEditActivity extends Activity {
         changeDateEditFocusChangeListener();
         
         longDescriptionInputField = (EditText) findViewById(R.id.detailed_description_tv);
-
         publishOfferButton = (Button) findViewById(R.id.publish_offer_btn);
 
         photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "foodSharingPhoto.jpg");
