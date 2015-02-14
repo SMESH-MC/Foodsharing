@@ -3,13 +3,11 @@ package de.htwds.mada.foodsharing;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,14 +16,13 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
 
 
-public class OfferEditActivity extends Activity implements ChooseCategoryFragment.OnDialogSelectorListener {
+public class OfferEditActivity extends Activity  {
     private static final String LOG=OfferEditActivity.class.getName();
 
     private TextView activityTitle;
@@ -39,8 +36,6 @@ public class OfferEditActivity extends Activity implements ChooseCategoryFragmen
     private final FragmentManager fragMan = getFragmentManager();
 
     private EditText titleInputField;
-    private int chosenCategory;
-    private EditText editCategoryField;
 
     private static Calendar bestBeforeDate;
     private EditText editDateField;
@@ -60,11 +55,6 @@ public class OfferEditActivity extends Activity implements ChooseCategoryFragmen
         photo = (ImageView)findViewById(R.id.offeringPhoto);
 
         titleInputField = (EditText) findViewById(R.id.title_tv);
-
-
-        editCategoryField = (EditText)findViewById(R.id.offer_category_edit);
-        changeCategoryEditOnClickListener();
-        changeCategoryEditFocusChangeListener();
 
         bestBeforeDate = Calendar.getInstance();
         editDateField = (EditText)findViewById(R.id.best_before_date_edit);
@@ -95,7 +85,7 @@ public class OfferEditActivity extends Activity implements ChooseCategoryFragmen
                             public void run() {
                                 titleInputField.setText(currentOffer.getShortDescription());
                                 longDescriptionInputField.setText(currentOffer.getLongDescription());
-                                editCategoryField.setText((currentOffer.getCategory())); //TODO: get name of category
+
                                 editDateField.setText(String.format("%tF", currentOffer.getMhd()));
                                 publishOfferButton.setEnabled(true);
                                 Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
@@ -170,45 +160,6 @@ public class OfferEditActivity extends Activity implements ChooseCategoryFragmen
         });
     }
 
-
-    private void changeCategoryEditOnClickListener() {
-        editCategoryField.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onCategoryEditClick();
-            }
-        });
-    }
-
-    private void changeCategoryEditFocusChangeListener() {
-        editCategoryField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    onCategoryEditClick();
-                }
-            }
-        });
-    }
-
-    private void onCategoryEditClick () {
-        final ChooseCategoryFragment ccf = ChooseCategoryFragment.newInstance(R.array.categories_array, 1);
-        ccf.show(fragMan, "categoryChooser");
-    /*    DialogFragment categoryFragment = new ChooseCategoryFragment() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                chosenCategory = which; //evtl +1?
-                editCategoryField.setText(//*Constants.CATEGORY+*//*"test");
-                Toast.makeText(getBaseContext(), which, Toast.LENGTH_LONG).show();
-            }
-        };
-       categoryFragment.show(fragMan,"categoryChooser");*/
-    }
-
-    @Override
-    public void onSelectedOption(int selectedIndex) {
-        // do something with the newly selected index
-    }
 
     private void changeDateEditOnClickListener() {
         editDateField.setOnClickListener(new View.OnClickListener() {
