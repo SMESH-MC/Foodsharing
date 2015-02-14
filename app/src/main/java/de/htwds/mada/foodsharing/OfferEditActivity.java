@@ -111,12 +111,6 @@ public class OfferEditActivity extends Activity  {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-
-                /*
-                Intent i = new Intent(getApplicationContext(), OfferDisplayActivity.class);
-                startActivity(i);
-                */
 
                 //Log.i(LOG,"Title: "+titleInputField.getText().toString().trim());
 
@@ -134,6 +128,7 @@ public class OfferEditActivity extends Activity  {
                         currentOffer.setPickupTimes(Constants.BLA_WORD); //uebergabe muss ausgelesen werden von wo?
 
                         if (currentOffer.saveObjectToDatabase())
+                            //ToDo speichern in die DB
                         {
                             handler.post(new Runnable (){
                                 @Override
@@ -142,6 +137,10 @@ public class OfferEditActivity extends Activity  {
                                     finish();
                                 }
                             });
+                            // Going back to browser
+//                            Intent i = new Intent(getApplicationContext(), BrowseCreateEdit.class);
+//                            startActivity(i);
+
                         }
                         else
                         {

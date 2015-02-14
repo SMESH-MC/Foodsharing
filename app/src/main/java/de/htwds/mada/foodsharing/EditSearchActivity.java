@@ -93,7 +93,6 @@ public class EditSearchActivity extends ActionBarActivity {
                         jumpTime ++;
                         progress.setProgress(jumpTime);
                     } catch (Exception e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
 
