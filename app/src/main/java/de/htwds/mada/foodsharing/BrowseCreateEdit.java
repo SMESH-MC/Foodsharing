@@ -1,12 +1,8 @@
 package de.htwds.mada.foodsharing;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -91,7 +87,7 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
                         break;
                     // Opens EditSearch to enter wanted profile
                     case R.id.browse_edit_profile_btn:
-                        fillIntent(EditSearchActivity.class);
+                        fillIntent(ProfileEditActivity.class);
 //                        this.getIntent().putExtra();
                         break;
 

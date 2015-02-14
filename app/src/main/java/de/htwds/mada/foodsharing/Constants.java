@@ -45,6 +45,12 @@ public class Constants {
     public static final String URL_CREATE_USER = "create_user.php";
     public static final String URL_GET_USER = "get_user_details.php";
     public static final String URL_GET_ALL_OFFERS = "get_all_offers.php";
+    public static final String URL_GET_CATEGORIES = "get_categories.php";
+    public static final String URL_GET_ATTRIBUTES ="get_attributes.php";
+    public static final String URL_GET_ATTRIBUTE_BY_ID = "get_attribute_by_id.php?aid=";
+    public static final String URL_GET_CATEGORY_BY_ID ="get_category_by_id.php?cid=";
+    public static final String URL_GET_ATTRIBUTE_IDS_FROM_OFFER = "get_offer_attributes.php?oid=";
+    public static final String URL_GET_CATEGORY_IDS_FROM_OFFER = "get_offer_categories.php?oid=";
 
     //JSON stuff
     public static final String JSON_POST = "POST";
@@ -83,7 +89,8 @@ public class Constants {
     public static final String CREATE_OFFER = "create offer";
     public static final String EDIT_OFFER =  "Edit offer";
     public static final String OFFER_ID = "Offer id: ";
-    public static final String BEST_BEFORE = "best before";
+    public static final String BEST_BEFORE = "Best before ";
+    public static final String CATEGORY = "Category: ";
 
     //Numbers
     public static final String NUMBER_0 = "0";

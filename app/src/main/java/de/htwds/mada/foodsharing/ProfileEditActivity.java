@@ -10,14 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -179,6 +173,8 @@ public class ProfileEditActivity extends Activity {
                 currentUser.setCountry(countryInputField.getText().toString().trim());
 
                 if (currentUser.saveObjectToDatabase())
+                //ToDo speichern in die DB
+
                 {
                     handler.post(new Runnable (){
                         @Override

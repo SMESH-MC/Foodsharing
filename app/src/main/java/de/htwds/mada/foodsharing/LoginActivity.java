@@ -48,7 +48,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
     /**
      * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
+     * remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
@@ -173,6 +173,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             // form field with an error.
             focusView.requestFocus();
         } else {
+            //ToDo: Try to login with user and password
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
@@ -182,12 +183,12 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
+        //TODO: Testing whether email is present on server
         return email.contains(Constants.AT_SIGN);
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
+        //TODO: Testing for valid password
         return password.length() > 4;
     }
 
@@ -261,7 +262,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
     @Override
     protected void onPlusClientRevokeAccess() {
-        // TODO: Access to the user's G+ account has been revoked.  Per the developer terms, delete
+        // Access to the user's G+ account has been revoked.  Per the developer terms, delete
         // any stored user data here.
     }
 
@@ -351,7 +352,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
+            // TODO: register a new user/ attempt authentication against a network service.
 
             try {
                 // Simulate network access.
