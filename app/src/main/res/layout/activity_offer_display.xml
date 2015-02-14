@@ -34,7 +34,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:id="@+id/offeringPhoto"
+            android:id="@+id/offerPicture"
             android:visibility="visible"
             android:background="@drawable/abc_ic_menu_selectall_mtrl_alpha"
             android:clickable="true"

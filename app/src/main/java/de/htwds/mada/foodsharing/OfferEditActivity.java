@@ -6,6 +6,8 @@ import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.os.Bundle;
@@ -33,6 +35,7 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Timestamp;
@@ -48,8 +51,9 @@ public class OfferEditActivity extends Activity {
 
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    private ImageView photo;
+    private ImageView photoImageView;
     private Bitmap bitmap;
+    private File photoFile;
 
     private final Handler handler = new Handler();
     private final FragmentManager fragMan = getFragmentManager();
@@ -70,7 +74,7 @@ public class OfferEditActivity extends Activity {
 
         activityTitle=(TextView)findViewById(R.id.offerEditActivityTitle);
 
-        photo = (ImageView)findViewById(R.id.offeringPhoto);
+        photoImageView = (ImageView)findViewById(R.id.offerPicture);
 
         titleInputField = (EditText) findViewById(R.id.title_tv);
 
@@ -82,8 +86,11 @@ public class OfferEditActivity extends Activity {
 
         publishOfferButton = (Button) findViewById(R.id.publish_offer_btn);
 
+        photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "foodSharingPhoto.jpg");
+        photoImageView.setImageURI(null);
+        photoImageView.setImageURI(Uri.fromFile(photoFile));
 
-        currentOffer=new Offer();
+        currentOffer=new Offer(OfferEditActivity.this);
         currentOffer.setOfferID(getIntent().getIntExtra(Constants.keyOfferID, -1));
         activityTitle.setText(Constants.CREATE_OFFER);
 
@@ -123,57 +130,8 @@ public class OfferEditActivity extends Activity {
             thread.start();
         }
 
-        publishOfferButton.setOnClickListener(new View.OnClickListener() {
+        //TODO: http://stackoverflow.com/questions/17173435/send-image-file-using-java-http-post-connections
 
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-
-                /*
-                Intent i = new Intent(getApplicationContext(), OfferDisplayActivity.class);
-                startActivity(i);
-                */
-
-                //Log.i(LOG,"Title: "+titleInputField.getText().toString().trim());
-
-               final Handler handler = new Handler();
-                Thread thread=new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        currentOffer.setShortDescription(titleInputField.getText().toString().trim());
-                        currentOffer.setLongDescription(longDescriptionInputField.getText().toString().trim());
-                        currentOffer.setOfferID(6);
-                        currentOffer.setTransactID(1);
-                        currentOffer.setCategory(1); // exchanged "Obst" 2 test app
-                        currentOffer.setMhd(2015, 3, 3);
-                        //currentOffer.setDateAdded();
-                        currentOffer.setPickupTimes(Constants.BLA_WORD); //uebergabe muss ausgelesen werden von wo?
-
-                        if (currentOffer.saveObjectToDatabase())
-                        {
-                            handler.post(new Runnable (){
-                                @Override
-                                public void run() {
-                                    Toast.makeText(getBaseContext(), Constants.OFFER_EDITED, Toast.LENGTH_LONG).show();
-                                    finish();
-                                }
-                            });
-                        }
-                        else
-                        {
-                            final String errorMessage=currentOffer.getErrorMessage();
-                            handler.post(new Runnable (){
-                                @Override
-                                public void run() {
-                                    Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        }
-                    }
-                });
-                thread.start();
-           }
-        });
     }
 
 
@@ -232,21 +190,70 @@ public class OfferEditActivity extends Activity {
     }
 
 
-    public void dispatchTakePictureIntent(View view) {
+    public void makePictureButtonClicked(View view) {
+        //TODO: hasSystemFeature(PackageManager.FEATURE_CAMERA)
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //makes sure any app can handle the Intent:
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            //launch an activity with a desired result
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+            photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "foodSharingPhoto.jpg");
+            if (photoFile != null) {
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
         }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i(LOG, "In onActivityResult");
+        Log.i(LOG, "In onActivityResult " + requestCode + " " + resultCode);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Log.i(LOG, "In onActivityResult: result ok");
             Bundle extras = data.getExtras();
             bitmap = (Bitmap)extras.get(Constants.DATA_WORD);
-            photo.setImageBitmap(bitmap);
+            photoImageView.setImageBitmap(bitmap);
         }
+    }
+
+    public void publishOfferButtonClicked(View view)
+    {
+        final Handler handler = new Handler();
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                currentOffer.setPicture(photoFile);
+                currentOffer.setShortDescription(titleInputField.getText().toString().trim());
+                currentOffer.setLongDescription(longDescriptionInputField.getText().toString().trim());
+                currentOffer.setTransactID(1);
+                currentOffer.setCategory(1); // exchanged "Obst" 2 test app
+                currentOffer.setMhd(2015, 3, 3);
+                currentOffer.setDateAdded();
+                currentOffer.setPickupTimes(Constants.BLA_WORD); //uebergabe muss ausgelesen werden von wo?
+
+                if (currentOffer.saveObjectToDatabase())
+                {
+                    handler.post(new Runnable (){
+                        @Override
+                        public void run() {
+                            Toast.makeText(getBaseContext(), Constants.OFFER_EDITED, Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    });
+                }
+                else
+                {
+                    final String errorMessage=currentOffer.getErrorMessage();
+                    handler.post(new Runnable (){
+                        @Override
+                        public void run() {
+                            Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        });
+        thread.start();
+
     }
 
 }

@@ -40,6 +40,7 @@ public class ResultActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Offer offer = (Offer) parent.getItemAtPosition(position);
                 Log.i(LOG, Constants.OFFER_ID + offer.getOfferID());
+                //TODO: if offer belongs to current user start OfferEditActivity
                 Intent intent = new Intent(ResultActivity.this, OfferDisplayActivity.class);
                 intent.putExtra(Constants.keyOfferID, offer.getOfferID());
                 startActivity(intent);
@@ -66,7 +67,7 @@ public class ResultActivity extends Activity {
                     for (int i=0; i<offerJSONArray.length(); i++) {
                         offerJSONObject = offerJSONArray.optJSONObject(i);
                         if (offerJSONObject != null) {
-                            listAdapter.add(new Offer(offerJSONObject));
+                            listAdapter.add(new Offer(ResultActivity.this, offerJSONObject));
                         }
                         //TODO: else {
                             //errorMessage = "Could not retrieve offer info!";

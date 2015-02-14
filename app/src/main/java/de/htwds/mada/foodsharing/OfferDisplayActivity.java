@@ -2,7 +2,9 @@ package de.htwds.mada.foodsharing;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
@@ -10,12 +12,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
 
 
 public class OfferDisplayActivity extends Activity {
     private static final String LOG=OfferDisplayActivity.class.getName();
+
+    private ImageView photoImageView;
+    private File photoFile;
     private final Handler handler = new Handler();
     private TextView titleDisplayField;
     public  static TextView bestBeforeDateDisplayField;
@@ -31,7 +39,10 @@ public class OfferDisplayActivity extends Activity {
         bestBeforeDateDisplayField = (TextView) findViewById(R.id.offer_display_best_before_tv);
         longDescriptionDisplayField = (TextView) findViewById(R.id.detailed_description_tv);
 
-        currentOffer=new Offer();
+        photoImageView = (ImageView)findViewById(R.id.offerPicture);
+
+
+        currentOffer=new Offer(OfferDisplayActivity.this);
         currentOffer.setOfferID(getIntent().getIntExtra(Constants.keyOfferID, -1));
         Log.i(LOG, Constants.OFFER_ID + currentOffer.getOfferID());
         Thread thread = new Thread(new Runnable() {
@@ -43,6 +54,9 @@ public class OfferDisplayActivity extends Activity {
                         public void run() {
                             titleDisplayField.setText(currentOffer.getShortDescription());
                             longDescriptionDisplayField.setText(currentOffer.getLongDescription());
+                            Log.i(LOG, currentOffer.getPicture().toString());
+                            photoImageView.setImageURI(null);
+                            photoImageView.setImageURI(Uri.fromFile(currentOffer.getPicture()));
                             Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
                         }
                     });

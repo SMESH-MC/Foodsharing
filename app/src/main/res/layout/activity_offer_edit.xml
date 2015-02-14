@@ -29,16 +29,15 @@
         android:layout_width="match_parent"
         android:layout_height="55dp">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/offer_create_add_picture_btn"
-            android:id="@+id/button2"
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="44dp"
+            android:id="@+id/offerPicture"
             android:layout_gravity="center_horizontal"
-            android:textAllCaps="false"
-            android:background="@color/blue06"
-            android:textColor="@color/abc_primary_text_material_dark"
-            android:textStyle="bold" />
+            android:onClick="makePictureButtonClicked"
+            android:clickable="true" />
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -132,13 +131,27 @@
             android:textAllCaps="false"
             android:background="@color/blue06"
             android:textColor="@color/abc_primary_text_material_dark"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:onClick="publishOfferButtonClicked" />
     </LinearLayout>
 
 
 </LinearLayout>
 
 
+    <!--
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/offer_create_add_picture_btn"
+        android:id="@+id/button2"
+        android:layout_gravity="center_horizontal"
+        android:textAllCaps="false"
+        android:background="@color/blue06"
+        android:textColor="@color/abc_primary_text_material_dark"
+        android:textStyle="bold"
+        android:onClick="makePictureButtonClicked" />
+        -->
 
     <!--
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

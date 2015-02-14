@@ -132,7 +132,7 @@ public class ProfileEditActivity extends Activity {
                     break;
                 case R.id.profile_edit_save_btn:
                     //fillIntent(ProfileDisplayActivity.class);
-                    updateAccount();
+                    updateProfile();
                     break;
 
                 default:
@@ -145,7 +145,7 @@ public class ProfileEditActivity extends Activity {
         startActivity(i);
     }
 
-    private void updateAccount()
+    private void updateProfile()
     {
         final EditText firstNameInputField = (EditText) findViewById(R.id.profile_edit_first_name_et);
         final EditText lastNameInputField = (EditText) findViewById(R.id.profile_edit_last_name_et);

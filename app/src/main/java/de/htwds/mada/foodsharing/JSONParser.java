@@ -33,23 +33,22 @@ public class JSONParser {
 
     public JSONObject makeHttpRequest(String url, String method, List<NameValuePair> params) {
         try {
+            DefaultHttpClient httpClient = new DefaultHttpClient();
             if (method.equals(Constants.JSON_POST)) {
-                DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(url);
                 httpPost.setEntity(new UrlEncodedFormEntity(params));
 
                 HttpResponse httpResponse = httpClient.execute(httpPost);
-                HttpEntity httpEntity = httpResponse.getEntity();
-                is = httpEntity.getContent();
+                HttpEntity httpResponseEntity = httpResponse.getEntity();
+                is = httpResponseEntity.getContent();
             } else if (method.equals(Constants.JSON_GET)) {
-                DefaultHttpClient httpClient = new DefaultHttpClient();
                 String paramString = URLEncodedUtils.format(params, Constants.JSON_UTF);
                 url += Constants.QUESTIONMARK + paramString;
                 HttpGet httpGet = new HttpGet(url);
 
                 HttpResponse httpResponse = httpClient.execute(httpGet);
-                HttpEntity httpEntity = httpResponse.getEntity();
-                is = httpEntity.getContent();
+                HttpEntity httpResponseEntity = httpResponse.getEntity();
+                is = httpResponseEntity.getContent();
             }
         } catch (Exception e) {
             String errorMessage=e.getLocalizedMessage();
@@ -60,15 +59,71 @@ public class JSONParser {
             } catch (JSONException ignored) { }
             return jObj;
         }
-        /*
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, Constants.JSON_ISO), 8);
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append(Constants.NEWLINE);
+            }
+            is.close();
+            json = sb.toString();
+        } catch (Exception e) {
+            String errorMessage=e.getLocalizedMessage();
+            Log.e(LOG, Constants.CONVERTING_ERROR + errorMessage);
+            try {
+                jObj.put(Constants.SUCCESS_WORD, false);
+                jObj.put(Constants.MESSAGE_WORD, errorMessage);
+            } catch (JSONException ignored) { }
+            return jObj;
         }
-        */
+
+        try{
+            jObj = new JSONObject(json);
+            Log.i(LOG,Constants.LOG_SUCCESS+jObj.optInt(Constants.SUCCESS_WORD, -1)+
+                    Constants.LOG_MESSAGE+jObj.optString(Constants.MESSAGE_WORD) + Constants.SPACE + json);
+            if (jObj.getInt(Constants.SUCCESS_WORD) == 1) {
+                jObj.put(Constants.SUCCESS_WORD, true);
+            }
+            else
+            {
+                String errorMessage=jObj.getString(Constants.MESSAGE_WORD);
+                jObj.put(Constants.SUCCESS_WORD, false);
+                jObj.put(Constants.MESSAGE_WORD, errorMessage);
+            }
+        } catch (JSONException e) {
+            String errorMessage=e.getLocalizedMessage();
+            Log.e(LOG, Constants.STRING_PARSING_ERROR + json + Constants.SPACE + errorMessage);
+            try {
+                jObj.put(Constants.SUCCESS_WORD, false);
+                jObj.put(Constants.MESSAGE_WORD, errorMessage);
+            } catch (JSONException ignored) { }
+            return jObj;
+        }
+
+        return jObj;
+    }
+
+
+    public JSONObject makeMultipartHttpRequest(String url,  HttpEntity httpRequestEntity) {
+        try {
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.setEntity(httpRequestEntity);
+
+            HttpResponse httpResponse = httpClient.execute(httpPost);
+            HttpEntity httpResponseEntity=httpResponse.getEntity();
+            is = httpResponseEntity.getContent();
+        } catch (Exception e) {
+            String errorMessage=e.getLocalizedMessage();
+            Log.e(LOG, Constants.HTTP_ERROR + errorMessage);
+            try {
+                jObj.put(Constants.SUCCESS_WORD, false);
+                jObj.put(Constants.MESSAGE_WORD, errorMessage);
+            } catch (JSONException ignored) { }
+            return jObj;
+        }
 
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, Constants.JSON_ISO), 8);
