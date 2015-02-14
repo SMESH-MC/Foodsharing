@@ -3,6 +3,7 @@ package de.htwds.mada.foodsharing;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.app.ListFragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +43,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class OfferEditActivity extends Activity {
@@ -56,14 +59,22 @@ public class OfferEditActivity extends Activity {
 
     private final Handler handler = new Handler();
     private final FragmentManager fragMan = getFragmentManager();
-
+    /* fields */
+    //title field
     private EditText titleInputField;
-
+    //category field
+    private List catList;
+    private String chosenItem;
+    private EditText editCategoryField;
+    //mhd field
     private static Calendar bestBeforeDate;
     private EditText editDateField;
+    //description field
     private EditText longDescriptionInputField;
-
+    //finish button
     private Button publishOfferButton;
+
+
 
     private Offer currentOffer;
 
@@ -136,6 +147,16 @@ public class OfferEditActivity extends Activity {
     }
 
 
+    private void changeCategoryEditOnClickListener() {
+        editCategoryField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View w) {
+                onCategorieEditClick();
+            }
+        });
+    }
+
+
     private void changeDateEditOnClickListener() {
         editDateField.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,6 +166,17 @@ public class OfferEditActivity extends Activity {
         });
     }
 
+    private void changeCategoryEditFocusChangeListener() {
+        editCategoryField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    onCategorieEditClick();
+                }
+            }
+        });
+
+    }
     private void changeDateEditFocusChangeListener() {
         editDateField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -154,6 +186,21 @@ public class OfferEditActivity extends Activity {
                 }
             }
         });
+    }
+
+    private void onCategorieEditClick() {
+        ListFragment lf = new CategoryFragment() {
+
+            @Override
+            public void onListItemClick(ListView l, View v, int position, long id) {
+                //String chosenItem = (String)l.getItemAtPosition(position);
+                chosenItem = (String)getListAdapter().getItem(position);
+                //chosenItem = String.valueOf(getListView().getCheckedItemCount());
+                Toast.makeText(getActivity(), chosenItem + Constants.SPACE + Constants.SELECTED_WORD, Toast.LENGTH_SHORT).show();
+                editCategoryField.setText(Constants.CATEGORY + chosenItem);
+            }
+        };
+        //lf.getListAdapter();
     }
 
     private void onDateEditClick() {
@@ -166,8 +213,6 @@ public class OfferEditActivity extends Activity {
         };
         dateFragment.show(fragMan, "datePicker");
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

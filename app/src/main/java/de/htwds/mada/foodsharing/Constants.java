@@ -70,6 +70,7 @@ public class Constants {
     public static final String DATE_WORD = "date";
     public static final String DATA_WORD = "data";
     public static final String BLA_WORD = "bla";
+    public static final String SELECTED_WORD = "selected";
     //address words
     public static final String EMAIL_WORD = "email";
     public static final String VORNAME_WORD = "vorname";
