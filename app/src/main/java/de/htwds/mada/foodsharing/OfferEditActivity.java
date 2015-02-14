@@ -23,7 +23,7 @@ import java.util.Calendar;
 
 
 public class OfferEditActivity extends Activity  {
-    private static final String LOG=OfferEditActivity.class.getName();
+    private static final String LOG = OfferEditActivity.class.getName();
 
     private TextView activityTitle;
 
