@@ -29,6 +29,7 @@ public class BrowserDialogFragment extends DialogFragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Intent intent = new Intent(getActivity(), ProfileEditActivity.class);
+                            intent.putExtra("newProfile", true);
                             startActivityForResult(intent, 0);
                         }
                     })

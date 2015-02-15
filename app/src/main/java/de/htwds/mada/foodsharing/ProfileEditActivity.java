@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,7 +41,7 @@ public class ProfileEditActivity extends Activity {
         setContentView(R.layout.activity_profile_edit);
 
         profileEditSaveButton=(Button)findViewById(R.id.profile_edit_save_btn);
-        profileEditSaveButton.setEnabled(false);
+        //profileEditSaveButton.setEnabled(false);
 
         emailInputField=(EditText) findViewById(R.id.profile_edit_email_et);
         passwordInputField=(EditText) findViewById(R.id.profileEditPassword);
@@ -56,46 +57,51 @@ public class ProfileEditActivity extends Activity {
 
 
 
-        currentUser=new User(this);
-        final Handler handler = new Handler();
-        Thread thread=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (currentUser.fillObjectFromDatabase())
-                {
-                    handler.post(new Runnable (){
-                        @Override
-                        public void run() {
-                            emailInputField.setText(currentUser.getEmail());
-                            usernameInputField.setText(currentUser.getUsername());
-                            firstNameInputField.setText(currentUser.getVorname());
-                            lastNameInputField.setText(currentUser.getNachname());
-                            streetInputField.setText(currentUser.getStreet());
-                            houseNumberInputField.setText(currentUser.getHouseNumber());
-                            zipcodeInputField.setText(String.valueOf(currentUser.getPlz()));
-                            cityInputField.setText(currentUser.getCity());
-                            countryInputField.setText(currentUser.getCountry());
-                            profileEditSaveButton.setEnabled(true);
-                            Toast.makeText(getBaseContext(), Constants.USER_FETCHED, Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-                else
-                {
-                    Log.e(LOG, currentUser.getErrorMessage());
-                    final String errorMessage=currentUser.getErrorMessage();
+        Intent intent=getIntent();
+        final boolean createNewProfile=intent.getBooleanExtra("newProfile", false);
+        if (createNewProfile)
+        {
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putInt(Constants.currentUserIdKey, -1).apply();
+        }
+        currentUser = new User(this);
+        if (!createNewProfile) {
+            final Handler handler = new Handler();
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if (currentUser.fillObjectFromDatabase()) {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                emailInputField.setText(currentUser.getEmail());
+                                usernameInputField.setText(currentUser.getUsername());
+                                firstNameInputField.setText(currentUser.getVorname());
+                                lastNameInputField.setText(currentUser.getNachname());
+                                streetInputField.setText(currentUser.getStreet());
+                                houseNumberInputField.setText(currentUser.getHouseNumber());
+                                zipcodeInputField.setText(String.valueOf(currentUser.getPlz()));
+                                cityInputField.setText(currentUser.getCity());
+                                countryInputField.setText(currentUser.getCountry());
+                                //profileEditSaveButton.setEnabled(true);
+                                Toast.makeText(getBaseContext(), Constants.USER_FETCHED, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    } else {
+                        Log.e(LOG, currentUser.getErrorMessage());
+                        final String errorMessage = currentUser.getErrorMessage();
 
-                    handler.post(new Runnable (){
-                        @Override
-                        public void run() {
-                            Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
-                        }
-                    });
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                            }
+                        });
 
+                    }
                 }
-            }
-        });
-        thread.start();
+            });
+            thread.start();
+        }
 
     }
 
@@ -160,9 +166,21 @@ public class ProfileEditActivity extends Activity {
                 currentUser.setStreet(streetInputField.getText().toString().trim());
                 currentUser.setHouseNumber(houseNumberInputField.getText().toString().trim());
                 currentUser.setAdditional("Nichts ist wie es scheint.");
-                currentUser.setPlz(Integer.parseInt(zipcodeInputField.getText().toString().trim()));
                 currentUser.setCity(cityInputField.getText().toString().trim());
                 currentUser.setCountry(countryInputField.getText().toString().trim());
+                int zipCode=Integer.parseInt(zipcodeInputField.getText().toString().trim());
+                try {
+                    currentUser.setPlz(zipCode);
+                    }
+                catch (Exception ex) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getBaseContext(), Constants.NO_VALID_PLZ, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    return;
+                }
 
                 if (currentUser.saveObjectToDatabase())
                 {

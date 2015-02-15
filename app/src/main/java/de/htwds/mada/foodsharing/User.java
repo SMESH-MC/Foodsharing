@@ -53,11 +53,14 @@ public class User {
     public int getUid() {        return uid;    }
     public void setUid(int uid) {
         //test if positive
+        /*
         if (uid >= 0) {
             this.uid = uid;
         } else {
             throw new NumberFormatException(Constants.NO_NEGATIVE_NUMBER);
         }
+        */
+        this.uid = uid;
     }
 
     public String getEmail() {        return email;    }
@@ -79,7 +82,7 @@ public class User {
     public char[] getPassword() {        return password;    }
     public void setPassword(char[] password) {
         //test if not empty
-        if (password[0] == '\0') {
+        if (password.length == 0 || password[0] == 0) {
             throw new NullPointerException(Constants.NO_ARGUMENT);
         }
         this.password = password;

@@ -125,7 +125,6 @@
                 <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="textPostalAddress"
                     android:ems="10"
                     android:id="@+id/profile_edit_zipcode_et"
                     android:hint="@string/profile_edit_zipcode_et"
@@ -134,7 +133,7 @@
                     android:textStyle="bold"
                     android:singleLine="true"
                     android:textColor="@color/abc_primary_text_material_dark"
-                    android:text="Zip" />
+                    android:inputType="number" />
 
             </TableRow>
 
