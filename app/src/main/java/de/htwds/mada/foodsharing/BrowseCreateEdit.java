@@ -114,6 +114,11 @@ public class BrowseCreateEdit extends Activity { // implements AdapterView.OnIte
 //                        this.getIntent().putExtra();
                         break;
                     case R.id.browse_exit_btn:
+
+                        SharedPreferences pref = getApplicationContext().getSharedPreferences("user-id", 0); // 0 - for private mode
+                        Editor editor = pref.edit();
+                        editor.clear();
+                        editor.commit();
                         moveTaskToBack(true);
 //                        this.getIntent().putExtra();
                         break;

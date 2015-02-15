@@ -191,8 +191,15 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             int userID = returnObject.optInt(USER_ID_ABK)
 
             if(userID > 0){
-                //save ID in SharedPrefs
-                //startActivity
+
+                SharedPreferences sp = getSharedPreferences("user_id", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putInt("user_id", userID);
+                editor.commit();
+
+                Intent intent = new Intent(this, BrowseCreateEdit.class);
+
+
             } else {
                 //Fehlermeldung
             }
