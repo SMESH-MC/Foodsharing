@@ -12,8 +12,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +29,10 @@ import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,8 +149,8 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String email = mEmailView.getText().toString().trim();
+        String password = mPasswordView.getText().toString().trim();
 
         boolean cancel = false;
         View focusView = null;
@@ -179,27 +185,42 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             // form field with an error.
             focusView.requestFocus();
         } else {
-            //ToDo: UserObject erzeugen mit Passwort und Mail Adresse und an DB Übergeben
+            final String emailString=email;
+            final String passwordString=password;
+            final Handler handler = new Handler();
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+                    nameValuePairs.add(new BasicNameValuePair(Constants.EMAIL_WORD, emailString));
+                    nameValuePairs.add(new BasicNameValuePair(Constants.PASSWORD_WORD, passwordString));
 
-            ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
-            nameValuePairs.add(new BasicNameValuePair(Constants.EMAIL_WORD, email));
-            nameValuePairs.add(new BasicNameValuePair(Constants.PASSWORD_WORD));
+                    JSONParser jsonParser = new JSONParser();
+                    //JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_OFFER, Constants.URL_GET_USERID_WITH_EMAIL_AND_PASSWORD, nameValuePairs);
+                    JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + "get_user_with_email_and_password.php", Constants.JSON_GET, nameValuePairs);
+                    final int userID = returnObject.optInt(Constants.USER_ID_ABK);
 
-            JSONParser jsonParser = new JSONParser();
-            JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_OFFER, Constants.URL_GET_USERID_WITH_EMAIL_AND_PASSWORD, nameValuePairs);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.i(LOG, "User ID " + userID);
 
-            int userID = returnObject.optInt(USER_ID_ABK)
+                            if(userID > 0){
+                                User user=new User(LoginActivity.this, userID);
+                                Intent i = new Intent(getApplicationContext(), BrowseCreateEdit.class);
+                                startActivity(i);
+                            }
+                        }
+                    });
 
-            if(userID > 0){
-                //save ID in SharedPrefs
-                //startActivity
-            } else {
-                //Fehlermeldung
-            }
+                }
+            });
+            thread.start();
 
 
 
 
+            /*
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
@@ -210,6 +231,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             //oder durch eigene ersetzen
 //            isEmailValid(String email);
 //            isPasswordValid(String password);
+*/
         }
     }
 
