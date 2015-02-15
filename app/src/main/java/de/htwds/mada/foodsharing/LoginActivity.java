@@ -203,7 +203,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.i(LOG, "User ID " + userID);
+                            Log.i(LOG, "User ID  " + userID);
 
                             if(userID > 0){
                                 User user=new User(LoginActivity.this, userID);
