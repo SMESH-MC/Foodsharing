@@ -33,9 +33,9 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
         //spinner = (android.widget.Spinner) findViewById(R.id.browse_spinner);
         browseLayout = findViewById(R.id.browse_layout);
 
-        ArrayAdapter<CharSequence> adapter;
+        /*ArrayAdapter<CharSequence> adapter;
 
-        /*
+
         if (Locale.getDefault().getDisplayLanguage().equals("Deutsch")) {
             // Creates an ArrayAdapter using the string array and customized spinner layout
             // German language
@@ -88,6 +88,11 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
 
                 //switch to pass an intent for distinct search
                 switch (btn.getId()) {
+                    //opens offering browser
+                    case R.id.browse_browse_btn:
+                        fillIntent(ResultActivity.class);
+//                        this.getIntent().putExtra();
+                        break;
                     // Opens OfferEdit to create new offer
                     case R.id.browse_create_new_offer_btn:
                         fillIntent(OfferEditActivity.class);
@@ -103,7 +108,15 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
                         fillIntent(ProfileEditActivity.class);
 //                        this.getIntent().putExtra();
                         break;
-
+                    //
+                    case R.id.browse_history_btn:
+                        fillIntent(TransactionHistoryActivity.class);
+//                        this.getIntent().putExtra();
+                        break;
+                    case R.id.browse_exit_btn:
+                        moveTaskToBack(true);
+//                        this.getIntent().putExtra();
+                        break;
                     default:
                         break;
                 }
