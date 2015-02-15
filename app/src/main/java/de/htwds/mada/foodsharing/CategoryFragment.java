@@ -1,14 +1,16 @@
 package de.htwds.mada.foodsharing;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.app.ListFragment;
+import android.widget.Toast;
 
-public class CategoryFragment extends ListFragment {
+public class CategoryFragment extends ListFragment  {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

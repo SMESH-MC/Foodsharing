@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -63,7 +65,9 @@ public class OfferEditActivity extends Activity {
     //title field
     private EditText titleInputField;
     //category field
-    private List catList;
+    private ListFragment catList;
+    private ListView catListView;
+    private ArrayAdapter<String> mAdapter;
     private String chosenItem;
     private EditText editCategoryField;
     //mhd field
@@ -88,6 +92,11 @@ public class OfferEditActivity extends Activity {
         photoImageView = (ImageView)findViewById(R.id.offerPicture);
 
         titleInputField = (EditText) findViewById(R.id.title_tv);
+
+
+        editCategoryField = (EditText)findViewById(R.id.offer_category_edit);
+        changeCategoryEditFocusChangeListener();
+        changeCategoryEditOnClickListener();
 
         bestBeforeDate = Calendar.getInstance();
         editDateField = (EditText)findViewById(R.id.best_before_date_edit);
@@ -189,8 +198,7 @@ public class OfferEditActivity extends Activity {
     }
 
     private void onCategorieEditClick() {
-        ListFragment lf = new CategoryFragment() {
-
+        catList = new CategoryFragment() {
             @Override
             public void onListItemClick(ListView l, View v, int position, long id) {
                 //String chosenItem = (String)l.getItemAtPosition(position);
@@ -198,10 +206,17 @@ public class OfferEditActivity extends Activity {
                 //chosenItem = String.valueOf(getListView().getCheckedItemCount());
                 Toast.makeText(getActivity(), chosenItem + Constants.SPACE + Constants.SELECTED_WORD, Toast.LENGTH_SHORT).show();
                 editCategoryField.setText(Constants.CATEGORY + chosenItem);
+                Toast.makeText(getActivity(), "wie komm ich lohin...", Toast.LENGTH_LONG).show();
             }
+
         };
-        //lf.getListAdapter();
+        //catListView.setOnItemClickListener(catList);
+        catList.setListAdapter(mAdapter);
+        getFragmentManager().beginTransaction().add(android.R.layout.simple_list_item_1, catList).commit();
+        //getFragmentManager().beginTransaction().add(catList, "catPicker").commit();
+
     }
+
 
     private void onDateEditClick() {
         DialogFragment dateFragment = new DatePickerFragment() {
@@ -301,5 +316,6 @@ public class OfferEditActivity extends Activity {
         thread.start();
 
     }
+
 
 }
