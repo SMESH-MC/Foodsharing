@@ -31,6 +31,8 @@ import com.google.android.gms.common.SignInButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.htwds.mada.foodsharing.dummy.BrowserDialogFragment;
+
 
 /**
  * A login screen that offers login via email/password and via Google+ sign in.
@@ -42,6 +44,7 @@ import java.util.List;
  */
 public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor> {
     public static final String LOG=LoginActivity.class.getName();
+
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -146,9 +149,16 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         boolean cancel = false;
         View focusView = null;
 
-
+        if (TextUtils.isEmpty(email)&& TextUtils.isEmpty(password)){
+            // Asking for registration in our database
+            android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+            // Create and show the dialog.
+//            Intent iA = new Intent(getApplicationContext(),AccountEditActivity.class);
+            BrowserDialogFragment dialogFragment = new BrowserDialogFragment ();
+            dialogFragment.show(ft, "dialog");
+        }
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        else if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -165,20 +175,26 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             cancel = true;
         }
 
+
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
         } else {
-            //ToDo: Try to login with user and password
-
-            Intent i = new Intent(this, AccountEditActivity.class);
-            startActivity(i);
+            //ToDo: Try to login with user and password -> Server prüft User Daten z.B. über Z.210
+            //ToDo: isEmailValid und isPasswordValid über Serverabfrage implementieren
+//            Intent i = new Intent(this, AccountEditActivity.class);
+//            startActivity(i);
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+
+            //ToDo: methoden ab Zeile 190 implementieren, und hier wieder reinnehmen
+            //oder durch eigene ersetzen
+//            isEmailValid(String email);
+//            isPasswordValid(String password);
         }
     }
 
@@ -394,14 +410,17 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         }
     }
 
-    // added for test login without user data
+    // added for dummy login without user data
     public void signInSuccess(){
 
         User currentUser=new User(this,4);
         Intent i = new Intent(getApplicationContext(), BrowseCreateEdit.class);
         startActivity(i);
     }
+
+
 }
+
 
 
 

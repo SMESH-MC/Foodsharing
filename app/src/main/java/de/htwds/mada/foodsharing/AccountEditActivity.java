@@ -2,9 +2,8 @@ package de.htwds.mada.foodsharing;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,7 +65,7 @@ public class AccountEditActivity extends Activity {
                 //fillIntent(AccountDisplayActivity.class);
                 break;
             case R.id.account_edit_cancel_btn:
-                fillIntent(BrowseCreateEdit.class);
+                fillIntent(LoginActivity.class);
                 break;
 
             default:
