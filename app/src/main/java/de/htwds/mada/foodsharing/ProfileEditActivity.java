@@ -166,6 +166,7 @@ public class ProfileEditActivity extends Activity {
                 currentUser.setStreet(streetInputField.getText().toString().trim());
                 currentUser.setHouseNumber(houseNumberInputField.getText().toString().trim());
                 currentUser.setAdditional("Nichts ist wie es scheint.");
+                currentUser.setPlz(Integer.parseInt(zipcodeInputField.getText().toString().trim()));
                 currentUser.setCity(cityInputField.getText().toString().trim());
                 currentUser.setCountry(countryInputField.getText().toString().trim());
                 int zipCode=Integer.parseInt(zipcodeInputField.getText().toString().trim());

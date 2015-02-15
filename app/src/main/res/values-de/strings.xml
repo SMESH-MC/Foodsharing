@@ -108,7 +108,7 @@
     <string name="choose_mhd_btn">Wähle Haltbarkeit</string>
     <string name="offer_edit_choose_pick_date_btn">Abholdatum</string>
     <string name="offer_category_edit">Kategorie</string>
-    <string name="action_sign_in">Einloggen/ Registrieren</string>
+    <string name="action_sign_in">Einloggen oder Registrieren</string>
     <string name="account_display_save_btn">Speichern</string>
     <string name="action_sign_in_short">Einloggen</string>
     <string name="error_incorrect_password">Falsches Passwort</string>
@@ -125,6 +125,8 @@
     <string name="browse_create_edit_history_btn">Verlauf</string>
     <string name="hello_world">Guntach!</string>
     <string name="hello_blank_fragment">Hallo leeres Fragment</string>
+    <string name="action_register">Registrieren</string>
+    <string name="profile_edit_zip_plz">PLZ</string>
 
 
 </resources>
