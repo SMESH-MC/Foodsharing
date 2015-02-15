@@ -7,15 +7,14 @@ import android.app.ListFragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -25,27 +24,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
 
 
 public class OfferEditActivity extends Activity {
@@ -198,7 +178,8 @@ public class OfferEditActivity extends Activity {
     }
 
     private void onCategorieEditClick() {
-        new CategoryFragment() {
+        /*getFragmentManager().beginTransaction().add(android.R.layout.simple_list_item_1, catList).commit();
+        catList = new CategoryFragment() {
             @Override
             public void onListItemClick(ListView l, View v, int position, long id) {
                 //String chosenItem = (String)l.getItemAtPosition(position);
@@ -213,8 +194,9 @@ public class OfferEditActivity extends Activity {
         //catListView.setOnItemClickListener(catList);
         catList.setListAdapter(mAdapter);
         getFragmentManager().beginTransaction().add(android.R.layout.simple_list_item_1, catList).commit();
-        //getFragmentManager().beginTransaction().add(catList, "catPicker").commit();
-
+        //getFragmentManager().beginTransaction().add(catList, "catPicker").commit();*/
+        DialogFragment dialog = new CategoryFragment();
+        dialog.show(getFragmentManager(), "Category-Dialog");
     }
 
 

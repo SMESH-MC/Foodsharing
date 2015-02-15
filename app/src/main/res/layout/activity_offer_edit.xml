@@ -73,6 +73,7 @@
             android:textStyle="bold"
             android:textColor="@color/abc_primary_text_material_dark"
             android:singleLine="true"
+            android:editable="false"
             android:inputType="none"/>
     </LinearLayout>
 
