@@ -18,7 +18,7 @@ public class CategoryFragment extends ListFragment  {
         String[] values = new String[] { "Kategorie 1", "Kategorie 2", "Kategorie C", "noch", "unzählige", "mehr"};
 
         ArrayAdapter<String> adapter;
-        adapter = new ArrayAdapter<>(   getActivity(),  android.R.layout.simple_list_item_1,    values);
+        adapter = new ArrayAdapter<>(   getActivity(),  android.R.layout.list_content,    values);
         setListAdapter(adapter);
         getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }

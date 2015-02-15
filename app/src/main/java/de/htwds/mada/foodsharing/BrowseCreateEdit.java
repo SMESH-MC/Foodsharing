@@ -29,12 +29,13 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_browse_create_edit);
-        spinner = (android.widget.Spinner) findViewById(R.id.browse_spinner);
+        setContentView(R.layout.activity_browse_create_edit_new);
+        //spinner = (android.widget.Spinner) findViewById(R.id.browse_spinner);
         browseLayout = findViewById(R.id.browse_layout);
 
         ArrayAdapter<CharSequence> adapter;
 
+        /*
         if (Locale.getDefault().getDisplayLanguage().equals("Deutsch")) {
             // Creates an ArrayAdapter using the string array and customized spinner layout
             // German language
@@ -44,8 +45,8 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
             // default language English
             adapter = ArrayAdapter.createFromResource(this,
                     R.array.items_array_english, R.layout.spinner_layout);
-        }
-
+        }                                                                           */
+/*
         // Adds customised layout to use when the list of choices appears
         adapter.setDropDownViewResource(R.layout.spinner_items_layout);
 
@@ -54,7 +55,7 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
         // Add new progress bar
-        progress = new ProgressDialog(this);
+        progress = new ProgressDialog(this);*/
 
     }
 
@@ -213,6 +214,10 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
         };
         t.start();
 
+    }
+
+    public void exitApp(View view) {
+        moveTaskToBack(true);
     }
 }
 

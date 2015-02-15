@@ -3,6 +3,7 @@
 
     <string name="app_name">Foodsharing</string>
     <string name="action_settings">Settings</string>
+
     <!-- Titles -->
     <string name="title_activity_search__browse">Search_Browse</string>
     <string name="title_activity_result">ResultActivity</string>
@@ -20,7 +21,7 @@
 
     <!-- activity elements -->
     <!-- text views -->
-    <string name="browse_tv">Browse</string>
+    <string name="browse_tv">Share your food!</string>
     <string name="create_tv">Create/ Edit</string>
     <string name="create_edit_tv">Create/ Edit</string>
     <string name="result_tv">Matches</string>
@@ -73,6 +74,16 @@
     <string name="profile_display_cancle_btn">Cancel</string>
     <string name="transaction_back_btn">Back</string>
     <string name="profile_edit_save_btn">Save</string>
+    <string name="edit_search_go_btn">Go!</string>
+    <string name="browse_create_new_offer_btn">New Offer</string>
+    <string name="browse_create_edit_offer_btn">Edit Offer</string>
+    <string name="browse_create_edit_profile_btn">Profile</string>
+    <string name="browse_create_edit_browse_btn">Browse</string>
+    <string name="choose_category_btn">Choose\nCategory</string>
+    <string name="choose_mhd_btn">Choose\nbest-before\ndate</string>
+    <string name="offer_edit_choose_pick_date_btn">New Button</string>
+    <string name="browse_create_edit_history_btn">History</string>
+    <string name="browse_create_edit_exit_btn">Exit</string>
 
     <!-- edit texts -->
     <string name="offer_create_title_et">Item</string>
@@ -94,17 +105,11 @@
     <string name="offer_category_tv">Category</string>
     <string name="hello_world">Hello world!</string>
     <string name="logo">logo</string>
-    <string name="edit_search_go_btn">Go!</string>
     <string name="edit_search_et">Searching for…</string>
-    <string name="browse_create_new_offer_btn">New Offer</string>
-    <string name="browse_create_edit_offer_btn">Edit Offer</string>
-    <string name="browse_create_edit_profile_btn">Profile</string>
-    <string name="choose_category_btn">Choose\nCategory</string>
-    <string name="choose_mhd_btn">Choose\nbest-before\ndate</string>
-    <string name="offer_edit_choose_pick_date_btn">New Button</string>
     <string name="offer_category_edit">Category</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="save_btn">Save</string>
 
 </resources>

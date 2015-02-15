@@ -21,7 +21,7 @@
 
     <!-- activity elements -->
     <!-- text views -->
-    <string name="browse_tv">Suche</string>
+    <string name="browse_tv">Teile deine Lebensmittel!</string>
     <string name="create_tv">Erstellen/ Edit</string>
     <string name="create_edit_tv">Erstellen/ Ändern</string>
     <string name="result_tv">Ergebnis</string>
@@ -100,7 +100,7 @@
     <string name="offer_category_tv">Kategorie</string>
     <string name="logo">Logo</string>
     <string name="edit_search_go_btn">Los!</string>
-    <string name="edit_search_et">Suche in...</string>
+    <string name="edit_search_et">Suche in…</string>
     <string name="browse_create_new_offer_btn">Neues Angebot</string>
     <string name="browse_create_edit_offer_btn">Angebot bearbeiten</string>
     <string name="browse_create_edit_profile_btn">Suche Profil</string>
@@ -109,6 +109,21 @@
     <string name="offer_edit_choose_pick_date_btn">Abholdatum</string>
     <string name="offer_category_edit">Kategorie</string>
     <string name="action_sign_in">Einloggen/ Registrieren</string>
+    <string name="account_display_save_btn">Speichern</string>
+    <string name="action_sign_in_short">Einloggen</string>
+    <string name="error_incorrect_password">Falsches Passwort</string>
+    <string name="error_invalid_email">Ungültige E-Mail-Adresse</string>
+    <string name="error_invalid_password">Passwort zu kurz</string>
+    <string name="error_field_required">Dieses Feld wird benötigt</string>
+    <string name="plus_disconnect">Verbindung mit Google+ aufgehoben</string>
+    <string name="plus_sign_out">Google+ Account wechseln</string>
+    <string name="prompt_email">E-Mail</string>
+    <string name="prompt_password">Passwort</string>
+    <string name="title_activity_login">Login</string>
+    <string name="browse_create_edit_browse_btn">Durchsuchen</string>
+    <string name="browse_create_edit_exit_btn">Beenden</string>
+    <string name="browse_create_edit_history_btn">Verlauf</string>
+    <string name="hello_world">Guntach!</string>
 
 
 </resources>

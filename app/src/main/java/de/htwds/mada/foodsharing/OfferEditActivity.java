@@ -198,7 +198,7 @@ public class OfferEditActivity extends Activity {
     }
 
     private void onCategorieEditClick() {
-        catList = new CategoryFragment() {
+        new CategoryFragment() {
             @Override
             public void onListItemClick(ListView l, View v, int position, long id) {
                 //String chosenItem = (String)l.getItemAtPosition(position);
