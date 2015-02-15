@@ -51,6 +51,7 @@ public class Constants {
     public static final String URL_GET_CATEGORY_BY_ID ="get_category_by_id.php?cid=";
     public static final String URL_GET_ATTRIBUTE_IDS_FROM_OFFER = "get_offer_attributes.php?oid=";
     public static final String URL_GET_CATEGORY_IDS_FROM_OFFER = "get_offer_categories.php?oid=";
+    public static final String URL_GET_USERID_WITH_EMAIL_AND_PASSWORD = "get_user_with_email_and_password.php?";
 
     //JSON stuff
     public static final String JSON_POST = "POST";
