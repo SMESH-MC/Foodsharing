@@ -2,6 +2,7 @@ package de.htwds.mada.foodsharing;
 
 import android.content.Context;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.util.Log;
 
@@ -282,17 +283,19 @@ public class Offer {
 
         FileBody fileBody = new FileBody(this.getPicture());
         builder.addPart("image", fileBody);
-        builder.addTextBody(Constants.JSON_TRANS_ID, String.valueOf(this.getTransactID()));
-        builder.addTextBody("bbd", this.getMhd().toString());
+        //builder.addTextBody(Constants.JSON_TRANS_ID, String.valueOf(this.getTransactID()));
+        builder.addTextBody("bbd", String.format("%tF", this.getMhd()));
         builder.addTextBody(Constants.TITLE_WORD, this.getShortDescription());
         builder.addTextBody(Constants.DESCRIPTION_ABK, this.getLongDescription());
         Timestamp timestamp=new Timestamp(this.getDateAdded().getTimeInMillis());
         builder.addTextBody(Constants.DATE_WORD, timestamp.toString());
         builder.addTextBody(Constants.JSON_VALID_DATE, "1423216493");
+        builder.addTextBody("offerer_id", String.valueOf(PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.currentUserIdKey, -1)));
         HttpEntity httpRequestEntity = builder.build();
 
         JSONParser jsonParser = new JSONParser();
-        JSONObject returnObject = jsonParser.makeMultipartHttpRequest("http://odin.htw-saarland.de/create_offer_with_image.php", httpRequestEntity);
+        //JSONObject returnObject = jsonParser.makeMultipartHttpRequest("http://odin.htw-saarland.de/create_offer_with_image.php", httpRequestEntity);
+        JSONObject returnObject = jsonParser.makeMultipartHttpRequest("http://odin.htw-saarland.de/create_offer_with_image_and_transaction.php", httpRequestEntity);
 
         if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
             errorMessage=returnObject.optString(Constants.MESSAGE_WORD, Constants.UNKNOWN_ERROR);

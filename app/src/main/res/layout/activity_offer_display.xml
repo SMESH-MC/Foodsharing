@@ -142,7 +142,7 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <LinearLayout
+<!--    <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -158,6 +158,13 @@
             android:textColor="@color/abc_primary_text_material_dark"
             android:textStyle="bold" />
 
+    </LinearLayout>-->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -167,6 +174,7 @@
             android:textColor="@color/abc_primary_text_material_dark"
             android:textStyle="bold" />
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -178,14 +186,14 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/edit_offer_btn"
-            android:id="@+id/publish_offer_btn"
+            android:text="@string/offer_display_contact_info_tv"
+            android:id="@+id/offer_display_contact_info_tv"
             android:layout_gravity="center_horizontal"
-            android:onClick="editOffer"
             android:textAllCaps="false"
             android:background="@color/blue06"
             android:textColor="@color/abc_primary_text_material_dark"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:onClick="showContactInfo" />
 
     </LinearLayout>
 

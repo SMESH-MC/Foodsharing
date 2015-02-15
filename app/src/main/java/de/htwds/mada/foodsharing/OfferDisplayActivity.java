@@ -16,7 +16,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.util.ArrayList;
 
 
 public class OfferDisplayActivity extends Activity {
@@ -110,6 +116,67 @@ public class OfferDisplayActivity extends Activity {
     public void editOffer(View view){
         Intent i = new Intent(getApplicationContext(), OfferEditActivity.class);
         startActivity(i);
+    }
+
+
+    public void showContactInfo(View view)
+    {
+        final int currentTransactionID=currentOffer.getTransactID();
+        final Handler handler = new Handler();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String errorMessage = Constants.EMPTY_STRING;
+                ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+                nameValuePairs.add(new BasicNameValuePair("tid", String.valueOf(currentTransactionID)));
+
+                JSONParser jsonParser = new JSONParser();
+                JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + "get_transaction_details.php", Constants.JSON_GET, nameValuePairs);
+                boolean infoFetchedSuccessfully=true;
+
+                int offerer_id=-1;
+                if (!returnObject.optBoolean(Constants.SUCCESS_WORD)) infoFetchedSuccessfully=false;
+                else
+                {
+                    JSONArray transactionJSONArray=returnObject.optJSONArray("transaction");
+                    JSONObject transactionJSONObject=transactionJSONArray.optJSONObject(0);
+                    if (transactionJSONObject != null)
+                    {
+                        offerer_id=transactionJSONObject.optInt("offerer_id", -1);
+
+                    }
+                    else
+                    {
+                        infoFetchedSuccessfully=false;
+                    }
+                }
+                final int finalOffererID=offerer_id;
+
+                if (infoFetchedSuccessfully) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.i(LOG, "Offerer ID  " + finalOffererID);
+                            Intent intent = new Intent(OfferDisplayActivity.this, ProfileDisplayActivity.class);
+                            intent.putExtra(Constants.keyUserID, finalOffererID);
+                            startActivity(intent);
+                        }
+                    });
+                }
+                else
+                {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getBaseContext(), "Could not retrieve offerer ID!", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+
+            }
+        });
+        thread.start();
+
     }
 
     public void dispatchTakePictureIntent(View view) {
