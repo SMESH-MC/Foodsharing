@@ -219,14 +219,16 @@ public class OfferEditActivity extends Activity {
         //makes sure any app can handle the Intent:
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
 
-            if (photoFile != null) {
+/*            if (photoFile != null) {
                 photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            }
+
+            }*/
+        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE); //wenn einkommentieren, dann in {}
         }
     }
 
+    /* Thumbnail */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.i(LOG, Constants.IN_ONACTIVITY_RESULT);
         Log.i(LOG, Constants.IN_ONACTIVITY_RESULT + requestCode + " " + resultCode);
