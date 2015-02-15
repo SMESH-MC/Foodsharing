@@ -84,7 +84,7 @@
     <string name="offer_create_title_et">Angebot</string>
     <string name="best_before_date_edit">Haltbar bis</string>
     <string name="detailed_description_et">Beschreibung</string>
-    <string name="searching_for_hint"></string>
+    <string name="searching_for_hint">Angebot</string>
     <string name="profile_edit_street_address_et">Straße</string>
     <string name="profile_edit_street_address_no_et">Nr.</string>
     <string name="profile_edit_zipcode_et">PLZ</string>
@@ -124,6 +124,7 @@
     <string name="browse_create_edit_exit_btn">Beenden</string>
     <string name="browse_create_edit_history_btn">Verlauf</string>
     <string name="hello_world">Guntach!</string>
+    <string name="hello_blank_fragment">Hallo leeres Fragment</string>
 
 
 </resources>
