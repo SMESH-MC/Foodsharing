@@ -73,7 +73,7 @@ public class EditSearchActivity extends ActionBarActivity {
 
     public void showProgress(View view){
 
-        progress.setMessage("Please wait.");
+        progress.setMessage(Constants.PLEASE_WAIT);
         progress.setProgressStyle(ProgressDialog.THEME_HOLO_LIGHT);
         progress.setIndeterminate(true);
         progress.setCancelable(true);

@@ -185,7 +185,7 @@ public class User {
                 this.setEmail(userJSONObject.optString(Constants.EMAIL_WORD));
                 this.setVorname(userJSONObject.optString(Constants.VORNAME_WORD));
                 this.setUsername(userJSONObject.optString(Constants.USERNAME_WORD));
-                this.setPassword(userJSONObject.optString("password", "").toCharArray());
+                this.setPassword(userJSONObject.optString(Constants.PASSWORD_WORD, Constants.EMPTY_STRING).toCharArray());
                 this.setNachname(userJSONObject.optString(Constants.NACHNAME_WORD));
                 this.setStreet(userJSONObject.optString(Constants.STRASSE_WORD));
                 this.setHouseNumber(userJSONObject.optString(Constants.HAUSNUMMER_WORD));

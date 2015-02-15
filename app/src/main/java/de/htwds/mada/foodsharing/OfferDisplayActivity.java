@@ -113,7 +113,7 @@ public class OfferDisplayActivity extends Activity {
     }
 
     public void dispatchTakePictureIntent(View view) {
-        Toast.makeText(getBaseContext(), "test", Toast.LENGTH_LONG).show();
+
 
     }
 }

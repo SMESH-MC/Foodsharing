@@ -116,7 +116,7 @@ public class BrowseCreateEdit extends Activity { // implements AdapterView.OnIte
                         break;
                     case R.id.browse_exit_btn:
 
-                        SharedPreferences pref = getApplicationContext().getSharedPreferences("user-id", 0); // 0 - for private mode
+                        SharedPreferences pref = getApplicationContext().getSharedPreferences(Constants.USER_ID, 0); // 0 - for private mode
                         SharedPreferences.Editor editor = pref.edit();
                         editor.clear();
                         editor.commit();
@@ -207,7 +207,7 @@ public class BrowseCreateEdit extends Activity { // implements AdapterView.OnIte
 
     }
     public void showProgress(View view){
-        progress.setMessage("Please wait.");
+        progress.setMessage(Constants.PLEASE_WAIT);
         progress.setProgressStyle(ProgressDialog.THEME_HOLO_LIGHT);
         progress.setIndeterminate(true);
         progress.setCancelable(true);

@@ -58,7 +58,7 @@ public class ProfileEditActivity extends Activity {
 
 
         Intent intent=getIntent();
-        final boolean createNewProfile=intent.getBooleanExtra("newProfile", false);
+        final boolean createNewProfile=intent.getBooleanExtra(Constants.NEW_PROFILE, false);
         if (createNewProfile)
         {
             PreferenceManager.getDefaultSharedPreferences(this).edit().putInt(Constants.currentUserIdKey, -1).apply();

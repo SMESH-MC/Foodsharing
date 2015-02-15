@@ -110,18 +110,18 @@ public class Offer {
     {
         boolean pictureWrittenSuccessfully=true;
 
-        File photoFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "foodSharingPhoto.jpg");
+        File photoFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
 
         try ( FileOutputStream fileOutputStream = new FileOutputStream(photoFile)) {
             fileOutputStream.write(picture);
             fileOutputStream.close();
         } catch (Exception ex) {
             pictureWrittenSuccessfully=false;
-            Log.e(LOG, "Error writing image to file!");
+            Log.e(LOG, Constants.IMAGE_TO_FILE_ERROR);
         }
 
         if (pictureWrittenSuccessfully) {
-            Log.i(LOG, "Picture written successfully!");
+            Log.i(LOG, Constants.PICTURE_WRITTEN);
             setPicture(photoFile);
         }
     }
@@ -292,7 +292,7 @@ public class Offer {
         HttpEntity httpRequestEntity = builder.build();
 
         JSONParser jsonParser = new JSONParser();
-        JSONObject returnObject = jsonParser.makeMultipartHttpRequest("http://odin.htw-saarland.de/create_offer_with_image.php", httpRequestEntity);
+        JSONObject returnObject = jsonParser.makeMultipartHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_CREATE_OFFER_WITH_IMAGE, httpRequestEntity);
 
         if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
             errorMessage=returnObject.optString(Constants.MESSAGE_WORD, Constants.UNKNOWN_ERROR);

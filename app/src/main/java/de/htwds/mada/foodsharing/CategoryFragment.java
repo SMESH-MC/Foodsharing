@@ -9,29 +9,11 @@ import android.widget.EditText;
 
 public class CategoryFragment extends DialogFragment {
 
-/*    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        String[] values = new String[] { "Kategorie 1", "Kategorie 2", "Kategorie C", "noch", "unzählige", "mehr"};
-
-        ArrayAdapter<String> adapter;
-        adapter = new ArrayAdapter<>(   getActivity(),  android.R.layout.list_content,    values);
-        setListAdapter(adapter);
-        getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-    }
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        // do something with the data
-        Log.i("onlistitemclick", "item " + id + "clicked");
-    }*/
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final String[] values = new String[] { "Kategorie 1", "Kategorie 2", "Kategorie C", "noch", "unzählige", "mehr"};
+        final String[] values = Constants.CATEGORIES_ARRAY;
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Test")
+        builder.setTitle(Constants.CATEGORY_WORD)
                .setItems(values, new DialogInterface.OnClickListener() {
                    @Override
                    public void onClick(DialogInterface dialog, int which) {

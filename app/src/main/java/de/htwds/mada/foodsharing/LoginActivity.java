@@ -167,7 +167,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             // Create and show the dialog.
 //            Intent iA = new Intent(getApplicationContext(),AccountEditActivity.class);
             BrowserDialogFragment dialogFragment = new BrowserDialogFragment ();
-            dialogFragment.show(ft, "dialog");
+            dialogFragment.show(ft, Constants.DIALOG_WORD);
         }
         // Check for a valid password, if the user entered one.
         else if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
@@ -203,13 +203,13 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
                     JSONParser jsonParser = new JSONParser();
                     //JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_OFFER, Constants.URL_GET_USERID_WITH_EMAIL_AND_PASSWORD, nameValuePairs);
-                    JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + "get_user_with_email_and_password.php", Constants.JSON_GET, nameValuePairs);
+                    JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_USERID_WITH_EMAIL_AND_PASSWORD, Constants.JSON_GET, nameValuePairs);
                     final int userID = returnObject.optInt(Constants.USER_ID_ABK, -1);
 
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.i(LOG, "User ID  " + userID);
+                            Log.i(LOG, Constants.USER_ID_MESSAGE + userID);
 
                             if(userID > 0){
                                 User user=new User(LoginActivity.this, userID);
@@ -219,7 +219,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                             else
                             {
 
-                                Toast.makeText(getBaseContext(), "Login incorrect!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getBaseContext(), Constants.LOGIN_INCORRECT, Toast.LENGTH_LONG).show();
                             }
                         }
                     });
