@@ -171,9 +171,9 @@ public class Offer {
                 this.setTransactID(offerJSONObject.optInt(Constants.JSON_TRANS_ID, -1));
                 this.setShortDescription(offerJSONObject.optString(Constants.TITLE_WORD));
                 this.setLongDescription(offerJSONObject.optString(Constants.DESCRIPTION_ABK));
-                //TODO: this.setMhd(userJSONObject.optString("bbd"));
+                //TODO: this.setMhd(userJSONObject.optInt("bbd"));
                 //TODO: this.setDateAdded(userJSONObject.optString("date"));
-                //TODO: this.setValidDate(userJSONObject.optString("valid_date"));
+                //TODO: this.setValidDate(userJSONObject.optInt("valid_date"));
                 Log.i(LOG, "filling");
                 //TODO: handle errors
                 this.getImage(offerJSONObject.optInt("image_id", -1));
