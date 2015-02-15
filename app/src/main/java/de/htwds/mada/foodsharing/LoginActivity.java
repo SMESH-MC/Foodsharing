@@ -12,10 +12,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,7 +23,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -174,6 +171,9 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             focusView.requestFocus();
         } else {
             //ToDo: Try to login with user and password
+
+            Intent i = new Intent(this, AccountEditActivity.class);
+            startActivity(i);
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
