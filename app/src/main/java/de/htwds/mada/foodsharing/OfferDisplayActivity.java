@@ -143,7 +143,6 @@ public class OfferDisplayActivity extends Activity {
                     if (transactionJSONObject != null)
                     {
                         offerer_id=transactionJSONObject.optInt("offerer_id", -1);
-
                     }
                     else
                     {
