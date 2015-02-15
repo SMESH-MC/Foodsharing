@@ -126,6 +126,7 @@
     <string name="hello_world">Guntach!</string>
     <string name="hello_blank_fragment">Hallo leeres Fragment</string>
     <string name="action_register">Registrieren</string>
+    <string name="profile_edit_zip_plz">PLZ</string>
 
 
 </resources>

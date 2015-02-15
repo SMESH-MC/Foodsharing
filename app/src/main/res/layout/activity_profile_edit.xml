@@ -134,7 +134,7 @@
                     android:textStyle="bold"
                     android:singleLine="true"
                     android:textColor="@color/abc_primary_text_material_dark"
-                    android:text="Zip" />
+                    android:text="@string/profile_edit_zip_plz" />
 
             </TableRow>
 

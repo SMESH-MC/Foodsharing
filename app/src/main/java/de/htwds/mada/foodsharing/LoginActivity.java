@@ -40,7 +40,6 @@ import java.util.List;
 
 import de.htwds.mada.foodsharing.dummy.BrowserDialogFragment;
 
-
 /**
  * A login screen that offers login via email/password and via Google+ sign in.
  * <p/>
@@ -51,9 +50,7 @@ import de.htwds.mada.foodsharing.dummy.BrowserDialogFragment;
  */
 public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor> {
     public static final String LOG=LoginActivity.class.getName();
-
-
-    /**
+   /**
      * A dummy authentication store containing known user names and passwords.
      * remove after connecting to a real authentication system.
      */
@@ -471,7 +468,3 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
 
 }
-
-
-
-

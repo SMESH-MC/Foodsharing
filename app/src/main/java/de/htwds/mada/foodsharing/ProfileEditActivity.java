@@ -12,9 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.Arrays;
-
-
 public class ProfileEditActivity extends Activity {
     private static final String LOG=ProfileEditActivity.class.getName();
 
@@ -61,11 +58,11 @@ public class ProfileEditActivity extends Activity {
         Thread thread=new Thread(new Runnable() {
             @Override
             public void run() {
-                if (currentUser.fillObjectFromDatabase())
+                if (currentUser.fillObjectFromDatabase()) //testet ob DB-abfrage erfolgreich war
                 {
                     handler.post(new Runnable (){
                         @Override
-                        public void run() {
+                        public void run() {/*
                             emailInputField.setText(currentUser.getEmail());
                             usernameInputField.setText(currentUser.getUsername());
                             firstNameInputField.setText(currentUser.getVorname());
@@ -74,9 +71,9 @@ public class ProfileEditActivity extends Activity {
                             houseNumberInputField.setText(currentUser.getHouseNumber());
                             zipcodeInputField.setText(String.valueOf(currentUser.getPlz()));
                             cityInputField.setText(currentUser.getCity());
-                            countryInputField.setText(currentUser.getCountry());
+                            countryInputField.setText(currentUser.getCountry());*/
                             profileEditSaveButton.setEnabled(true);
-                            Toast.makeText(getBaseContext(), Constants.USER_FETCHED, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getBaseContext(), Constants.USER_FETCHED, Toast.LENGTH_LONG).show();
                         }
                     });
                 }
