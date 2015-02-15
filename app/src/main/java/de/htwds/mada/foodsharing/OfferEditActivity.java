@@ -111,6 +111,7 @@ public class OfferEditActivity extends Activity {
                                 titleInputField.setText(currentOffer.getShortDescription());
                                 longDescriptionInputField.setText(currentOffer.getLongDescription());
 
+
                                 bbdInputField.setText(String.format("%tF", currentOffer.getMhd()));
                                 publishOfferButton.setEnabled(true);
                                 Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
