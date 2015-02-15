@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.app.ListFragment;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -238,7 +239,6 @@ public class OfferEditActivity extends Activity {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //makes sure any app can handle the Intent:
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-
             photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "foodSharingPhoto.jpg");
             if (photoFile != null) {
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
