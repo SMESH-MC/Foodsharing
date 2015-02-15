@@ -47,18 +47,12 @@ public class EditSearchActivity extends ActionBarActivity {
     }
 
     public void editSearch(View view){
-        /* ToDo toast if editText is empty -> doesn't work yet*/
-
-//                if(testInput(view)){
                     showProgress(view);
 
                     Intent i  = new Intent(getApplicationContext(), ResultActivity.class);
                     startActivity(i);
-//                };
-
-
-
     }
+
     private boolean testInput(View view){
         EditText et = (EditText) view;
 
@@ -71,9 +65,9 @@ public class EditSearchActivity extends ActionBarActivity {
         return true;
     }
 
-    public void showProgress(View view){
+    void showProgress(View view){
 
-        progress.setMessage("Please wait.");
+        progress.setMessage(Constants.PLEASE_WAIT);
         progress.setProgressStyle(ProgressDialog.THEME_HOLO_LIGHT);
         progress.setIndeterminate(true);
         progress.setCancelable(true);

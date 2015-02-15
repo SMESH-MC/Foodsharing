@@ -32,7 +32,7 @@ public class OfferDisplayActivity extends Activity {
     private File photoFile;
     private final Handler handler = new Handler();
     private TextView titleDisplayField;
-    public  TextView bestBeforeDateDisplayField;
+    private TextView bestBeforeDateDisplayField;
     private TextView longDescriptionDisplayField;
     private TextView dateAddedDisplayField;
     private Offer currentOffer;
@@ -180,7 +180,7 @@ public class OfferDisplayActivity extends Activity {
     }
 
     public void dispatchTakePictureIntent(View view) {
-        Toast.makeText(getBaseContext(), "test", Toast.LENGTH_LONG).show();
+
 
     }
 }

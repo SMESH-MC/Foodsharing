@@ -1,10 +1,11 @@
 package de.htwds.mada.foodsharing;
 
 public class Constants {
-    public static final String EMPTY_STRING = "";
+
     public static final String keyOfferID = Constants.class.getName() + "keyOfferID";
     public static final String keyUserID = Constants.class.getName() + "keyUserID";
     public static final String currentUserIdKey = "de.htwds.mada.foodsharing.currentuserid";
+    public static final String PHOTO_FILENAME = "foodSharingPhoto.jpg";
 
     //success messages
     public static final String ACCOUNT_UPDATED = "Account updated successfully!";
@@ -13,6 +14,7 @@ public class Constants {
     public static final String SIGNED_OUT = "Sign out successful!";
     public static final String USER_FETCHED = "User data fetched successfully!";
     public static final String WAIT_INFO = "Please wait.";
+    public static final String PICTURE_WRITTEN = "Picture written successfully!";
 
     //missing failures
     public static final String NO_NEGATIVE_NUMBER = "Only positive numbers allowed!";
@@ -23,6 +25,7 @@ public class Constants {
     public static final String NO_ARGUMENT = "No or empty object given!";
 
     //chars
+    public static final String EMPTY_STRING = "";
     public static final String SPACE = " ";
     public static final String NEWLINE = "\n";
     public static final String QUESTIONMARK = "?";
@@ -47,11 +50,12 @@ public class Constants {
     public static final String URL_GET_ALL_OFFERS = "get_all_offers.php";
     public static final String URL_GET_CATEGORIES = "get_categories.php";
     public static final String URL_GET_ATTRIBUTES ="get_attributes.php";
+    public static final String URL_CREATE_OFFER_WITH_IMAGE = "create_offer_with_image.php";
     public static final String URL_GET_ATTRIBUTE_BY_ID = "get_attribute_by_id.php?aid=";
     public static final String URL_GET_CATEGORY_BY_ID ="get_category_by_id.php?cid=";
     public static final String URL_GET_ATTRIBUTE_IDS_FROM_OFFER = "get_offer_attributes.php?oid=";
     public static final String URL_GET_CATEGORY_IDS_FROM_OFFER = "get_offer_categories.php?oid=";
-    public static final String URL_GET_USERID_WITH_EMAIL_AND_PASSWORD = "get_user_with_email_and_password.php?";
+    public static final String URL_GET_USERID_WITH_EMAIL_AND_PASSWORD = "get_user_with_email_and_password.php";
 
     //JSON stuff
     public static final String JSON_POST = "POST";
@@ -72,6 +76,8 @@ public class Constants {
     public static final String DATA_WORD = "data";
     public static final String BLA_WORD = "bla";
     public static final String SELECTED_WORD = "selected";
+    public static final String CATEGORY_WORD = "Category";
+
     //address words
     public static final String EMAIL_WORD = "email";
     public static final String VORNAME_WORD = "vorname";
@@ -84,6 +90,9 @@ public class Constants {
     public static final String ORT_WORD = "ort";
     public static final String LAND_WORD = "land";
     public static final String PASSWORD_WORD = "password";
+    public static final String DIALOG_WORD = "dialog";
+    public static final String NEW_PROFILE = "newProfile";
+
 
     //multiple words
     public static final String LOG_SUCCESS = "Success: ";
@@ -93,6 +102,12 @@ public class Constants {
     public static final String OFFER_ID = "Offer id: ";
     public static final String BEST_BEFORE = "Best before ";
     public static final String CATEGORY = "Category: ";
+    public static final String REGISTER_ACCOUNT = "Do you want to register an account with us?";
+    public static final String USER_ID = "user-id";
+    public static final String PLEASE_WAIT = "Please wait";
+    public static final String USER_ID_MESSAGE = "User ID  ";
+    public static final String IN_ONACTIVITY_RESULT = "In onActivityResult ";
+    public static final String RESULT_OK = ": result ok";
 
     //Numbers
     public static final String NUMBER_0 = "0";
@@ -105,6 +120,14 @@ public class Constants {
     public static final String OFFER_INFO_RETRIEVING_ERROR = "Could not retrieve offer info!";
     public static final String USER_INFO_RETRIEVING_ERROR = "Could not retrieve user info!";
     public static final String UNKNOWN_ERROR = "Unknown error!";
+    public static final String LOGIN_INCORRECT = "Login incorrect!";
+    public static final String IMAGE_TO_FILE_ERROR = "Error writing image to file!";
+
+    public static final String[] CATEGORIES_ARRAY = {"Fleisch", "Fisch", "Obst", "Gemüse", "Backwaren"};
+
+    //tags
+    public static final String DATEPICKER_TAG = "datePicker";
+    public static final String CATEGORY_DIALOG_TAG = "categoryDialog";
 
 
 

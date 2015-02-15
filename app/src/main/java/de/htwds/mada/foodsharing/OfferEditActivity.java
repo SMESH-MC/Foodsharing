@@ -35,7 +35,7 @@ public class OfferEditActivity extends Activity {
     private TextView activityTitle;
 
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView photoImageView;
     private Bitmap bitmap;
     private File photoFile;
@@ -46,10 +46,6 @@ public class OfferEditActivity extends Activity {
     //title field
     private EditText titleInputField;
     //category field
-    private ListFragment catList;
-    private ListView catListView;
-    private ArrayAdapter<String> mAdapter;
-    private String chosenItem;
     private EditText editCategoryField;
     //mhd field
     private static Calendar bestBeforeDate;
@@ -87,7 +83,7 @@ public class OfferEditActivity extends Activity {
         longDescriptionInputField = (EditText) findViewById(R.id.detailed_description_tv);
         publishOfferButton = (Button) findViewById(R.id.publish_offer_btn);
 
-        photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "foodSharingPhoto");
+        photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
         photoImageView.setImageURI(null);
         photoImageView.setImageURI(Uri.fromFile(photoFile));
 
@@ -98,7 +94,6 @@ public class OfferEditActivity extends Activity {
         if (currentOffer.getOfferID() >= 0) {
             //currentOffer.setOfferID(1);
             activityTitle.setText(Constants.EDIT_OFFER);
-            //editDateField.setText(bestBeforeDate.toString());
             publishOfferButton.setEnabled(false);
             final Handler handler = new Handler();
             Thread thread = new Thread(new Runnable() {
@@ -179,25 +174,8 @@ public class OfferEditActivity extends Activity {
     }
 
     private void onCategorieEditClick() {
-        /*getFragmentManager().beginTransaction().add(android.R.layout.simple_list_item_1, catList).commit();
-        catList = new CategoryFragment() {
-            @Override
-            public void onListItemClick(ListView l, View v, int position, long id) {
-                //String chosenItem = (String)l.getItemAtPosition(position);
-                chosenItem = (String)getListAdapter().getItem(position);
-                //chosenItem = String.valueOf(getListView().getCheckedItemCount());
-                Toast.makeText(getActivity(), chosenItem + Constants.SPACE + Constants.SELECTED_WORD, Toast.LENGTH_SHORT).show();
-                editCategoryField.setText(Constants.CATEGORY + chosenItem);
-                Toast.makeText(getActivity(), "wie komm ich lohin...", Toast.LENGTH_LONG).show();
-            }
-
-        };
-        //catListView.setOnItemClickListener(catList);
-        catList.setListAdapter(mAdapter);
-        getFragmentManager().beginTransaction().add(android.R.layout.simple_list_item_1, catList).commit();
-        //getFragmentManager().beginTransaction().add(catList, "catPicker").commit();*/
         DialogFragment dialog = new CategoryFragment();
-        dialog.show(getFragmentManager(), "Category-Dialog");
+        dialog.show(getFragmentManager(), Constants.CATEGORY_DIALOG_TAG);
     }
 
 
@@ -209,7 +187,7 @@ public class OfferEditActivity extends Activity {
                 bbdInputField.setText(String.format("%tF", bestBeforeDate));
             }
         };
-        dateFragment.show(fragMan, "datePicker");
+        dateFragment.show(fragMan, Constants.DATEPICKER_TAG);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -239,19 +217,22 @@ public class OfferEditActivity extends Activity {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //makes sure any app can handle the Intent:
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "foodSharingPhoto.jpg");
-            if (photoFile != null) {
+
+/*            if (photoFile != null) {
+                photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            }
+
+            }*/
+        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE); //wenn einkommentieren, dann in {}
         }
     }
 
+    /* Thumbnail */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i(LOG, "In onActivityResult");
-        Log.i(LOG, "In onActivityResult " + requestCode + " " + resultCode);
+        Log.i(LOG, Constants.IN_ONACTIVITY_RESULT);
+        Log.i(LOG, Constants.IN_ONACTIVITY_RESULT + requestCode + " " + resultCode);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Log.i(LOG, "In onActivityResult: result ok");
+            Log.i(LOG, Constants.IN_ONACTIVITY_RESULT + Constants.RESULT_OK);
             Bundle extras = data.getExtras();
             bitmap = (Bitmap)extras.get(Constants.DATA_WORD);
             photoImageView.setImageBitmap(bitmap);

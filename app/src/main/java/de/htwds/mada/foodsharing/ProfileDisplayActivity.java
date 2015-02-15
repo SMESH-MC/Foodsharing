@@ -122,7 +122,7 @@ public class ProfileDisplayActivity extends Activity {
         }
     }
 
-    protected void fillIntent(Class activity){
+    void fillIntent(Class activity){
         Intent i;
         i = new Intent(getApplicationContext(), activity);
         startActivity(i);

@@ -21,12 +21,12 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-public class JSONParser {
-    public static final String LOG=JSONParser.class.getName();
+class JSONParser {
+    private static final String LOG=JSONParser.class.getName();
 
-    static InputStream is = null;
-    static JSONObject jObj = new JSONObject();
-    static String json = Constants.EMPTY_STRING;
+    private static InputStream is = null;
+    private static JSONObject jObj = new JSONObject();
+    private static String json = Constants.EMPTY_STRING;
 
     public JSONParser() {
     }

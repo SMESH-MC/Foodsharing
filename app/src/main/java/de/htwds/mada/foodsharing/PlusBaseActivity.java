@@ -29,7 +29,7 @@ public abstract class PlusBaseActivity extends Activity
     private boolean mAutoResolveOnFail;
 
     // A flag to track when a connection is already in progress
-    public boolean mPlusClientIsConnecting = false;
+    private boolean mPlusClientIsConnecting = false;
 
     // This is the helper object that connects to Google Play Services.
     private PlusClient mPlusClient;
@@ -82,7 +82,7 @@ public abstract class PlusBaseActivity extends Activity
     /**
      * Try to sign in the user.
      */
-    public void signIn() {
+    void signIn() {
         if (!mPlusClient.isConnected()) {
             // Show the dialog as we are now signing in.
             setProgressBarVisible(true);
@@ -127,7 +127,7 @@ public abstract class PlusBaseActivity extends Activity
     /**
      * Sign out the user (so they can switch to another account).
      */
-    public void signOut() {
+    void signOut() {
 
         // We only want to sign out if we're connected.
         if (mPlusClient.isConnected()) {
@@ -148,7 +148,7 @@ public abstract class PlusBaseActivity extends Activity
     /**
      * Revoke Google+ authorization completely.
      */
-    public void revokeAccess() {
+    void revokeAccess() {
 
         if (mPlusClient.isConnected()) {
             // Clear the default account as in the Sign Out.
@@ -276,7 +276,7 @@ public abstract class PlusBaseActivity extends Activity
         }
     }
 
-    public PlusClient getPlusClient() {
+    PlusClient getPlusClient() {
         return mPlusClient;
     }
 

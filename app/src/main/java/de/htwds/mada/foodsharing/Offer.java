@@ -111,18 +111,18 @@ public class Offer {
     {
         boolean pictureWrittenSuccessfully=true;
 
-        File photoFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "foodSharingPhoto.jpg");
+        File photoFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
 
         try ( FileOutputStream fileOutputStream = new FileOutputStream(photoFile)) {
             fileOutputStream.write(picture);
             fileOutputStream.close();
         } catch (Exception ex) {
             pictureWrittenSuccessfully=false;
-            Log.e(LOG, "Error writing image to file!");
+            Log.e(LOG, Constants.IMAGE_TO_FILE_ERROR);
         }
 
         if (pictureWrittenSuccessfully) {
-            Log.i(LOG, "Picture written successfully!");
+            Log.i(LOG, Constants.PICTURE_WRITTEN);
             setPicture(photoFile);
         }
     }
@@ -201,8 +201,7 @@ public class Offer {
         return returnObject.optBoolean(Constants.SUCCESS_WORD);
     }
 
-    private void fillObjectFromJSONObject(JSONObject offerJSONObject)
-    {
+    private void fillObjectFromJSONObject(JSONObject offerJSONObject)    {
         this.setOfferID(offerJSONObject.optInt(Constants.ID_ABK, -1));
         this.setTransactID(offerJSONObject.optInt(Constants.JSON_TRANS_ID, -1));
         this.setShortDescription(offerJSONObject.optString(Constants.TITLE_WORD));
@@ -215,8 +214,7 @@ public class Offer {
         this.getImage(offerJSONObject.optInt("image_id", -1));
     }
 
-    private boolean getImage(int imageID)
-    {
+    private boolean getImage(int imageID)    {
         errorMessage = Constants.EMPTY_STRING;
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
         nameValuePairs.add(new BasicNameValuePair("pid", String.valueOf(imageID)));
@@ -275,8 +273,7 @@ public class Offer {
     */
 
 
-    public boolean saveObjectToDatabase()
-    {
+    public boolean saveObjectToDatabase()    {
         errorMessage= Constants.EMPTY_STRING;
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
@@ -307,11 +304,8 @@ public class Offer {
     }
 
 
-    /*
-    Currently only for the items in ListView
-     */
-    public String toString()
-    {
+    /*    Currently only for the items in ListView     */
+    public String toString()    {
         return getShortDescription() + Constants.NEWLINE + getLongDescription();
     }
 }
