@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="items_array">
+    <string-array name="items_array_english">
         <item><b>Search in ...</b></item>
         <item>Offers</item>
         <item>Categories</item>
         <item>Locations</item>
         <item>Profiles</item>
     </string-array>
+
+    <string-array name="items_array_german">
+        <item><b>In...</b></item>
+        <item>Angebote</item>
+        <item>Kategorien</item>
+        <item>Orte</item>
+        <item>Profile</item>
+    </string-array>
+
 </resources>
 

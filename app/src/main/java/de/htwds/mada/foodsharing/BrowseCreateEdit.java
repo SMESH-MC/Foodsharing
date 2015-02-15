@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 
 public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSelectedListener {
     private Spinner spinner;
@@ -31,9 +33,19 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
         spinner = (android.widget.Spinner) findViewById(R.id.browse_spinner);
         browseLayout = findViewById(R.id.browse_layout);
 
-        // Creates an ArrayAdapter using the string array and customized spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.items_array, R.layout.spinner_layout);
+        ArrayAdapter<CharSequence> adapter;
+
+        if (Locale.getDefault().getDisplayLanguage().equals("Deutsch")) {
+            // Creates an ArrayAdapter using the string array and customized spinner layout
+            // German language
+            adapter = ArrayAdapter.createFromResource(this,
+                    R.array.items_array_german, R.layout.spinner_layout);
+        } else {
+            // default language English
+            adapter = ArrayAdapter.createFromResource(this,
+                    R.array.items_array_english, R.layout.spinner_layout);
+        }
+
         // Adds customised layout to use when the list of choices appears
         adapter.setDropDownViewResource(R.layout.spinner_items_layout);
 
