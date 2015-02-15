@@ -34,9 +34,8 @@ public class BrowseCreateEdit extends Activity { // implements AdapterView.OnIte
         //spinner = (android.widget.Spinner) findViewById(R.id.browse_spinner);
         browseLayout = findViewById(R.id.browse_layout);
 
+        /* if you want to use an array adapter instead of a button */
         /*ArrayAdapter<CharSequence> adapter;
-
-
         if (Locale.getDefault().getDisplayLanguage().equals("Deutsch")) {
             // Creates an ArrayAdapter using the string array and customized spinner layout
             // German language
@@ -46,101 +45,19 @@ public class BrowseCreateEdit extends Activity { // implements AdapterView.OnIte
             // default language English
             adapter = ArrayAdapter.createFromResource(this,
                     R.array.items_array_english, R.layout.spinner_layout);
-        }                                                                           */
-/*
+        }
         // Adds customised layout to use when the list of choices appears
         adapter.setDropDownViewResource(R.layout.spinner_items_layout);
-
-
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
         // Add new progress bar
         progress = new ProgressDialog(this);*/
-
     }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_browse_create, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    public void createEdit(View view) {
-        Button btn = (Button) view;
-
-                //switch to pass an intent for distinct search
-                switch (btn.getId()) {
-                    //opens offering browser
-                    case R.id.browse_browse_btn:
-                        fillIntent(ResultActivity.class);
-//                        this.getIntent().putExtra();
-                        break;
-                    // Opens OfferEdit to create new offer
-                    case R.id.browse_create_new_offer_btn:
-                        fillIntent(OfferEditActivity.class);
-//                        this.getIntent().putExtra();
-                        break;
-                    // Opens EditSearch to enter offer which will be edited
-                    case R.id.browse_create_edit_offer_btn:
-                        fillIntent(EditSearchActivity.class);
-//                        this.getIntent().putExtra();
-                        break;
-                    // Opens EditSearch to enter wanted profile
-                    case R.id.browse_edit_profile_btn:
-                        fillIntent(ProfileEditActivity.class);
-//                        this.getIntent().putExtra();
-                        break;
-                    //
-                    case R.id.browse_history_btn:
-                        fillIntent(TransactionHistoryActivity.class);
-//                        this.getIntent().putExtra();
-                        break;
-                    case R.id.browse_exit_btn:
-
-                        SharedPreferences pref = getApplicationContext().getSharedPreferences(Constants.USER_ID, 0); // 0 - for private mode
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.clear();
-                        editor.commit();
-                        moveTaskToBack(true);
-//                        this.getIntent().putExtra();
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-
-
-    protected void fillIntent(Class activity) {
-        i = new Intent(getApplicationContext(), activity);
-        startActivity(i);
-    }
-
-
-    /*
+       /*
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
             switch (parent.getSelectedItemPosition()) {
-        // ToDo show toast if editText is empty -> testInput doesn't work yet
 
                 case 0:
                      break;
@@ -186,14 +103,78 @@ public class BrowseCreateEdit extends Activity { // implements AdapterView.OnIte
             }
 
     }
-*/
 
-    /*
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         // Do nothing.
     }
     */
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_browse_create, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    public void createEdit(View view) {
+        Button btn = (Button) view;
+
+                //switch to pass an intent for distinct search
+                switch (btn.getId()) {
+                    //opens offering browser
+                    case R.id.browse_browse_btn:
+                        fillIntent(ResultActivity.class);
+                        break;
+                    // Opens OfferEdit to create new offer
+                    case R.id.browse_create_new_offer_btn:
+                        fillIntent(OfferEditActivity.class);
+                        break;
+                    // Opens EditSearch to enter offer which will be edited
+                    case R.id.browse_create_edit_offer_btn:
+                        fillIntent(EditSearchActivity.class);
+                        break;
+                    // Opens EditSearch to enter wanted profile
+                    case R.id.browse_edit_profile_btn:
+                        fillIntent(ProfileEditActivity.class);
+                        break;
+                    //
+                    case R.id.browse_history_btn:
+                        fillIntent(TransactionHistoryActivity.class);
+                        break;
+                    case R.id.browse_exit_btn:
+
+                        SharedPreferences pref = getApplicationContext().getSharedPreferences(Constants.USER_ID, 0); // 0 - for private mode
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.clear();
+                        editor.commit();
+                        moveTaskToBack(true);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+    protected void fillIntent(Class activity) {
+        i = new Intent(getApplicationContext(), activity);
+        startActivity(i);
+    }
 
     private void testInput(View view){
         EditText et = (EditText) view;
@@ -206,6 +187,7 @@ public class BrowseCreateEdit extends Activity { // implements AdapterView.OnIte
         Toast.makeText(getBaseContext(), Constants.WAIT_INFO, Toast.LENGTH_LONG).show();
 
     }
+
     public void showProgress(View view){
         progress.setMessage(Constants.PLEASE_WAIT);
         progress.setProgressStyle(ProgressDialog.THEME_HOLO_LIGHT);
@@ -223,7 +205,6 @@ public class BrowseCreateEdit extends Activity { // implements AdapterView.OnIte
                 int jumpTime = 0;
                 while(jumpTime < totalProgressTime){
                     try {
-//                        sleep(200);
                         jumpTime ++;
                         progress.setProgress(jumpTime);
                     } catch (Exception e) {
@@ -237,10 +218,6 @@ public class BrowseCreateEdit extends Activity { // implements AdapterView.OnIte
         };
         t.start();
 
-    }
-
-    public void exitApp(View view) {
-        moveTaskToBack(true);
     }
 }
 

@@ -46,10 +46,6 @@ public class OfferEditActivity extends Activity {
     //title field
     private EditText titleInputField;
     //category field
-    private ListFragment catList;
-    private ListView catListView;
-    private ArrayAdapter<String> mAdapter;
-    private String chosenItem;
     private EditText editCategoryField;
     //mhd field
     private static Calendar bestBeforeDate;
@@ -98,7 +94,6 @@ public class OfferEditActivity extends Activity {
         if (currentOffer.getOfferID() >= 0) {
             //currentOffer.setOfferID(1);
             activityTitle.setText(Constants.EDIT_OFFER);
-            //editDateField.setText(bestBeforeDate.toString());
             publishOfferButton.setEnabled(false);
             final Handler handler = new Handler();
             Thread thread = new Thread(new Runnable() {
@@ -223,8 +218,9 @@ public class OfferEditActivity extends Activity {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //makes sure any app can handle the Intent:
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
+
             if (photoFile != null) {
+                photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
