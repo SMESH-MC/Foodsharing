@@ -30,13 +30,16 @@
         android:layout_height="55dp">
 
         <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/offerPicture"
             android:layout_gravity="center_horizontal"
             android:onClick="makePictureButtonClicked"
-            android:background="@drawable/abc_ic_menu_selectall_mtrl_alpha"
-            android:clickable="true" />
+            android:background="@drawable/ic_action_camera"
+            android:clickable="true"
+            android:contentDescription="Add a picture"
+            android:minHeight="60dp"
+            android:minWidth="60dp" />
 
 
     </LinearLayout>
