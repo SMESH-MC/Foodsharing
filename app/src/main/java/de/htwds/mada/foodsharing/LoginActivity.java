@@ -181,13 +181,22 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         } else {
             //ToDo: UserObject erzeugen mit Passwort und Mail Adresse und an DB Übergeben
 
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair(Constants.EMAIL_WORD, email));
+            nameValuePairs.add(new BasicNameValuePair(Constants.PASSWORD_WORD));
 
-            //new User(email, passwort);
-            //int userID = sendUser(email, passwort)
-            //if( userID >0){
-            // //store userID in shared Prefs
-            // intent -> browsecreateedit-activity
-            //}
+            JSONParser jsonParser = new JSONParser();
+            JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_OFFER, Constants.URL_GET_USERID_WITH_EMAIL_AND_PASSWORD, nameValuePairs);
+
+            int userID = returnObject.optInt(USER_ID_ABK)
+
+            if(userID > 0){
+                //save ID in SharedPrefs
+                //startActivity
+            } else {
+                //Fehlermeldung
+            }
+
 
 
 

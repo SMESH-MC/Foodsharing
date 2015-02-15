@@ -34,6 +34,11 @@ public class User {
     private Pattern pattern;
     private Matcher matcher;
 
+    public User(String email, String password){
+        setEmail(email);
+        setPassword(password.toCharArray());
+    }
+
     public User(Context context)
     {
         setUid(PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.currentUserIdKey, -1));
