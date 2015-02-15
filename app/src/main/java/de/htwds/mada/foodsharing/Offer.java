@@ -142,10 +142,16 @@ public class Offer {
         } catch (Exception ex) { mhd.setTimeInMillis(0); }
     }
 
-    public Calendar getDateAdded() {        return dateAdded;    }
+    public Calendar getDateAdded()
+    {
+        if (dateAdded == null)
+            dateAdded=Calendar.getInstance();
+        return dateAdded;
+    }
     private void setDateAdded(String dateAddedString) {
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat();
-        dateAdded=Calendar.getInstance();
+        if (dateAdded == null)
+            dateAdded=Calendar.getInstance();
         try {
             this.dateAdded.setTime(simpleDateFormat.parse(dateAddedString));
         } catch (Exception ex) { this.dateAdded.setTimeInMillis(0); }
@@ -285,7 +291,6 @@ public class Offer {
 
         JSONParser jsonParser = new JSONParser();
         JSONObject returnObject = jsonParser.makeMultipartHttpRequest("http://odin.htw-saarland.de/create_offer_with_image.php", httpRequestEntity);
-        //JSONObject returnObject = jsonParser.makeMultipartHttpRequest("http://odin.htw-saarland.de/showMultipartContent.php", httpRequestEntity);
 
         if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
             errorMessage=returnObject.optString(Constants.MESSAGE_WORD, Constants.UNKNOWN_ERROR);

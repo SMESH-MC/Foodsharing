@@ -34,7 +34,7 @@ public class Constants {
     //abkuerzings
     public static final String ID_ABK = "id";
     public static final String OFFER_ID_ABK = "oid";
-    public static final String USER_ID_ABK = "oid";
+    public static final String USER_ID_ABK = "uid";
     public static final String DESCRIPTION_ABK = "descr";
     public static final String COUNTRY_CODE_STANDARD = "DE";
 

@@ -268,9 +268,9 @@ public class OfferEditActivity extends Activity {
                 currentOffer.setShortDescription(titleInputField.getText().toString().trim());
                 currentOffer.setLongDescription(longDescriptionInputField.getText().toString().trim());
                 currentOffer.setTransactID(1);
-                currentOffer.setCategory(1); // exchanged "Obst" 2 test app
+                currentOffer.setCategory(1);
                 currentOffer.setMhd(bbdInputField.getText().toString().trim());
-                currentOffer.setPickupTimes(Constants.BLA_WORD); //uebergabe muss ausgelesen werden von wo?
+                currentOffer.setPickupTimes(Constants.BLA_WORD);
 
                 if (currentOffer.saveObjectToDatabase())
                 {
