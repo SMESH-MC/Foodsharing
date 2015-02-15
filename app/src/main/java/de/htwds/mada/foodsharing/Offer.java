@@ -145,6 +145,7 @@ public class Offer {
     public Calendar getDateAdded() {        return dateAdded;    }
     private void setDateAdded(String dateAddedString) {
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat();
+        dateAdded=Calendar.getInstance();
         try {
             this.dateAdded.setTime(simpleDateFormat.parse(dateAddedString));
         } catch (Exception ex) { this.dateAdded.setTimeInMillis(0); }

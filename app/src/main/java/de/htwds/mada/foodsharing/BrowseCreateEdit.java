@@ -17,7 +17,7 @@ import android.widget.Toast;
 import java.util.Locale;
 
 
-public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSelectedListener {
+public class BrowseCreateEdit extends Activity { // implements AdapterView.OnItemSelectedListener {
     private Spinner spinner;
     private Intent i;
     private View browseLayout;
@@ -130,10 +130,11 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
     }
 
 
+    /*
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
             switch (parent.getSelectedItemPosition()) {
-        /* ToDo show toast if editText is empty -> testInput doesn't work yet*/
+        // ToDo show toast if editText is empty -> testInput doesn't work yet
 
                 case 0:
                      break;
@@ -179,11 +180,14 @@ public class BrowseCreateEdit extends Activity implements AdapterView.OnItemSele
             }
 
     }
+*/
 
+    /*
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         // Do nothing.
     }
+    */
 
     private void testInput(View view){
         EditText et = (EditText) view;
