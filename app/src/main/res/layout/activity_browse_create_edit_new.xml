@@ -168,7 +168,7 @@
                 android:background="@color/blue06"
                 android:textStyle="bold"
                 android:textColor="@color/abc_primary_text_material_dark"
-                android:onClick="exitApp"
+                android:onClick="createEdit"
                 android:elevation="2dp"
                 android:textAllCaps="false"
                 android:layout_gravity="center_horizontal" />
