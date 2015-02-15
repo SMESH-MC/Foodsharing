@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Foodsharing</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Titles -->
+    <string name="title_activity_search__browse">Search_Browse</string>
+    <string name="title_activity_result">ResultActivity</string>
+    <string name="title_activity_transaction_history">TransactionHistoryActivity</string>
+    <string name="title_activity_edit_offer">EditOffer</string>
+    <string name="title_activity_display_offer">DisplayOfferActivity</string>
+    <string name="title_activity_profile_edit">Edit profile</string>
+    <string name="title_activity_profile_display">ProfileDisplayActivity</string>
+    <string name="title_activity_account_edit">AccountEditActivity</string>
+    <string name="title_activity_account_display">AccountDisplayActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_edit_search">EditSearchActivity</string>
+
+
+
+    <!-- activity elements -->
+    <!-- text views -->
+    <string name="browse_tv">Suche</string>
+    <string name="create_tv">Erstellen/ Edit</string>
+    <string name="create_edit_tv">Erstellen/ Ändern</string>
+    <string name="result_tv">Ergebnis</string>
+    <string name="profile_title_tv">Profil</string>
+    <string name="profile_edit_last_name_tv">Familienname</string>
+    <string name="profile_edit_first_name_tv">Vorname</string>
+    <string name="title_tv">Titel</string>
+    <string name="best_before_tv">Haltbar bis</string>
+    <string name="detailed_description_tv">Beschreibung</string>
+    <string name="create_offer_tv">Angebot erstellen</string>
+    <string name="offer_display_get_location_tv">Ort</string>
+    <string name="offer_display_contact_info_tv">Kontaktinfo</string>
+    <string name="edit_latest_offer_tv">Letztes Angebot</string>
+    <string name="passwort_tv">Passwort</string>
+    <string name="username_tv">Username</string>
+    <string name="profile_display_username_tv">Username</string>
+    <string name="profile_display_password_tv">******</string>
+    <string name="transaction_history_title_tv">Transactionen</string>
+    <string name="transaction_edit_tv">Transaction bearbeiten</string>
+    <string name="profile_displ_country_tv">Land</string>
+    <string name="published_offers_tv">Meine Angebote</string>
+    <string name="accepted_offers_tv">Erhaltenes</string>
+
+
+    <!-- buttons -->
+    <string name="items">Artikel</string>
+    <string name="search_location_btn">Standort</string>
+    <string name="search_category_btn">Kategorie</string>
+    <string name="existing_offers_btn">Aktuelle Angebote</string>
+    <string name="search_profile_btn">Profile</string>
+    <string name="edit_profile_btn">Profil bearbeiten</string>
+    <string name="new_offer_btn">Neues /nAngebot</string>
+    <string name="browse_btn">Suche in</string>
+    <string name="show_location_btn">Standort</string>
+    <string name="show_contact_information_btn">Zeige Kontakt</string>
+    <string name="place_order_btn">Erstellen</string>
+    <string name="add_contact_info">Kontakt hinzufügen</string>
+    <string name="publish_offer_btn">Erstellen</string>
+    <string name="get_location_btn">Standort</string>
+    <string name="new_profile_btn">Neues Profil</string>
+
+    <string name="save_btn">Speichern</string>
+    <string name="account_edit_save_btn">Speichern</string>
+    <string name="profile_edit_save_btn">Speichern</string>
+
+    <string name="account_display_cancel_btn">Abbrechen</string>
+    <string name="account_edit_cancel_btn">Abbrechen</string>
+    <string name="transaction_cancel_btn">Abbrechen</string>
+    <string name="profile_display_cancle_btn">Abbrechen</string>
+
+    <string name="account_display_edit_btn">Bearbeiten</string>
+    <string name="edit_offer_btn">Bearbeiten</string>
+    <string name="profile_display_edit_btn">Bearbeiten</string>
+
+    <string name="offer_create_add_picture_btn">Bild hinzufügen</string>
+    <string name="transaction_close_tr_btn">Schließen</string>
+    <string name="transaction_back_btn">Zurück</string>
+
+    <!-- edit texts -->
+    <string name="offer_create_title_et">Angebot</string>
+    <string name="best_before_date_edit">Haltbar bis</string>
+    <string name="detailed_description_et">Beschreibung</string>
+    <string name="searching_for_hint"></string>
+    <string name="profile_edit_street_address_et">Straße</string>
+    <string name="profile_edit_street_address_no_et">Nr.</string>
+    <string name="profile_edit_zipcode_et">PLZ</string>
+    <string name="profile_edit_place_of_res_et">Wohnort</string>
+    <string name="profile_edit_phone_et">Telefonnummer</string>
+    <string name="profile_edit_email_et">Email</string>
+    <string name="username_et">Username</string>
+    <string name="profile_display_show_tr_history">Transaktionen</string>
+    <string name="profile_edit_country_et">Land</string>
+    <string name="offer_display_short_description_tv">Kurzbeschreibung</string>
+    <string name="offer_display_best_before_tv">Haltbar bis</string>
+    <string name="offer_display_pick_up_tv">Abholdatum</string>
+    <string name="offer_category_tv">Kategorie</string>
+    <string name="logo">Logo</string>
+    <string name="edit_search_go_btn">Los!</string>
+    <string name="edit_search_et">Suche in...</string>
+    <string name="browse_create_new_offer_btn">Neues Angebot</string>
+    <string name="browse_create_edit_offer_btn">Angebot bearbeiten</string>
+    <string name="browse_create_edit_profile_btn">Suche Profil</string>
+    <string name="choose_category_btn">Wähle Kategorie</string>
+    <string name="choose_mhd_btn">Wähle Haltbarkeit</string>
+    <string name="offer_edit_choose_pick_date_btn">Abholdatum</string>
+    <string name="offer_category_edit">Kategorie</string>
+    <string name="action_sign_in">Einloggen/ Registrieren</string>
+
+
+</resources>
