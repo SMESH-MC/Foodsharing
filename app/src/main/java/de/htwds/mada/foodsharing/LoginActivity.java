@@ -174,17 +174,23 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             focusView = mEmailView;
             cancel = true;
         }
-
-
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
         } else {
-            //ToDo: Try to login with user and password -> Server prüft User Daten z.B. über Z.210
-            //ToDo: isEmailValid und isPasswordValid über Serverabfrage implementieren
-//            Intent i = new Intent(this, AccountEditActivity.class);
-//            startActivity(i);
+            //ToDo: UserObject erzeugen mit Passwort und Mail Adresse und an DB Übergeben
+
+
+            //new User(email, passwort);
+            //int userID = sendUser(email, passwort)
+            //if( userID >0){
+            // //store userID in shared Prefs
+            // intent -> browsecreateedit-activity
+            //}
+
+
+
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
@@ -199,7 +205,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Testing whether email is present on server
+
         return email.contains(Constants.AT_SIGN);
     }
 
