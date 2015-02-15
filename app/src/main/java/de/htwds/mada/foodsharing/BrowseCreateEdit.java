@@ -3,6 +3,7 @@ package de.htwds.mada.foodsharing;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -114,6 +115,11 @@ public class BrowseCreateEdit extends Activity { // implements AdapterView.OnIte
 //                        this.getIntent().putExtra();
                         break;
                     case R.id.browse_exit_btn:
+
+                        SharedPreferences pref = getApplicationContext().getSharedPreferences("user-id", 0); // 0 - for private mode
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.clear();
+                        editor.commit();
                         moveTaskToBack(true);
 //                        this.getIntent().putExtra();
                         break;
