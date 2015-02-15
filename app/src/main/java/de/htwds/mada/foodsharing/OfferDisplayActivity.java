@@ -26,8 +26,9 @@ public class OfferDisplayActivity extends Activity {
     private File photoFile;
     private final Handler handler = new Handler();
     private TextView titleDisplayField;
-    public  static TextView bestBeforeDateDisplayField;
+    public  TextView bestBeforeDateDisplayField;
     private TextView longDescriptionDisplayField;
+    private TextView dateAddedDisplayField;
     private Offer currentOffer;
 
     @Override
@@ -35,11 +36,13 @@ public class OfferDisplayActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_display);
 
-        titleDisplayField = (TextView) findViewById(R.id.title_tv);
+        titleDisplayField = (TextView) findViewById(R.id.offerDisplayTitle);
         bestBeforeDateDisplayField = (TextView) findViewById(R.id.offer_display_best_before_tv);
         longDescriptionDisplayField = (TextView) findViewById(R.id.detailed_description_tv);
+        dateAddedDisplayField = (TextView) findViewById(R.id.offerDisplayDateAdded);
 
-        photoImageView = (ImageView)findViewById(R.id.offerPicture);
+
+        photoImageView = (ImageView)findViewById(R.id.offerDisplayPicture);
 
 
         currentOffer=new Offer(OfferDisplayActivity.this);
@@ -54,6 +57,8 @@ public class OfferDisplayActivity extends Activity {
                         public void run() {
                             titleDisplayField.setText(currentOffer.getShortDescription());
                             longDescriptionDisplayField.setText(currentOffer.getLongDescription());
+                            bestBeforeDateDisplayField.setText(currentOffer.getMhd().toString());
+                            dateAddedDisplayField.setText(currentOffer.getDateAdded().toString());
                             Log.i(LOG, currentOffer.getPicture().toString());
                             photoImageView.setImageURI(null);
                             photoImageView.setImageURI(Uri.fromFile(currentOffer.getPicture()));

@@ -21,6 +21,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -50,14 +52,7 @@ public class Offer {
 
     public Offer(Context context, JSONObject offerJSONObject)
     {
-        this.setOfferID(offerJSONObject.optInt(Constants.ID_ABK, -1));
-        this.setTransactID(offerJSONObject.optInt(Constants.JSON_TRANS_ID, -1));
-        //TODO: this.setPicture();
-        this.setShortDescription(offerJSONObject.optString(Constants.TITLE_WORD));
-        this.setLongDescription(offerJSONObject.optString(Constants.DESCRIPTION_ABK));
-        //TODO: this.setMhd(userJSONObject.optString("bbd"));
-        //TODO: this.setDateAdded(userJSONObject.optString("date"));
-        //TODO: this.setValidDate(userJSONObject.optString("valid_date"));
+        this.fillObjectFromJSONObject(offerJSONObject);
 
         this.context=context;
     }
@@ -136,10 +131,23 @@ public class Offer {
         mhd.setLenient(false);          //make calendar validating
         mhd.set(year, month, day); //throws exception if date is invalid
     }
+    public void setMhd(long millisecondsSinceEpoch)
+    {
+        mhd.setTimeInMillis(millisecondsSinceEpoch);
+    }
+    public void setMhd(String bbdString) {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat();
+        try {
+            mhd.setTime(simpleDateFormat.parse(bbdString));
+        } catch (Exception ex) { mhd.setTimeInMillis(0); }
+    }
 
     public Calendar getDateAdded() {        return dateAdded;    }
-    public void setDateAdded() {
-        this.dateAdded = Calendar.getInstance(); //take current time
+    private void setDateAdded(String dateAddedString) {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat();
+        try {
+            this.dateAdded.setTime(simpleDateFormat.parse(dateAddedString));
+        } catch (Exception ex) { this.dateAdded.setTimeInMillis(0); }
     }
 
     public String getPickupTimes() {        return pickupTimes;    }
@@ -168,15 +176,7 @@ public class Offer {
             JSONObject offerJSONObject=offerJSONArray.optJSONObject(0);
             if (offerJSONObject != null)
             {
-                this.setTransactID(offerJSONObject.optInt(Constants.JSON_TRANS_ID, -1));
-                this.setShortDescription(offerJSONObject.optString(Constants.TITLE_WORD));
-                this.setLongDescription(offerJSONObject.optString(Constants.DESCRIPTION_ABK));
-                //TODO: this.setMhd(userJSONObject.optInt("bbd"));
-                //TODO: this.setDateAdded(userJSONObject.optString("date"));
-                //TODO: this.setValidDate(userJSONObject.optInt("valid_date"));
-                Log.i(LOG, "filling");
-                //TODO: handle errors
-                this.getImage(offerJSONObject.optInt("image_id", -1));
+                this.fillObjectFromJSONObject(offerJSONObject);
             }
             else
             {
@@ -189,6 +189,20 @@ public class Offer {
             errorMessage=returnObject.optString(Constants.MESSAGE_WORD);
 
         return returnObject.optBoolean(Constants.SUCCESS_WORD);
+    }
+
+    private void fillObjectFromJSONObject(JSONObject offerJSONObject)
+    {
+        this.setOfferID(offerJSONObject.optInt(Constants.ID_ABK, -1));
+        this.setTransactID(offerJSONObject.optInt(Constants.JSON_TRANS_ID, -1));
+        this.setShortDescription(offerJSONObject.optString(Constants.TITLE_WORD));
+        this.setLongDescription(offerJSONObject.optString(Constants.DESCRIPTION_ABK));
+        this.setMhd( offerJSONObject.optLong("bbd", -1) );
+        this.setDateAdded(offerJSONObject.optString("date", ""));
+        //TODO: this.setValidDate(userJSONObject.optLong("valid_date"));
+        Log.i(LOG, "filling");
+        //TODO: handle errors:
+        this.getImage(offerJSONObject.optInt("image_id", -1));
     }
 
     private boolean getImage(int imageID)

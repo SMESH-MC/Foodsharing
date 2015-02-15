@@ -107,22 +107,6 @@
                 android:value="de.htwds.mada.foodsharing.BrowseCreateEdit" />
         </activity>
         <activity
-            android:name=".AccountEditActivity"
-            android:label="@string/title_activity_account_edit"
-            android:parentActivityName=".LoginActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.htwds.mada.foodsharing.LoginActivity" />
-        </activity>
-        <activity
-            android:name=".AccountDisplayActivity"
-            android:label="@string/title_activity_account_display"
-            android:parentActivityName=".LoginActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.htwds.mada.foodsharing.ProfileDisplayActivity" />
-        </activity>
-        <activity
             android:name=".TransactionHistoryActivity"
             android:label="@string/title_activity_transaction_history"
             android:parentActivityName=".ProfileDisplayActivity" >

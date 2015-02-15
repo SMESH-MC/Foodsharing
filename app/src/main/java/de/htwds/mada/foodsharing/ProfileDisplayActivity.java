@@ -18,6 +18,7 @@ public class ProfileDisplayActivity extends Activity {
 
     private TextView firstNameDisplayField;
     private TextView lastNameDisplayField;
+    private TextView userNameDisplayField;
     private TextView emailDisplayField;
     private TextView phoneDisplayField;
     private TextView cityDisplayField;
@@ -35,12 +36,13 @@ public class ProfileDisplayActivity extends Activity {
 
         firstNameDisplayField = (TextView) findViewById(R.id.profile_edit_first_name_tv);
         lastNameDisplayField = (TextView) findViewById(R.id.profile_edit_last_name_tv);
+        userNameDisplayField = (TextView) findViewById(R.id.profile_display_username_tv);
         emailDisplayField=(TextView) findViewById(R.id.profile_edit_email_et);
         phoneDisplayField=(TextView) findViewById(R.id.profile_edit_phone_et);
         cityDisplayField=(TextView) findViewById(R.id.profile_edit_place_of_res_et);
         streetDisplayField=(TextView) findViewById(R.id.profile_edit_street_address_et);
         houseNumberDisplayField=(TextView) findViewById(R.id.profile_edit_street_address_no_et);
-        //zipcodeDisplayField=(TextView) findViewById(R.id.profile_edit_zipcode_et);
+        zipcodeDisplayField=(TextView) findViewById(R.id.profile_edit_zipcode_et);
         countryDisplayField=(TextView) findViewById(R.id.profile_displ_country_tv);
 
         displayedUser=new User(this, getIntent().getIntExtra(Constants.keyUserID, -1));
@@ -55,11 +57,12 @@ public class ProfileDisplayActivity extends Activity {
                         public void run() {
                             firstNameDisplayField.setText(displayedUser.getVorname());
                             lastNameDisplayField.setText(displayedUser.getNachname());
+                            userNameDisplayField.setText(displayedUser.getUsername());
                             emailDisplayField.setText(displayedUser.getEmail());
                             cityDisplayField.setText(displayedUser.getCity());
                             streetDisplayField.setText(displayedUser.getStreet());
                             houseNumberDisplayField.setText(displayedUser.getHouseNumber());
-                            //TODO: zipcodeDisplayField.setText(displayedUser.getPlz());
+                            zipcodeDisplayField.setText(String.valueOf(displayedUser.getPlz()));
                             countryDisplayField.setText(displayedUser.getCountry());
                             Toast.makeText(getBaseContext(), Constants.USER_FETCHED, Toast.LENGTH_LONG).show();
                         }

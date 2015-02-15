@@ -18,8 +18,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"
-            android:id="@+id/title_tv"
+            android:text="Offer details"
+            android:id="@+id/offerDisplayTitle"
             android:textSize="25sp"
             android:textColor="@color/abc_primary_text_material_dark"
             android:textStyle="bold" />
@@ -34,7 +34,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:id="@+id/offerPicture"
+            android:id="@+id/offerDisplayPicture"
             android:visibility="visible"
             android:background="@drawable/abc_ic_menu_selectall_mtrl_alpha"
             android:clickable="true"
@@ -151,6 +151,15 @@
             android:layout_height="wrap_content"
             android:text="@string/offer_display_contact_info_tv"
             android:id="@+id/offer_display_contact_info_tv"
+            android:textSize="15sp"
+            android:textColor="@color/abc_primary_text_material_dark"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date added"
+            android:id="@+id/offerDisplayDateAdded"
             android:textSize="15sp"
             android:textColor="@color/abc_primary_text_material_dark"
             android:textStyle="bold" />

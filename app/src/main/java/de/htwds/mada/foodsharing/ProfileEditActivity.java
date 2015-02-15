@@ -18,6 +18,17 @@ import java.util.Arrays;
 public class ProfileEditActivity extends Activity {
     private static final String LOG=ProfileEditActivity.class.getName();
 
+    EditText firstNameInputField;
+    EditText lastNameInputField;
+    EditText emailInputField;
+    EditText phoneInputField;
+    EditText cityInputField;
+    EditText streetInputField;
+    EditText houseNumberInputField;
+    EditText zipcodeInputField;
+    EditText countryInputField;
+    EditText usernameInputField;
+    EditText passwordInputField;
 
     private Button profileEditSaveButton;
 
@@ -31,15 +42,18 @@ public class ProfileEditActivity extends Activity {
         profileEditSaveButton=(Button)findViewById(R.id.profile_edit_save_btn);
         profileEditSaveButton.setEnabled(false);
 
-        final EditText firstNameInputField = (EditText) findViewById(R.id.profile_edit_first_name_et);
-        final EditText lastNameInputField = (EditText) findViewById(R.id.profile_edit_last_name_et);
-        final EditText emailInputField=(EditText) findViewById(R.id.profile_edit_email_et);
-        final EditText phoneInputField=(EditText) findViewById(R.id.profile_edit_phone_et);
-        final EditText cityInputField=(EditText) findViewById(R.id.profile_edit_place_of_res_et);
-        final EditText streetInputField=(EditText) findViewById(R.id.profile_edit_street_address_et);
-        final EditText houseNumberInputField=(EditText) findViewById(R.id.profile_edit_street_address_no_et);
-        final EditText zipcodeInputField=(EditText) findViewById(R.id.profile_edit_zipcode_et);
-        final EditText countryInputField=(EditText) findViewById(R.id.profile_edit_country_et);
+        emailInputField=(EditText) findViewById(R.id.profile_edit_email_et);
+        passwordInputField=(EditText) findViewById(R.id.profileEditPassword);
+        usernameInputField=(EditText) findViewById(R.id.profileEditUsername);
+        firstNameInputField = (EditText) findViewById(R.id.profile_edit_first_name_et);
+        lastNameInputField = (EditText) findViewById(R.id.profile_edit_last_name_et);
+        phoneInputField=(EditText) findViewById(R.id.profile_edit_phone_et);
+        streetInputField=(EditText) findViewById(R.id.profile_edit_street_address_et);
+        houseNumberInputField=(EditText) findViewById(R.id.profile_edit_street_address_no_et);
+        zipcodeInputField=(EditText) findViewById(R.id.profile_edit_zipcode_et);
+        cityInputField=(EditText) findViewById(R.id.profile_edit_place_of_res_et);
+        countryInputField=(EditText) findViewById(R.id.profile_edit_country_et);
+
 
 
         currentUser=new User(this);
@@ -52,13 +66,14 @@ public class ProfileEditActivity extends Activity {
                     handler.post(new Runnable (){
                         @Override
                         public void run() {
+                            emailInputField.setText(currentUser.getEmail());
+                            usernameInputField.setText(currentUser.getUsername());
                             firstNameInputField.setText(currentUser.getVorname());
                             lastNameInputField.setText(currentUser.getNachname());
-                            emailInputField.setText(currentUser.getEmail());
-                            cityInputField.setText(currentUser.getCity());
                             streetInputField.setText(currentUser.getStreet());
                             houseNumberInputField.setText(currentUser.getHouseNumber());
-                            //TODO: zipcodeInputField.setText(currentUser.getPlz());
+                            zipcodeInputField.setText(String.valueOf(currentUser.getPlz()));
+                            cityInputField.setText(currentUser.getCity());
                             countryInputField.setText(currentUser.getCountry());
                             profileEditSaveButton.setEnabled(true);
                             Toast.makeText(getBaseContext(), Constants.USER_FETCHED, Toast.LENGTH_LONG).show();
@@ -82,17 +97,6 @@ public class ProfileEditActivity extends Activity {
         });
         thread.start();
 
-        /*
-        firstNameInputField.setText("Willi", TextView.BufferType.EDITABLE);
-        lastNameInputField.setText("Winzig", TextView.BufferType.EDITABLE);
-        emailInputField.setText("williwinzig@mailinator.com", TextView.BufferType.EDITABLE);
-        phoneInputField.setText("123456789", TextView.BufferType.EDITABLE);
-        cityInputField.setText("Hintertupfingen", TextView.BufferType.EDITABLE);
-        streetInputField.setText("Winzigestrasse", TextView.BufferType.EDITABLE);
-        houseNumberInputField.setText("23", TextView.BufferType.EDITABLE);
-        zipcodeInputField.setText("23542", TextView.BufferType.EDITABLE);
-        countryInputField.setText("DE", TextView.BufferType.EDITABLE);
-        */
     }
 
 
@@ -141,40 +145,26 @@ public class ProfileEditActivity extends Activity {
 
     private void updateProfile()
     {
-        final EditText firstNameInputField = (EditText) findViewById(R.id.profile_edit_first_name_et);
-        final EditText lastNameInputField = (EditText) findViewById(R.id.profile_edit_last_name_et);
-        final EditText emailInputField=(EditText) findViewById(R.id.profile_edit_email_et);
-        final EditText phoneInputField=(EditText) findViewById(R.id.profile_edit_phone_et);
-        final EditText cityInputField=(EditText) findViewById(R.id.profile_edit_place_of_res_et);
-        final EditText streetInputField=(EditText) findViewById(R.id.profile_edit_street_address_et);
-        final EditText houseNumberInputField=(EditText) findViewById(R.id.profile_edit_street_address_no_et);
-        final EditText zipcodeInputField=(EditText) findViewById(R.id.profile_edit_zipcode_et);
-        final EditText countryInputField=(EditText) findViewById(R.id.profile_edit_country_et);
-
-
         final Handler handler = new Handler();
         Thread thread=new Thread(new Runnable() {
             @Override
             public void run() {
+                currentUser.setEmail(emailInputField.getText().toString().trim());
+                int passwordLength=passwordInputField.length();
+                char[] password=new char[passwordLength];
+                passwordInputField.getText().getChars(0,passwordLength,password,0);
+                currentUser.setPassword(password);
+                currentUser.setUsername(usernameInputField.getText().toString().trim());
                 currentUser.setVorname(firstNameInputField.getText().toString().trim());
                 currentUser.setNachname(lastNameInputField.getText().toString().trim());
-                currentUser.setUsername("williwinzig");
-                int passwordLength=8;
-                char[] password=new char[passwordLength];
-                //passwordInputField.getText().getChars(0,passwordLength,password,0);
-                Arrays.fill(password, 'a');
-                currentUser.setPassword(password);
-                currentUser.setEmail(emailInputField.getText().toString().trim());
                 currentUser.setStreet(streetInputField.getText().toString().trim());
                 currentUser.setHouseNumber(houseNumberInputField.getText().toString().trim());
                 currentUser.setAdditional("Nichts ist wie es scheint.");
-                //TODO: currentUser.setPlz(Integer.parseInt(zipcodeInputField.getText().toString().trim()));
+                currentUser.setPlz(Integer.parseInt(zipcodeInputField.getText().toString().trim()));
                 currentUser.setCity(cityInputField.getText().toString().trim());
                 currentUser.setCountry(countryInputField.getText().toString().trim());
 
                 if (currentUser.saveObjectToDatabase())
-                //ToDo speichern in die DB
-
                 {
                     handler.post(new Runnable (){
                         @Override

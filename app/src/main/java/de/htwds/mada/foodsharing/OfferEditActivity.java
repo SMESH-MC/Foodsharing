@@ -52,7 +52,7 @@ public class OfferEditActivity extends Activity {
     private EditText editCategoryField;
     //mhd field
     private static Calendar bestBeforeDate;
-    private EditText editDateField;
+    private EditText bbdInputField;
     //description field
     private EditText longDescriptionInputField;
     //finish button
@@ -79,7 +79,7 @@ public class OfferEditActivity extends Activity {
         changeCategoryEditOnClickListener();
 
         bestBeforeDate = Calendar.getInstance();
-        editDateField = (EditText)findViewById(R.id.best_before_date_edit);
+        bbdInputField = (EditText)findViewById(R.id.best_before_date_edit);
         changeDateEditOnClickListener();
         changeDateEditFocusChangeListener();
         
@@ -110,7 +110,7 @@ public class OfferEditActivity extends Activity {
                                 titleInputField.setText(currentOffer.getShortDescription());
                                 longDescriptionInputField.setText(currentOffer.getLongDescription());
 
-                                editDateField.setText(String.format("%tF", currentOffer.getMhd()));
+                                bbdInputField.setText(String.format("%tF", currentOffer.getMhd()));
                                 publishOfferButton.setEnabled(true);
                                 Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
                             }
@@ -147,7 +147,7 @@ public class OfferEditActivity extends Activity {
 
 
     private void changeDateEditOnClickListener() {
-        editDateField.setOnClickListener(new View.OnClickListener() {
+        bbdInputField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onDateEditClick();
@@ -167,7 +167,7 @@ public class OfferEditActivity extends Activity {
 
     }
     private void changeDateEditFocusChangeListener() {
-        editDateField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        bbdInputField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
@@ -205,7 +205,7 @@ public class OfferEditActivity extends Activity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 bestBeforeDate.set(year, monthOfYear, dayOfMonth);
-                editDateField.setText(Constants.BEST_BEFORE + String.format("%tF", bestBeforeDate));
+                bbdInputField.setText(String.format("%tF", bestBeforeDate));
             }
         };
         dateFragment.show(fragMan, "datePicker");
@@ -269,8 +269,7 @@ public class OfferEditActivity extends Activity {
                 currentOffer.setLongDescription(longDescriptionInputField.getText().toString().trim());
                 currentOffer.setTransactID(1);
                 currentOffer.setCategory(1); // exchanged "Obst" 2 test app
-                currentOffer.setMhd(2015, 3, 3);
-                currentOffer.setDateAdded();
+                currentOffer.setMhd(bbdInputField.getText().toString().trim());
                 currentOffer.setPickupTimes(Constants.BLA_WORD); //uebergabe muss ausgelesen werden von wo?
 
                 if (currentOffer.saveObjectToDatabase())
