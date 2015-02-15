@@ -32,11 +32,14 @@
         android:layout_weight="0">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:minHeight="120dp"
+            android:minWidth="120dp"
             android:id="@+id/offerDisplayPicture"
             android:visibility="visible"
-            android:background="@drawable/abc_ic_menu_selectall_mtrl_alpha"
+            android:background="@drawable/ic_action_camera"
             android:clickable="true"
             android:nestedScrollingEnabled="false"
             android:longClickable="false"
