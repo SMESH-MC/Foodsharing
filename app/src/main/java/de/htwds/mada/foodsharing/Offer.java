@@ -185,6 +185,7 @@ public class Offer {
             if (offerJSONObject != null)
             {
                 this.fillObjectFromJSONObject(offerJSONObject);
+
             }
             else
             {
