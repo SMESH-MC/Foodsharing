@@ -177,6 +177,7 @@ public class Offer {
         JSONParser jsonParser = new JSONParser();
         JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_OFFER, Constants.JSON_GET, nameValuePairs);
 
+
         if (returnObject.optBoolean(Constants.SUCCESS_WORD))
         {
             JSONArray offerJSONArray=returnObject.optJSONArray(Constants.OFFER_WORD);
