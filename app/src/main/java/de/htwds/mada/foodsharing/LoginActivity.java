@@ -25,6 +25,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -198,7 +199,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                     JSONParser jsonParser = new JSONParser();
                     //JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_OFFER, Constants.URL_GET_USERID_WITH_EMAIL_AND_PASSWORD, nameValuePairs);
                     JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + "get_user_with_email_and_password.php", Constants.JSON_GET, nameValuePairs);
-                    final int userID = returnObject.optInt(Constants.USER_ID_ABK);
+                    final int userID = returnObject.optInt(Constants.USER_ID_ABK, -1);
 
                     handler.post(new Runnable() {
                         @Override
@@ -209,6 +210,10 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                                 User user=new User(LoginActivity.this, userID);
                                 Intent i = new Intent(getApplicationContext(), BrowseCreateEdit.class);
                                 startActivity(i);
+                            }
+                            else
+                            {
+                                Toast.makeText(getBaseContext(), "Login incorrect!", Toast.LENGTH_LONG).show();
                             }
                         }
                     });
