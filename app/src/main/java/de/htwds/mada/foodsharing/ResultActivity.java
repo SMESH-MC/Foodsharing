@@ -47,7 +47,6 @@ public class ResultActivity extends Activity {
             }
         });
 
-        Log.i(LOG, "hallo");
 
         final Handler handler = new Handler();
         Thread thread=new Thread(new Runnable() {
