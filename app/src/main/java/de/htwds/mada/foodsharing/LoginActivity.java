@@ -3,10 +3,12 @@ package de.htwds.mada.foodsharing;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -27,6 +29,10 @@ import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -183,21 +189,18 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair(Constants.EMAIL_WORD, email));
-            nameValuePairs.add(new BasicNameValuePair(Constants.PASSWORD_WORD));
+            nameValuePairs.add(new BasicNameValuePair(Constants.PASSWORD_WORD, password));
 
             JSONParser jsonParser = new JSONParser();
             JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_OFFER, Constants.URL_GET_USERID_WITH_EMAIL_AND_PASSWORD, nameValuePairs);
 
-            int userID = returnObject.optInt(USER_ID_ABK)
+            int userID = returnObject.optInt(Constants.USER_ID_ABK);
 
             if(userID > 0){
 
-                SharedPreferences sp = getSharedPreferences("user_id", Activity.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putInt("user_id", userID);
-                editor.commit();
+               User user = new User(this, userID);
 
-                Intent intent = new Intent(this, BrowseCreateEdit.class);
+               Intent intent = new Intent(this, BrowseCreateEdit.class);
 
 
             } else {
