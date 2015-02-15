@@ -49,7 +49,7 @@ import de.htwds.mada.foodsharing.dummy.BrowserDialogFragment;
  * and follow the steps in "Step 1" to create an OAuth 2.0 client for your package.
  */
 public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor> {
-    public static final String LOG=LoginActivity.class.getName();
+    private static final String LOG=LoginActivity.class.getName();
    /**
      * A dummy authentication store containing known user names and passwords.
      * remove after connecting to a real authentication system.
@@ -145,7 +145,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    public void attemptLogin() {
+    void attemptLogin() {
         if (mAuthTask != null) {
             return;
         }
@@ -260,7 +260,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
      * Shows the progress UI and hides the login form.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    public void showProgress(final boolean show) {
+    void showProgress(final boolean show) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
@@ -459,7 +459,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     }
 
     // added for dummy login without user data
-    public void signInSuccess(){
+    void signInSuccess(){
 
         User currentUser=new User(this,4);
         Intent i = new Intent(getApplicationContext(), BrowseCreateEdit.class);

@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class Offer {
+class Offer {
     private static final String LOG=Offer.class.getName();
 
     private int offerID;
@@ -42,7 +42,7 @@ public class Offer {
     private final Calendar mhd = new GregorianCalendar();
 
 
-    private Context context;
+    private final Context context;
 
     //Exceptions
 
@@ -67,7 +67,7 @@ public class Offer {
         this.offerID = offerID;
     }
 
-    public int getTransactID() {        return transactID;    }
+    int getTransactID() {        return transactID;    }
     public void setTransactID(int transactID) {
         if (transactID < 0) {
             throw new NumberFormatException(Constants.NOT_NEGATIVE);
@@ -106,7 +106,7 @@ public class Offer {
         }
         this.picture = picture;
     }
-    public void setPicture(byte[] picture)
+    void setPicture(byte[] picture)
     {
         boolean pictureWrittenSuccessfully=true;
 
@@ -131,7 +131,7 @@ public class Offer {
         mhd.setLenient(false);          //make calendar validating
         mhd.set(year, month, day); //throws exception if date is invalid
     }
-    public void setMhd(long millisecondsSinceEpoch)
+    void setMhd(long millisecondsSinceEpoch)
     {
         mhd.setTimeInMillis(millisecondsSinceEpoch);
     }

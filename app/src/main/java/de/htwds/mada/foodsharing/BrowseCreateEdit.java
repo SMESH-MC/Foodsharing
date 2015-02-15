@@ -171,7 +171,7 @@ public class BrowseCreateEdit extends Activity { // implements AdapterView.OnIte
                 }
             }
 
-    protected void fillIntent(Class activity) {
+    void fillIntent(Class activity) {
         i = new Intent(getApplicationContext(), activity);
         startActivity(i);
     }
@@ -188,7 +188,7 @@ public class BrowseCreateEdit extends Activity { // implements AdapterView.OnIte
 
     }
 
-    public void showProgress(View view){
+    void showProgress(View view){
         progress.setMessage(Constants.PLEASE_WAIT);
         progress.setProgressStyle(ProgressDialog.THEME_HOLO_LIGHT);
         progress.setIndeterminate(true);

@@ -26,7 +26,7 @@ public class OfferDisplayActivity extends Activity {
     private File photoFile;
     private final Handler handler = new Handler();
     private TextView titleDisplayField;
-    public  TextView bestBeforeDateDisplayField;
+    private TextView bestBeforeDateDisplayField;
     private TextView longDescriptionDisplayField;
     private TextView dateAddedDisplayField;
     private Offer currentOffer;

@@ -2,7 +2,7 @@ package de.htwds.mada.foodsharing;
 
 import java.util.Calendar;
 
-public class Transaction {
+class Transaction {
 
     private int id;
     private boolean dealDone;

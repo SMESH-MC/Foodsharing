@@ -19,17 +19,17 @@ import java.util.Arrays;
 public class ProfileEditActivity extends Activity {
     private static final String LOG=ProfileEditActivity.class.getName();
 
-    EditText firstNameInputField;
-    EditText lastNameInputField;
-    EditText emailInputField;
-    EditText phoneInputField;
-    EditText cityInputField;
-    EditText streetInputField;
-    EditText houseNumberInputField;
-    EditText zipcodeInputField;
-    EditText countryInputField;
-    EditText usernameInputField;
-    EditText passwordInputField;
+    private EditText firstNameInputField;
+    private EditText lastNameInputField;
+    private EditText emailInputField;
+    private EditText phoneInputField;
+    private EditText cityInputField;
+    private EditText streetInputField;
+    private EditText houseNumberInputField;
+    private EditText zipcodeInputField;
+    private EditText countryInputField;
+    private EditText usernameInputField;
+    private EditText passwordInputField;
 
     private Button profileEditSaveButton;
 
@@ -143,7 +143,7 @@ public class ProfileEditActivity extends Activity {
             }
         }
 
-    protected void fillIntent(Class activity){
+    void fillIntent(Class activity){
         Intent i;
         i = new Intent(getApplicationContext(), activity);
         startActivity(i);

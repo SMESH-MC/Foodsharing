@@ -50,8 +50,8 @@ public class User {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(Constants.currentUserIdKey, getUid()).apply();
     }
 
-    public int getUid() {        return uid;    }
-    public void setUid(int uid) {
+    int getUid() {        return uid;    }
+    void setUid(int uid) {
         //test if positive
         /*
         if (uid >= 0) {
@@ -79,7 +79,7 @@ public class User {
         }
     }
 
-    public char[] getPassword() {        return password;    }
+    char[] getPassword() {        return password;    }
     public void setPassword(char[] password) {
         //test if not empty
         if (password.length == 0 || password[0] == 0) {
@@ -115,7 +115,7 @@ public class User {
         this.houseNumber = houseNumber.trim();
     }
 
-    public String getAdditional() {        return additional;    }
+    String getAdditional() {        return additional;    }
     public void setAdditional(String additional) {
         this.additional = additional.trim();
     }

@@ -35,7 +35,7 @@ public class OfferEditActivity extends Activity {
     private TextView activityTitle;
 
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView photoImageView;
     private Bitmap bitmap;
     private File photoFile;

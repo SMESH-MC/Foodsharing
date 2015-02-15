@@ -65,7 +65,7 @@ public class EditSearchActivity extends ActionBarActivity {
         return true;
     }
 
-    public void showProgress(View view){
+    void showProgress(View view){
 
         progress.setMessage(Constants.PLEASE_WAIT);
         progress.setProgressStyle(ProgressDialog.THEME_HOLO_LIGHT);
