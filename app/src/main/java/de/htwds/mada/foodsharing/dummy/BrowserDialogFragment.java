@@ -7,7 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
-import de.htwds.mada.foodsharing.AccountEditActivity;
+import de.htwds.mada.foodsharing.ProfileEditActivity;
 
 
 // Asks user to register
@@ -28,7 +28,7 @@ public class BrowserDialogFragment extends DialogFragment {
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(getActivity(), AccountEditActivity.class);
+                            Intent intent = new Intent(getActivity(), ProfileEditActivity.class);
                             startActivityForResult(intent, 0);
                         }
                     })
