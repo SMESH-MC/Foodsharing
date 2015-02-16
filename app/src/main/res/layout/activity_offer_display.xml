@@ -156,27 +156,6 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/offer_display_contact_info_tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:text="@string/offer_display_contact_info_tv"
-            android:textColor="@color/abc_primary_text_material_dark"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/offer_display_contact_info_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="30dp"
-            android:text="@string/offer_display_contact_info_tv"
-            android:textColor="@color/abc_primary_text_material_dark"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-
-        <TextView
             android:id="@+id/offerDisplayDateAddedTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -208,4 +187,5 @@
             android:textColor="@color/abc_primary_text_material_dark"
             android:textStyle="bold"
             android:onClick="showContactInfo" />
+    </LinearLayout>
 </ScrollView>
