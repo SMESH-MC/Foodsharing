@@ -282,8 +282,8 @@ public class Offer {
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 
-        FileBody fileBody = new FileBody(this.getPicture());
-        builder.addPart("image", fileBody);
+     //   FileBody fileBody = new FileBody(this.getPicture());
+    //    builder.addPart("image", fileBody);
         //builder.addTextBody(Constants.JSON_TRANS_ID, String.valueOf(this.getTransactID()));
         builder.addTextBody("bbd", String.valueOf(this.getMhd().getTimeInMillis()/1000));
         builder.addTextBody(Constants.TITLE_WORD, this.getShortDescription());
