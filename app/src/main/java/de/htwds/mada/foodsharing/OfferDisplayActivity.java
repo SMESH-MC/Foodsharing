@@ -63,10 +63,8 @@ public class OfferDisplayActivity extends Activity {
                         public void run() {
                             titleDisplayField.setText(currentOffer.getShortDescription());
                             longDescriptionDisplayField.setText(currentOffer.getLongDescription());
-                            //bestBeforeDateDisplayField.setText(currentOffer.getMhd().getTime().toString());
                             bestBeforeDateDisplayField.setText(String.format("%tF", currentOffer.getMhd()));
-                            //dateAddedDisplayField.setText(currentOffer.getDateAdded().getTime().toString());
-                            dateAddedDisplayField.setText(String.format("%tF", currentOffer.getDateAdded()));
+                            dateAddedDisplayField.setText(String.format("%1$tF %1$tT", currentOffer.getDateAdded()));
                             Log.i(LOG, currentOffer.getPicture().toString());
                             photoImageView.setImageURI(null);
                             photoImageView.setImageURI(Uri.fromFile(currentOffer.getPicture()));
@@ -178,8 +176,4 @@ public class OfferDisplayActivity extends Activity {
 
     }
 
-    public void dispatchTakePictureIntent(View view) {
-
-
-    }
 }

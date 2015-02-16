@@ -177,34 +177,30 @@ public class User {
         JSONParser jsonParser = new JSONParser();
         JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_USER, Constants.JSON_GET, nameValuePairs);
 
-        if (returnObject.optBoolean(Constants.SUCCESS_WORD))
-        {
-            JSONObject userJSONObject=returnObject.optJSONObject(Constants.NUMBER_0);
-            if (userJSONObject != null)
-            {
-                this.setEmail(userJSONObject.optString(Constants.EMAIL_WORD));
-                this.setVorname(userJSONObject.optString(Constants.VORNAME_WORD));
-                this.setUsername(userJSONObject.optString(Constants.USERNAME_WORD));
-                this.setPassword(userJSONObject.optString(Constants.PASSWORD_WORD, Constants.EMPTY_STRING).toCharArray());
-                this.setNachname(userJSONObject.optString(Constants.NACHNAME_WORD));
-                this.setStreet(userJSONObject.optString(Constants.STRASSE_WORD));
-                this.setHouseNumber(userJSONObject.optString(Constants.HAUSNUMMER_WORD));
-                this.setAdditional(userJSONObject.optString(Constants.ZUSATZ_WORD));
-                this.setPlz(userJSONObject.optInt(Constants.PLZ_WORD));
-                this.setCity(userJSONObject.optString(Constants.ORT_WORD));
-                this.setCountry(userJSONObject.optString(Constants.LAND_WORD));
-            }
-            else
-            {
-               errorMessage=Constants.USER_INFO_RETRIEVING_ERROR;
-                return false;
-            }
+        if (!returnObject.optBoolean(Constants.SUCCESS_WORD)) {
+            errorMessage=returnObject.optString(Constants.MESSAGE_WORD);
+            return false;
         }
 
-        if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
-            errorMessage=returnObject.optString(Constants.MESSAGE_WORD);
+        JSONObject userJSONObject=returnObject.optJSONObject(Constants.NUMBER_0);
+        if (userJSONObject == null) {
+            errorMessage = Constants.USER_INFO_RETRIEVING_ERROR;
+            return false;
+        }
 
-        return returnObject.optBoolean(Constants.SUCCESS_WORD);
+        this.setEmail(userJSONObject.optString(Constants.EMAIL_WORD));
+        this.setVorname(userJSONObject.optString(Constants.VORNAME_WORD));
+        this.setUsername(userJSONObject.optString(Constants.USERNAME_WORD));
+        this.setPassword(userJSONObject.optString(Constants.PASSWORD_WORD, Constants.EMPTY_STRING).toCharArray());
+        this.setNachname(userJSONObject.optString(Constants.NACHNAME_WORD));
+        this.setStreet(userJSONObject.optString(Constants.STRASSE_WORD));
+        this.setHouseNumber(userJSONObject.optString(Constants.HAUSNUMMER_WORD));
+        this.setAdditional(userJSONObject.optString(Constants.ZUSATZ_WORD));
+        this.setPlz(userJSONObject.optInt(Constants.PLZ_WORD));
+        this.setCity(userJSONObject.optString(Constants.ORT_WORD));
+        this.setCountry(userJSONObject.optString(Constants.LAND_WORD));
+
+        return true;
     }
 
     public boolean saveObjectToDatabase()

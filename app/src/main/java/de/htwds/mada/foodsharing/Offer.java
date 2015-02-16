@@ -132,15 +132,20 @@ public class Offer {
         mhd.setLenient(false);          //make calendar validating
         mhd.set(year, month, day); //throws exception if date is invalid
     }
-    public void setMhd(long millisecondsSinceEpoch)
+    public void setMhd(long secondsSinceEpoch)
     {
-        mhd.setTimeInMillis(millisecondsSinceEpoch);
+        mhd.setTimeInMillis(secondsSinceEpoch*1000);
     }
     public void setMhd(String bbdString) {
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat();
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
         try {
             mhd.setTime(simpleDateFormat.parse(bbdString));
-        } catch (Exception ex) { mhd.setTimeInMillis(0); }
+            Log.i(LOG, String.format("%tF", this.mhd));
+        } catch (Exception ex)
+        {
+            mhd.setTimeInMillis(0);
+            Log.e(LOG, String.format("%tF", this.mhd));
+        }
     }
 
     public Calendar getDateAdded()
@@ -150,9 +155,11 @@ public class Offer {
         return dateAdded;
     }
     private void setDateAdded(String dateAddedString) {
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat();
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         if (dateAdded == null)
             dateAdded=Calendar.getInstance();
+
         try {
             this.dateAdded.setTime(simpleDateFormat.parse(dateAddedString));
         } catch (Exception ex) { this.dateAdded.setTimeInMillis(0); }
@@ -179,26 +186,24 @@ public class Offer {
         JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_OFFER, Constants.JSON_GET, nameValuePairs);
 
 
-        if (returnObject.optBoolean(Constants.SUCCESS_WORD))
-        {
-            JSONArray offerJSONArray=returnObject.optJSONArray(Constants.OFFER_WORD);
-            JSONObject offerJSONObject=offerJSONArray.optJSONObject(0);
-            if (offerJSONObject != null)
-            {
-                this.fillObjectFromJSONObject(offerJSONObject);
-
-            }
-            else
-            {
-                errorMessage=Constants.OFFER_INFO_RETRIEVING_ERROR;
-                return false;
-            }
+        if (!returnObject.optBoolean(Constants.SUCCESS_WORD)) {
+            errorMessage = returnObject.optString(Constants.MESSAGE_WORD);
+            return false;
         }
 
-        if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
-            errorMessage=returnObject.optString(Constants.MESSAGE_WORD);
+        JSONArray offerJSONArray=returnObject.optJSONArray(Constants.OFFER_WORD);
+        JSONObject offerJSONObject=offerJSONArray.optJSONObject(0);
 
-        return returnObject.optBoolean(Constants.SUCCESS_WORD);
+        if (offerJSONObject == null)
+        {
+            errorMessage=Constants.OFFER_INFO_RETRIEVING_ERROR;
+            return false;
+        }
+
+        this.fillObjectFromJSONObject(offerJSONObject);
+
+
+        return true;
     }
 
     private void fillObjectFromJSONObject(JSONObject offerJSONObject)    {
@@ -223,29 +228,28 @@ public class Offer {
         JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + "get_image.php", Constants.JSON_GET, nameValuePairs);
 
         Log.i(LOG, "Getting image ...");
-        if (returnObject.optBoolean(Constants.SUCCESS_WORD))
-        {
-            JSONArray imageJSONArray=returnObject.optJSONArray("image");
-            JSONObject imageJSONObject=imageJSONArray.optJSONObject(0);
-            if (imageJSONObject != null)
-            {
-                try {
-                    this.setPicture(Base64.decode(imageJSONObject.optString("image", ""), Base64.DEFAULT));
-                } catch (Exception ex) {
-                    Log.e(LOG, "Error decoding image!");
-                }
-            }
-            else
-            {
-                errorMessage="Failed to fetch image!";
-                return false;
-            }
+        if (!returnObject.optBoolean(Constants.SUCCESS_WORD)) {
+            errorMessage = returnObject.optString(Constants.MESSAGE_WORD);
+            return false;
         }
 
-        if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
-            errorMessage=returnObject.optString(Constants.MESSAGE_WORD);
+        JSONArray imageJSONArray=returnObject.optJSONArray("image");
+        JSONObject imageJSONObject=imageJSONArray.optJSONObject(0);
 
-        return returnObject.optBoolean(Constants.SUCCESS_WORD);
+        if (imageJSONObject == null) {
+            errorMessage = "Failed to fetch image!";
+            return false;
+        }
+
+        try {
+            this.setPicture(Base64.decode(imageJSONObject.optString("image", ""), Base64.DEFAULT));
+        } catch (Exception ex) {
+            Log.e(LOG, "Error decoding image!");
+            errorMessage="Error decoding image!";
+            return false;
+        }
+
+        return true;
     }
 
     /*
@@ -281,11 +285,9 @@ public class Offer {
         FileBody fileBody = new FileBody(this.getPicture());
         builder.addPart("image", fileBody);
         //builder.addTextBody(Constants.JSON_TRANS_ID, String.valueOf(this.getTransactID()));
-        builder.addTextBody("bbd", String.format("%tF", this.getMhd()));
+        builder.addTextBody("bbd", String.valueOf(this.getMhd().getTimeInMillis()/1000));
         builder.addTextBody(Constants.TITLE_WORD, this.getShortDescription());
         builder.addTextBody(Constants.DESCRIPTION_ABK, this.getLongDescription());
-        Timestamp timestamp=new Timestamp(this.getDateAdded().getTimeInMillis());
-        builder.addTextBody(Constants.DATE_WORD, timestamp.toString());
         builder.addTextBody(Constants.JSON_VALID_DATE, "1423216493");
         builder.addTextBody("offerer_id", String.valueOf(PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.currentUserIdKey, -1)));
         HttpEntity httpRequestEntity = builder.build();

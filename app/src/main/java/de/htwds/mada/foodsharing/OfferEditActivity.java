@@ -248,7 +248,6 @@ public class OfferEditActivity extends Activity {
                 currentOffer.setPicture(photoFile);
                 currentOffer.setShortDescription(titleInputField.getText().toString().trim());
                 currentOffer.setLongDescription(longDescriptionInputField.getText().toString().trim());
-                //currentOffer.setTransactID(1);
                 currentOffer.setCategory(1);
                 currentOffer.setMhd(bbdInputField.getText().toString().trim());
                 currentOffer.setPickupTimes(Constants.BLA_WORD);
