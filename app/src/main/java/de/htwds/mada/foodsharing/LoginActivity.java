@@ -125,7 +125,9 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         mEmailRegisterButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), ProfileEditActivity.class));
+                Intent intent = new Intent(getApplicationContext(), ProfileEditActivity.class);
+                intent.putExtra(Constants.NEW_PROFILE, true);
+                startActivity(intent);
             }
         });
 

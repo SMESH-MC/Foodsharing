@@ -59,22 +59,44 @@ public class ResultActivity extends Activity {
                 JSONParser jsonParser = new JSONParser();
                 JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_ALL_OFFERS, Constants.JSON_GET, nameValuePairs);
 
-                if (returnObject.optBoolean(Constants.SUCCESS_WORD))
-                {
-                    JSONArray offerJSONArray=returnObject.optJSONArray(Constants.OFFERS_WORD);
-                    //TODO: if (offerJSONArray == null)
-                    JSONObject offerJSONObject;
-                    for (int i=0; i<offerJSONArray.length(); i++) {
-                        offerJSONObject = offerJSONArray.optJSONObject(i);
-                        if (offerJSONObject != null) {
-                            listAdapter.add(new Offer(ResultActivity.this, offerJSONObject));
+                if (!returnObject.optBoolean(Constants.SUCCESS_WORD)) {
+                    handler.post(new Runnable (){
+                        @Override
+                        public void run() {
+                            Toast.makeText(getBaseContext(), "Failed to fetch offers!", Toast.LENGTH_LONG).show();
                         }
-                        //TODO: else {
-                            //errorMessage = "Could not retrieve offer info!";
-                        //}
+                    });
+                    return;
+                }
+
+                JSONArray offerJSONArray=returnObject.optJSONArray(Constants.OFFERS_WORD);
+                if (offerJSONArray == null)
+                {
+                    handler.post(new Runnable (){
+                        @Override
+                        public void run() {
+                            Toast.makeText(getBaseContext(), "Failed to fetch offers!", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    return;
+                }
+                JSONObject offerJSONObject;
+                for (int i=0; i<offerJSONArray.length(); i++) {
+                    offerJSONObject = offerJSONArray.optJSONObject(i);
+                    if (offerJSONObject != null) {
+                        listAdapter.add(new Offer(ResultActivity.this, offerJSONObject));
+                    }
+                    else
+                    {
+                        final int offerNumber=i;
+                        handler.post(new Runnable (){
+                            @Override
+                            public void run() {
+                                Toast.makeText(getBaseContext(), "Could not retrieve offer info " + offerNumber, Toast.LENGTH_LONG).show();
+                            }
+                        });
                     }
                 }
-                //TODO: else
                 handler.post(new Runnable (){
                     @Override
                     public void run() {
