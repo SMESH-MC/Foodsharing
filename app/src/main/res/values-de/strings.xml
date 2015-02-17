@@ -21,7 +21,7 @@
 
     <!-- activity elements -->
     <!-- text views -->
-    <string name="browse_tv">Teile deine Lebensmittel!</string>
+    <string name="browse_tv">Teile Lebensmittel!</string>
     <string name="create_tv">Erstellen/ Edit</string>
     <string name="create_edit_tv">Erstellen/ Ändern</string>
     <string name="result_tv">Ergebnis</string>
