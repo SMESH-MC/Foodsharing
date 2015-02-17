@@ -59,6 +59,7 @@ public class ResultActivity extends Activity {
                 JSONParser jsonParser = new JSONParser();
                 JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_ALL_OFFERS, Constants.JSON_GET, nameValuePairs);
 
+
                 if (!returnObject.optBoolean(Constants.SUCCESS_WORD)) {
                     handler.post(new Runnable (){
                         @Override
