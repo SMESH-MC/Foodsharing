@@ -38,8 +38,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.htwds.mada.foodsharing.dummy.BrowserDialogFragment;
-
 /**
  * A login screen that offers login via email/password and via Google+ sign in.
  * <p/>
