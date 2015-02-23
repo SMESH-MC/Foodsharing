@@ -1,4 +1,4 @@
-package de.htwds.mada.foodsharing.dummy;
+package de.htwds.mada.foodsharing;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -6,9 +6,6 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
-import de.htwds.mada.foodsharing.Constants;
-import de.htwds.mada.foodsharing.ProfileEditActivity;
 
 
 // Asks user to register

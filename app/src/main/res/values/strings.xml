@@ -92,7 +92,7 @@
     <string name="searching_for_hint">Item</string>
     <string name="profile_edit_street_address_et">Street Address</string>
     <string name="profile_edit_street_address_no_et">No.</string>
-    <string name="profile_edit_zipcode_et">Zipcode</string>
+    <string name="profile_edit_zipcode_et">Zip</string>
     <string name="profile_edit_place_of_res_et">Place of Residence</string>
     <string name="profile_edit_phone_et">Phone Number</string>
     <string name="profile_edit_email_et">Email Address</string>

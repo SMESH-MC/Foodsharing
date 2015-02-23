@@ -56,7 +56,8 @@
                     android:textColorHint="@color/abc_primary_text_material_dark"
                     android:textStyle="bold"
                     android:singleLine="true"
-                    android:textColor="@color/abc_primary_text_material_dark" />
+                    android:textColor="@color/abc_primary_text_material_dark"
+                    android:maxLength="30" />
 
                 <EditText
                     android:layout_width="wrap_content"
@@ -69,7 +70,8 @@
                     android:textColorHint="@color/abc_primary_text_material_dark"
                     android:textStyle="bold"
                     android:singleLine="true"
-                    android:textColor="@color/abc_primary_text_material_dark" />
+                    android:textColor="@color/abc_primary_text_material_dark"
+                    android:maxLength="30" />
 
             </TableRow>
 
