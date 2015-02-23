@@ -65,9 +65,12 @@ public class OfferDisplayActivity extends Activity {
                             longDescriptionDisplayField.setText(currentOffer.getLongDescription());
                             bestBeforeDateDisplayField.setText(String.format("%tF", currentOffer.getMhd()));
                             dateAddedDisplayField.setText(String.format("%1$tF %1$tT", currentOffer.getDateAdded()));
-                            Log.i(LOG, currentOffer.getPicture().toString());
-                            photoImageView.setImageURI(null);
-                            photoImageView.setImageURI(Uri.fromFile(currentOffer.getPicture()));
+                            File pictureFile=currentOffer.getPicture();
+                            if (pictureFile != null) {
+                                Log.i(LOG, currentOffer.getPicture().toString());
+                                photoImageView.setImageURI(null);
+                                photoImageView.setImageURI(Uri.fromFile(currentOffer.getPicture()));
+                            }
                             Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
                         }
                     });

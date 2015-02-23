@@ -83,9 +83,6 @@ public class OfferEditActivity extends Activity {
         longDescriptionInputField = (EditText) findViewById(R.id.detailed_description_tv);
         publishOfferButton = (Button) findViewById(R.id.publish_offer_btn);
 
-        photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
-        photoImageView.setImageURI(null);
-        photoImageView.setImageURI(Uri.fromFile(photoFile));
 
         currentOffer=new Offer(OfferEditActivity.this);
         currentOffer.setOfferID(getIntent().getIntExtra(Constants.keyOfferID, -1));
@@ -94,7 +91,7 @@ public class OfferEditActivity extends Activity {
         if (currentOffer.getOfferID() >= 0) {
             //currentOffer.setOfferID(1);
             activityTitle.setText(Constants.EDIT_OFFER);
-            publishOfferButton.setEnabled(false);
+            //publishOfferButton.setEnabled(false);
             final Handler handler = new Handler();
             Thread thread = new Thread(new Runnable() {
                 @Override
@@ -105,10 +102,13 @@ public class OfferEditActivity extends Activity {
                             public void run() {
                                 titleInputField.setText(currentOffer.getShortDescription());
                                 longDescriptionInputField.setText(currentOffer.getLongDescription());
-
-
                                 bbdInputField.setText(String.format("%tF", currentOffer.getMhd()));
-                                publishOfferButton.setEnabled(true);
+                                photoFile = currentOffer.getPicture();
+                                if (photoFile != null) {
+                                    photoImageView.setImageURI(null);
+                                    photoImageView.setImageURI(Uri.fromFile(photoFile));
+                                }
+                                //publishOfferButton.setEnabled(true);
                                 Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
                             }
                         });
@@ -218,12 +218,9 @@ public class OfferEditActivity extends Activity {
         //makes sure any app can handle the Intent:
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
 
-/*            if (photoFile != null) {
-                photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-
-            }*/
-        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE); //wenn einkommentieren, dann in {}
+            photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE); //wenn einkommentieren, dann in {}
         }
     }
 

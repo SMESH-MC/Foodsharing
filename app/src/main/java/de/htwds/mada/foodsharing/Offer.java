@@ -37,6 +37,7 @@ public class Offer {
     private String shortDescription;
     private String longDescription;
     private File picture;
+    private int pictureID;
 
     private Calendar dateAdded;
     private String pickupTimes; //too complex to use date or time types
@@ -100,11 +101,24 @@ public class Offer {
         this.longDescription = longDescription.trim();
     }
 
-    public File getPicture() {        return picture;    }
+    public File getPicture()
+    {
+        if (this.picture == null)
+            this.retreivePictureFromDatabase(this.pictureID);
+        if (this.picture == null
+                || ! this.picture.isFile()
+                || ! this.picture.canRead())
+            return null;
+
+        return this.picture;
+    }
     public void setPicture(File picture) {
+        /*
         if (picture == null) {
             throw new IllegalArgumentException(Constants.NO_ARGUMENT);
         }
+        */
+        /* picture == null says that no picture was set */
         this.picture = picture;
     }
     public void setPicture(byte[] picture)
@@ -123,7 +137,11 @@ public class Offer {
 
         if (pictureWrittenSuccessfully) {
             Log.i(LOG, Constants.PICTURE_WRITTEN);
-            setPicture(photoFile);
+            this.setPicture(photoFile);
+        }
+        else {
+            if (photoFile != null) photoFile.delete();
+            this.picture=null;
         }
     }
 
@@ -216,10 +234,10 @@ public class Offer {
         //TODO: this.setValidDate(userJSONObject.optLong("valid_date"));
         Log.i(LOG, "filling");
         //TODO: handle errors:
-        this.getImage(offerJSONObject.optInt("image_id", -1));
+        this.pictureID=offerJSONObject.optInt("image_id", -1);
     }
 
-    private boolean getImage(int imageID)    {
+    private boolean retreivePictureFromDatabase(int imageID)    {
         errorMessage = Constants.EMPTY_STRING;
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
         nameValuePairs.add(new BasicNameValuePair("pid", String.valueOf(imageID)));
@@ -282,9 +300,10 @@ public class Offer {
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 
-     //   FileBody fileBody = new FileBody(this.getPicture());
-    //    builder.addPart("image", fileBody);
-        //builder.addTextBody(Constants.JSON_TRANS_ID, String.valueOf(this.getTransactID()));
+        File pictureFile=this.getPicture();
+        if (pictureFile != null) {
+            builder.addPart("image", new FileBody(pictureFile));
+        }
         builder.addTextBody("bbd", String.valueOf(this.getMhd().getTimeInMillis()/1000));
         builder.addTextBody(Constants.TITLE_WORD, this.getShortDescription());
         builder.addTextBody(Constants.DESCRIPTION_ABK, this.getLongDescription());
