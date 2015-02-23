@@ -245,7 +245,7 @@ public class Offer {
         JSONParser jsonParser = new JSONParser();
         JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + "get_image.php", Constants.JSON_GET, nameValuePairs);
 
-        Log.i(LOG, "Getting image ...");
+        Log.i(LOG, "Getting image with id " + imageID);
         if (!returnObject.optBoolean(Constants.SUCCESS_WORD)) {
             errorMessage = returnObject.optString(Constants.MESSAGE_WORD);
             return false;
@@ -303,6 +303,7 @@ public class Offer {
         File pictureFile=this.getPicture();
         if (pictureFile != null) {
             builder.addPart("image", new FileBody(pictureFile));
+            Log.i(LOG, "Picture was set!");
         }
         builder.addTextBody("bbd", String.valueOf(this.getMhd().getTimeInMillis()/1000));
         builder.addTextBody(Constants.TITLE_WORD, this.getShortDescription());

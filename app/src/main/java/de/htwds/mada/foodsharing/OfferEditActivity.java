@@ -97,16 +97,17 @@ public class OfferEditActivity extends Activity {
                 @Override
                 public void run() {
                     if (currentOffer.fillObjectFromDatabase()) {
+                        photoFile = currentOffer.getPicture();
+                        final File pictureFile=photoFile;
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
                                 titleInputField.setText(currentOffer.getShortDescription());
                                 longDescriptionInputField.setText(currentOffer.getLongDescription());
                                 bbdInputField.setText(String.format("%tF", currentOffer.getMhd()));
-                                photoFile = currentOffer.getPicture();
-                                if (photoFile != null) {
+                                if (pictureFile != null) {
                                     photoImageView.setImageURI(null);
-                                    photoImageView.setImageURI(Uri.fromFile(photoFile));
+                                    photoImageView.setImageURI(Uri.fromFile(pictureFile));
                                 }
                                 //publishOfferButton.setEnabled(true);
                                 Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();

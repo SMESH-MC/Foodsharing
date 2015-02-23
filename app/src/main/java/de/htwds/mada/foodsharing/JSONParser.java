@@ -1,7 +1,9 @@
 package de.htwds.mada.foodsharing;
 
+import android.preference.PreferenceActivity;
 import android.util.Log;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -46,6 +48,12 @@ class JSONParser {
                 url += Constants.QUESTIONMARK + paramString;
                 HttpGet httpGet = new HttpGet(url);
 
+                Log.i(LOG, "Hallo " + httpGet.getRequestLine());
+                Header[] headers = httpGet.getAllHeaders();
+
+                for (Header header : headers)
+                    Log.i(LOG, "Hallo " + header.getName() + " " + header.getValue());
+
                 HttpResponse httpResponse = httpClient.execute(httpGet);
                 HttpEntity httpResponseEntity = httpResponse.getEntity();
                 is = httpResponseEntity.getContent();
@@ -67,6 +75,7 @@ class JSONParser {
             while ((line = reader.readLine()) != null) {
                 sb.append(line).append(Constants.NEWLINE);
             }
+            reader.close();
             is.close();
             json = sb.toString();
         } catch (Exception e) {
@@ -132,6 +141,7 @@ class JSONParser {
             while ((line = reader.readLine()) != null) {
                 sb.append(line).append(Constants.NEWLINE);
             }
+            reader.close();
             is.close();
             json = sb.toString();
         } catch (Exception e) {

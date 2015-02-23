@@ -58,6 +58,7 @@ public class OfferDisplayActivity extends Activity {
             @Override
             public void run() {
                 if (currentOffer.fillObjectFromDatabase()) {
+                    final File pictureFile=currentOffer.getPicture();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -65,9 +66,7 @@ public class OfferDisplayActivity extends Activity {
                             longDescriptionDisplayField.setText(currentOffer.getLongDescription());
                             bestBeforeDateDisplayField.setText(String.format("%tF", currentOffer.getMhd()));
                             dateAddedDisplayField.setText(String.format("%1$tF %1$tT", currentOffer.getDateAdded()));
-                            File pictureFile=currentOffer.getPicture();
                             if (pictureFile != null) {
-                                Log.i(LOG, currentOffer.getPicture().toString());
                                 photoImageView.setImageURI(null);
                                 photoImageView.setImageURI(Uri.fromFile(currentOffer.getPicture()));
                             }
