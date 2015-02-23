@@ -48,11 +48,11 @@ class JSONParser {
                 url += Constants.QUESTIONMARK + paramString;
                 HttpGet httpGet = new HttpGet(url);
 
-                Log.i(LOG, "Hallo " + httpGet.getRequestLine());
+                Log.i(LOG, "Request " + httpGet.getRequestLine());
                 Header[] headers = httpGet.getAllHeaders();
 
                 for (Header header : headers)
-                    Log.i(LOG, "Hallo " + header.getName() + " " + header.getValue());
+                    Log.i(LOG, "Request " + header.getName() + " " + header.getValue());
 
                 HttpResponse httpResponse = httpClient.execute(httpGet);
                 HttpEntity httpResponseEntity = httpResponse.getEntity();
