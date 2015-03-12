@@ -141,6 +141,7 @@ public class Offer {
             this.setPicture(photoFile);
         }
         else {
+
             if (photoFile != null) photoFile.delete();
             this.picture=null;
         }
