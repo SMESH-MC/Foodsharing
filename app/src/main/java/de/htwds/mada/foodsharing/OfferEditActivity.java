@@ -227,7 +227,7 @@ public class OfferEditActivity extends Activity {
 
             //photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
             //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE); //wenn einkommentieren, dann in {}
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
@@ -240,6 +240,9 @@ public class OfferEditActivity extends Activity {
             Bundle extras = data.getExtras();
             bitmap = (Bitmap)extras.get(Constants.DATA_WORD);
             photoImageView.setImageBitmap(bitmap);
+            if (currentOffer.getOfferID() >= 0) {
+                currentOffer.setPictureEdited(true);
+            }
         }
     }
 

@@ -38,7 +38,7 @@ public class Offer {
     private String shortDescription;
     private String longDescription;
     private File picture;
-    private int pictureID;
+    private int pictureID=-1;
 
     private Calendar dateAdded;
     private String pickupTimes; //too complex to use date or time types
@@ -48,6 +48,7 @@ public class Offer {
     private Context context;
 
     private boolean objectHasBeenEdited=false;
+    private boolean pictureHasBeenEdited=false;
 
     //Exceptions
 
@@ -176,6 +177,11 @@ public class Offer {
             if (photoFile != null) photoFile.delete();
             this.picture=null;
         }
+    }
+
+    public void setPictureEdited(boolean edited)
+    {
+        this.pictureHasBeenEdited=edited;
     }
 
     public Calendar getMhd() {        return mhd;    }
@@ -333,22 +339,29 @@ public class Offer {
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 
-        File pictureFile=this.getPicture();
-        if (pictureFile != null) {
-            builder.addPart("image", new FileBody(pictureFile));
-            Log.i(LOG, "Picture was set!");
+        //TODO: How do we detect only updated attributes?
+        if (!this.objectHasBeenEdited
+                || (this.objectHasBeenEdited && this.pictureHasBeenEdited)) {
+            File pictureFile = this.getPicture();
+            if (pictureFile != null) {
+                builder.addPart("image", new FileBody(pictureFile));
+                Log.i(LOG, "Picture was set!");
+            }
         }
         builder.addTextBody("bbd", String.valueOf(this.getMhd().getTimeInMillis()/1000));
         builder.addTextBody(Constants.TITLE_WORD, this.getShortDescription());
         builder.addTextBody(Constants.DESCRIPTION_ABK, this.getLongDescription());
         builder.addTextBody(Constants.JSON_VALID_DATE, "1423216493");
         builder.addTextBody("offerer_id", String.valueOf(PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.currentUserIdKey, -1)));
+        if (this.objectHasBeenEdited) {
+            builder.addTextBody("id", String.valueOf(this.getOfferID()));
+        }
         HttpEntity httpRequestEntity = builder.build();
 
         JSONParser jsonParser = new JSONParser();
         JSONObject returnObject;
         if (this.objectHasBeenEdited) {
-            returnObject = jsonParser.makeMultipartHttpRequest("http://odin.htw-saarland.de/update_offer.php", httpRequestEntity);
+            returnObject = jsonParser.makeMultipartHttpRequest("http://odin.htw-saarland.de/update_offer_with_image.php", httpRequestEntity);
         }
         else
             returnObject = jsonParser.makeMultipartHttpRequest("http://odin.htw-saarland.de/create_offer_with_image_and_transaction.php", httpRequestEntity);
