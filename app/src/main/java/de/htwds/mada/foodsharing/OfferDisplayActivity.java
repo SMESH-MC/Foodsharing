@@ -1,8 +1,10 @@
 package de.htwds.mada.foodsharing;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -121,6 +123,8 @@ public class OfferDisplayActivity extends Activity {
 
     public void showContactInfo(View view)
     {
+        new RetrieveContactInfoTask().execute();
+        /*
         final int currentTransactionID=currentOffer.getTransactID();
         final Handler handler = new Handler();
         Thread thread = new Thread(new Runnable() {
@@ -175,7 +179,75 @@ public class OfferDisplayActivity extends Activity {
             }
         });
         thread.start();
+        */
 
+    }
+
+
+    private class RetrieveContactInfoTask extends AsyncTask<Void, Void, Void>
+    {
+        private boolean errorOccurred=false;
+        private String errorMessage="";
+        private ProgressDialog progressDialog;
+
+        private int offererID=-1;
+
+        protected void onPreExecute()
+        {
+            progressDialog=new ProgressDialog(OfferDisplayActivity.this);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage("Retrieving contact info...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+        }
+
+        protected Void doInBackground(Void... params)
+        {
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair("tid", String.valueOf(currentOffer.getTransactID())));
+
+            JSONParser jsonParser = new JSONParser();
+            JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + "get_transaction_details.php", Constants.JSON_GET, nameValuePairs);
+
+            if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
+            {
+                errorOccurred=true;
+                errorMessage="Could not retrieve offerer ID!";
+                return null;
+
+            }
+
+            JSONArray transactionJSONArray=returnObject.optJSONArray("transaction");
+            JSONObject transactionJSONObject=transactionJSONArray.optJSONObject(0);
+            if (transactionJSONObject == null)
+            {
+                errorOccurred=true;
+                errorMessage="Could not retrieve offerer ID!";
+                return null;
+            }
+
+            offererID=transactionJSONObject.optInt("offerer_id", -1);
+
+            return null;
+        }
+
+
+        protected void onPostExecute(Void param)
+        {
+            if (errorOccurred) {
+                progressDialog.dismiss();
+                Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            progressDialog.dismiss();
+            Log.i(LOG, "Offerer ID  " + offererID);
+            Intent intent = new Intent(OfferDisplayActivity.this, ProfileDisplayActivity.class);
+            intent.putExtra(Constants.keyUserID, offererID);
+            startActivity(intent);
+        }
     }
 
 }

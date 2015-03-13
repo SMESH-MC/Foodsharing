@@ -1,14 +1,15 @@
 package de.htwds.mada.foodsharing;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewStub;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -20,7 +21,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class ResultActivity extends Activity {
@@ -47,7 +47,9 @@ public class ResultActivity extends Activity {
             }
         });
 
+        new RetrieveOffersTask().execute();
 
+        /*
         final Handler handler = new Handler();
         Thread thread=new Thread(new Runnable() {
             @Override
@@ -109,6 +111,7 @@ public class ResultActivity extends Activity {
             }
         });
         thread.start();
+        */
 
     }
 
@@ -134,4 +137,78 @@ public class ResultActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private class RetrieveOffersTask extends AsyncTask<Void, Void, Void>
+    {
+        private boolean errorOccurred=false;
+        private String errorMessage="";
+        private ProgressDialog progressDialog;
+
+
+        protected void onPreExecute()
+        {
+            progressDialog=new ProgressDialog(ResultActivity.this);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage("Retrieving all offers ...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+        }
+
+        protected Void doInBackground(Void... params)
+        {
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair(Constants.JSON_TRANS_ID,Constants.BLA_WORD));
+
+            JSONParser jsonParser = new JSONParser();
+            JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_ALL_OFFERS, Constants.JSON_GET, nameValuePairs);
+
+
+            if (!returnObject.optBoolean(Constants.SUCCESS_WORD)) {
+                errorOccurred=true;
+                errorMessage="Failed to fetch offers!";
+                return null;
+            }
+
+            JSONArray offerJSONArray=returnObject.optJSONArray(Constants.OFFERS_WORD);
+            if (offerJSONArray == null)
+            {
+                errorOccurred=true;
+                errorMessage="Failed to fetch offers!";
+                return null;
+            }
+            JSONObject offerJSONObject;
+            for (int i=0; i<offerJSONArray.length(); i++) {
+                offerJSONObject = offerJSONArray.optJSONObject(i);
+                if (offerJSONObject != null) {
+                    listAdapter.add(new Offer(ResultActivity.this, offerJSONObject));
+                }
+                else
+                {
+                    errorOccurred=true;
+                    errorMessage="Could not retrieve offer info " + i;
+                    return null;
+                }
+            }
+
+            return null;
+        }
+
+
+        protected void onPostExecute(Void param)
+        {
+            if (errorOccurred) {
+                progressDialog.dismiss();
+                Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            listAdapter.notifyDataSetChanged();
+            resultListView.setAdapter(listAdapter);
+            progressDialog.dismiss();
+            Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
+        }
+    }
+
 }

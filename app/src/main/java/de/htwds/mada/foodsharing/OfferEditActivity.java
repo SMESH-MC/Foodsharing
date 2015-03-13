@@ -220,7 +220,7 @@ public class OfferEditActivity extends Activity {
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
 
             photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+            //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE); //wenn einkommentieren, dann in {}
         }
     }
@@ -243,7 +243,8 @@ public class OfferEditActivity extends Activity {
         Thread thread=new Thread(new Runnable() {
             @Override
             public void run() {
-                currentOffer.setPicture(photoFile);
+                //currentOffer.setPicture(photoFile);
+                currentOffer.setPicture(bitmap);
                 currentOffer.setShortDescription(titleInputField.getText().toString().trim());
                 currentOffer.setLongDescription(longDescriptionInputField.getText().toString().trim());
                 currentOffer.setCategory(1);

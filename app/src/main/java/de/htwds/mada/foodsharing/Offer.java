@@ -1,6 +1,7 @@
 package de.htwds.mada.foodsharing;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Base64;
@@ -129,6 +130,31 @@ public class Offer {
 
         try ( FileOutputStream fileOutputStream = new FileOutputStream(photoFile)) {
             fileOutputStream.write(picture);
+            fileOutputStream.close();
+        } catch (Exception ex) {
+            pictureWrittenSuccessfully=false;
+            Log.e(LOG, Constants.IMAGE_TO_FILE_ERROR);
+        }
+
+        if (pictureWrittenSuccessfully) {
+            Log.i(LOG, Constants.PICTURE_WRITTEN);
+            this.setPicture(photoFile);
+        }
+        else {
+
+            if (photoFile != null) photoFile.delete();
+            this.picture=null;
+        }
+    }
+
+    public void setPicture(Bitmap picture)
+    {
+        boolean pictureWrittenSuccessfully=true;
+
+        File photoFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
+
+        try ( FileOutputStream fileOutputStream = new FileOutputStream(photoFile)) {
+            picture.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
             fileOutputStream.close();
         } catch (Exception ex) {
             pictureWrittenSuccessfully=false;
