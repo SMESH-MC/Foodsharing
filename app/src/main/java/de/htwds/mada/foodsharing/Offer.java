@@ -47,6 +47,8 @@ public class Offer {
 
     private Context context;
 
+    private boolean objectHasBeenEdited=false;
+
     //Exceptions
 
     public Offer(Context context) {
@@ -58,6 +60,11 @@ public class Offer {
         this.fillObjectFromJSONObject(offerJSONObject);
 
         this.context=context;
+    }
+
+    public void setEdited(boolean edited)
+    {
+        this.objectHasBeenEdited=edited;
     }
 
     public int getOfferID() {        return offerID;    }
@@ -339,8 +346,12 @@ public class Offer {
         HttpEntity httpRequestEntity = builder.build();
 
         JSONParser jsonParser = new JSONParser();
-        //JSONObject returnObject = jsonParser.makeMultipartHttpRequest("http://odin.htw-saarland.de/create_offer_with_image.php", httpRequestEntity);
-        JSONObject returnObject = jsonParser.makeMultipartHttpRequest("http://odin.htw-saarland.de/create_offer_with_image_and_transaction.php", httpRequestEntity);
+        JSONObject returnObject;
+        if (this.objectHasBeenEdited) {
+            returnObject = jsonParser.makeMultipartHttpRequest("http://odin.htw-saarland.de/update_offer.php", httpRequestEntity);
+        }
+        else
+            returnObject = jsonParser.makeMultipartHttpRequest("http://odin.htw-saarland.de/create_offer_with_image_and_transaction.php", httpRequestEntity);
 
         if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
             errorMessage=returnObject.optString(Constants.MESSAGE_WORD, Constants.UNKNOWN_ERROR);

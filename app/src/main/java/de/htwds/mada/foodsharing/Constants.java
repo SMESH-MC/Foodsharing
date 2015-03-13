@@ -97,8 +97,8 @@ public class Constants {
     //multiple words
     public static final String LOG_SUCCESS = "Success: ";
     public static final String LOG_MESSAGE = ", message: ";
-    public static final String CREATE_OFFER = "create offer";
-    public static final String EDIT_OFFER =  "Edit offer";
+    public static final String CREATE_OFFER = "Create Offer";
+    public static final String EDIT_OFFER =  "Edit Offer";
     public static final String OFFER_ID = "Offer id: ";
     public static final String BEST_BEFORE = "Best before ";
     public static final String CATEGORY = "Category: ";

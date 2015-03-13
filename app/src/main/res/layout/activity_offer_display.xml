@@ -187,5 +187,19 @@
             android:textColor="@color/abc_primary_text_material_dark"
             android:textStyle="bold"
             android:onClick="showContactInfo" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Offer"
+            android:id="@+id/offerDisplayEditOfferButton"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/blue06"
+            android:textAllCaps="false"
+            android:textColor="@color/abc_primary_text_material_dark"
+            android:textStyle="bold"
+            android:onClick="editOffer"
+            android:visibility="invisible" />
+
     </LinearLayout>
 </ScrollView>

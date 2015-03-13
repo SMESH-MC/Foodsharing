@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,7 +38,11 @@ public class OfferDisplayActivity extends Activity {
     private TextView bestBeforeDateDisplayField;
     private TextView longDescriptionDisplayField;
     private TextView dateAddedDisplayField;
+
+    private Button editOfferButton;
     private Offer currentOffer;
+    private int offererID=-1;
+    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +58,18 @@ public class OfferDisplayActivity extends Activity {
         photoImageView = (ImageView)findViewById(R.id.offerDisplayPicture);
 
 
+        editOfferButton = (Button)findViewById(R.id.offerDisplayEditOfferButton);
+
+
         currentOffer=new Offer(OfferDisplayActivity.this);
         currentOffer.setOfferID(getIntent().getIntExtra(Constants.keyOfferID, -1));
         Log.i(LOG, Constants.OFFER_ID + currentOffer.getOfferID());
+
+        currentUser=new User(this);
+
+
+        new RetrieveOfferInfoTask().execute();
+        /*
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -90,6 +104,7 @@ public class OfferDisplayActivity extends Activity {
             }
         });
         thread.start();
+        */
     }
 
 
@@ -116,14 +131,18 @@ public class OfferDisplayActivity extends Activity {
     }
 
     public void editOffer(View view){
-        Intent i = new Intent(getApplicationContext(), OfferEditActivity.class);
-        startActivity(i);
+        Intent intent = new Intent(getApplicationContext(), OfferEditActivity.class);
+        intent.putExtra(Constants.keyOfferID, currentOffer.getOfferID());
+        startActivity(intent);
     }
 
 
     public void showContactInfo(View view)
     {
-        new RetrieveContactInfoTask().execute();
+        //Intent intent = new Intent(OfferDisplayActivity.this, ProfileDisplayActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ProfileDisplayActivity.class);
+        intent.putExtra(Constants.keyUserID, offererID);
+        startActivity(intent);
         /*
         final int currentTransactionID=currentOffer.getTransactID();
         final Handler handler = new Handler();
@@ -184,20 +203,20 @@ public class OfferDisplayActivity extends Activity {
     }
 
 
-    private class RetrieveContactInfoTask extends AsyncTask<Void, Void, Void>
+    private class RetrieveOfferInfoTask extends AsyncTask<Void, Void, Void>
     {
         private boolean errorOccurred=false;
         private String errorMessage="";
         private ProgressDialog progressDialog;
+        private File pictureFile;
 
-        private int offererID=-1;
 
         protected void onPreExecute()
         {
             progressDialog=new ProgressDialog(OfferDisplayActivity.this);
             progressDialog.setIndeterminate(true);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage("Retrieving contact info...");
+            progressDialog.setMessage("Retrieving offer info...");
             progressDialog.setCancelable(false);
             progressDialog.show();
 
@@ -205,6 +224,15 @@ public class OfferDisplayActivity extends Activity {
 
         protected Void doInBackground(Void... params)
         {
+            if (!currentOffer.fillObjectFromDatabase()) {
+                Log.e(LOG, currentOffer.getErrorMessage());
+                errorOccurred=true;
+                errorMessage=currentOffer.getErrorMessage();
+                return null;
+            }
+
+            pictureFile=currentOffer.getPicture();
+
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("tid", String.valueOf(currentOffer.getTransactID())));
 
@@ -230,6 +258,7 @@ public class OfferDisplayActivity extends Activity {
 
             offererID=transactionJSONObject.optInt("offerer_id", -1);
 
+
             return null;
         }
 
@@ -242,11 +271,22 @@ public class OfferDisplayActivity extends Activity {
                 return;
             }
 
+            titleDisplayField.setText(currentOffer.getShortDescription());
+            longDescriptionDisplayField.setText(currentOffer.getLongDescription());
+            bestBeforeDateDisplayField.setText(String.format("%tF", currentOffer.getMhd()));
+            dateAddedDisplayField.setText(String.format("%1$tF %1$tT", currentOffer.getDateAdded()));
+            if (pictureFile != null) {
+                photoImageView.setImageURI(null);
+                photoImageView.setImageURI(Uri.fromFile(currentOffer.getPicture()));
+            }
+            if (offererID == currentUser.getUid())
+            {
+                editOfferButton.setVisibility(View.VISIBLE);
+            }
             progressDialog.dismiss();
+            Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
+
             Log.i(LOG, "Offerer ID  " + offererID);
-            Intent intent = new Intent(OfferDisplayActivity.this, ProfileDisplayActivity.class);
-            intent.putExtra(Constants.keyUserID, offererID);
-            startActivity(intent);
         }
     }
 
