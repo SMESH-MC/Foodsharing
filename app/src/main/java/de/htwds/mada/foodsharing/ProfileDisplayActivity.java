@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Displays the profile of a given user
+ */
 
 public class ProfileDisplayActivity extends Activity {
     private static final String LOG=ProfileDisplayActivity.class.getName();
@@ -37,15 +40,21 @@ public class ProfileDisplayActivity extends Activity {
         firstNameDisplayField = (TextView) findViewById(R.id.profile_edit_first_name_tv);
         lastNameDisplayField = (TextView) findViewById(R.id.profile_edit_last_name_tv);
         userNameDisplayField = (TextView) findViewById(R.id.profile_display_username_tv);
-        emailDisplayField=(TextView) findViewById(R.id.profile_edit_email_et);
-        phoneDisplayField=(TextView) findViewById(R.id.profile_edit_phone_et);
-        cityDisplayField=(TextView) findViewById(R.id.profile_edit_place_of_res_et);
-        streetDisplayField=(TextView) findViewById(R.id.profile_edit_street_address_et);
-        houseNumberDisplayField=(TextView) findViewById(R.id.profile_edit_street_address_no_et);
-        zipcodeDisplayField=(TextView) findViewById(R.id.profile_edit_zipcode_et);
-        countryDisplayField=(TextView) findViewById(R.id.profile_displ_country_tv);
+        emailDisplayField = (TextView) findViewById(R.id.profile_edit_email_et);
+        phoneDisplayField = (TextView) findViewById(R.id.profile_edit_phone_et);
+        cityDisplayField = (TextView) findViewById(R.id.profile_edit_place_of_res_et);
+        streetDisplayField = (TextView) findViewById(R.id.profile_edit_street_address_et);
+        houseNumberDisplayField = (TextView) findViewById(R.id.profile_edit_street_address_no_et);
+        zipcodeDisplayField = (TextView) findViewById(R.id.profile_edit_zipcode_et);
+        countryDisplayField = (TextView) findViewById(R.id.profile_displ_country_tv);
 
-        displayedUser=new User(this, getIntent().getIntExtra(Constants.keyUserID, -1));
+        displayedUser = new User(this, getIntent().getIntExtra(Constants.keyUserID, -1));
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
         final Handler handler = new Handler();
         Thread thread=new Thread(new Runnable() {
             @Override

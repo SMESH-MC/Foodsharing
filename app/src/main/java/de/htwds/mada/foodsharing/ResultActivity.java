@@ -5,14 +5,17 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -20,98 +23,129 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Comparator;
 
+/**
+ * Lists all offers in the database and provides the functionality to sort and filter them
+ */
 
 public class ResultActivity extends Activity {
     private static final String LOG=ResultActivity.class.getName();
-    private ArrayAdapter<Offer> listAdapter;
+    private ArrayAdapter<Offer> offerArrayAdapter;
     private ListView resultListView;
+
+    private Spinner sortSpinner;
+    private EditText filterInputField;
+    private ArrayAdapter<String> spinnerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        listAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1);
-        resultListView = (ListView) findViewById(R.id.activity_result_listview);
+        sortSpinner=(Spinner) findViewById(R.id.resultActivitySortSpinner);
+        filterInputField=(EditText) findViewById(R.id.resultActivityFilter);
+
+        resultListView=(ListView) findViewById(R.id.activity_result_listview);
         resultListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Offer offer = (Offer) parent.getItemAtPosition(position);
                 Log.i(LOG, Constants.OFFER_ID + offer.getOfferID());
-                //TODO: if offer belongs to current user start OfferEditActivity
                 Intent intent = new Intent(ResultActivity.this, OfferDisplayActivity.class);
                 intent.putExtra(Constants.keyOfferID, offer.getOfferID());
                 startActivity(intent);
             }
         });
 
-        new RetrieveOffersTask().execute();
 
-        /*
-        final Handler handler = new Handler();
-        Thread thread=new Thread(new Runnable() {
+        spinnerAdapter=new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
+        spinnerAdapter.add("Not sorted");
+        spinnerAdapter.add("Short Description");
+        spinnerAdapter.add("Long Description");
+        spinnerAdapter.add("Best Before Date");
+        spinnerAdapter.add("Date Added");
+        sortSpinner.setAdapter(spinnerAdapter);
+
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void run() {
-
-                ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
-                nameValuePairs.add(new BasicNameValuePair(Constants.JSON_TRANS_ID,Constants.BLA_WORD));
-
-                JSONParser jsonParser = new JSONParser();
-                JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_ALL_OFFERS, Constants.JSON_GET, nameValuePairs);
-
-
-                if (!returnObject.optBoolean(Constants.SUCCESS_WORD)) {
-                    handler.post(new Runnable (){
-                        @Override
-                        public void run() {
-                            Toast.makeText(getBaseContext(), "Failed to fetch offers!", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    return;
-                }
-
-                JSONArray offerJSONArray=returnObject.optJSONArray(Constants.OFFERS_WORD);
-                if (offerJSONArray == null)
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String selectionString=(String)parent.getItemAtPosition(position);
+                final Collator collator=Collator.getInstance();
+                switch(selectionString)
                 {
-                    handler.post(new Runnable (){
-                        @Override
-                        public void run() {
-                            Toast.makeText(getBaseContext(), "Failed to fetch offers!", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    return;
-                }
-                JSONObject offerJSONObject;
-                for (int i=0; i<offerJSONArray.length(); i++) {
-                    offerJSONObject = offerJSONArray.optJSONObject(i);
-                    if (offerJSONObject != null) {
-                        listAdapter.add(new Offer(ResultActivity.this, offerJSONObject));
-                    }
-                    else
-                    {
-                        final int offerNumber=i;
-                        handler.post(new Runnable (){
+                    case "Not sorted":
+                        offerArrayAdapter.sort(null);
+                        break;
+                    case "Short Description":
+                        offerArrayAdapter.sort(new Comparator<Offer>() {
                             @Override
-                            public void run() {
-                                Toast.makeText(getBaseContext(), "Could not retrieve offer info " + offerNumber, Toast.LENGTH_LONG).show();
+                            public int compare(Offer lhs, Offer rhs) {
+                                return collator.compare(lhs.getShortDescription(), rhs.getShortDescription());
                             }
                         });
-                    }
+                        break;
+                    case "Long Description":
+                        offerArrayAdapter.sort(new Comparator<Offer>() {
+                            @Override
+                            public int compare(Offer lhs, Offer rhs) {
+                                return collator.compare(lhs.getLongDescription(), rhs.getLongDescription());
+                            }
+                        });
+                        break;
+                    case "Best Before Date":
+                        offerArrayAdapter.sort(new Comparator<Offer>() {
+                            @Override
+                            public int compare(Offer lhs, Offer rhs) {
+                                return lhs.getMhd().compareTo(rhs.getMhd());
+                            }
+                        });
+                        break;
+                    case "Date Added":
+                        offerArrayAdapter.sort(new Comparator<Offer>() {
+                            @Override
+                            public int compare(Offer lhs, Offer rhs) {
+                                return lhs.getDateAdded().compareTo(rhs.getDateAdded());
+                            }
+                        });
+                        break;
                 }
-                handler.post(new Runnable (){
-                    @Override
-                    public void run() {
-                        listAdapter.notifyDataSetChanged();
-                        resultListView.setAdapter(listAdapter);
-                        Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
-                    }
-                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+                Log.i(LOG, "Nothing selected.");
             }
         });
-        thread.start();
-        */
+
+        filterInputField.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                ResultActivity.this.offerArrayAdapter.getFilter().filter(cs);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        offerArrayAdapter =new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        new RetrieveOffersTask().execute();
 
     }
 
@@ -182,7 +216,7 @@ public class ResultActivity extends Activity {
             for (int i=0; i<offerJSONArray.length(); i++) {
                 offerJSONObject = offerJSONArray.optJSONObject(i);
                 if (offerJSONObject != null) {
-                    listAdapter.add(new Offer(ResultActivity.this, offerJSONObject));
+                    offerArrayAdapter.add(new Offer(ResultActivity.this, offerJSONObject));
                 }
                 else
                 {
@@ -204,8 +238,8 @@ public class ResultActivity extends Activity {
                 return;
             }
 
-            listAdapter.notifyDataSetChanged();
-            resultListView.setAdapter(listAdapter);
+            offerArrayAdapter.notifyDataSetChanged();
+            resultListView.setAdapter(offerArrayAdapter);
             progressDialog.dismiss();
             Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
         }
