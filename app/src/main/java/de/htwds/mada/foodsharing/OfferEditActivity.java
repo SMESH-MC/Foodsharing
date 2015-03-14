@@ -248,6 +248,8 @@ public class OfferEditActivity extends Activity {
 
     public void publishOfferButtonClicked(View view)
     {
+        new PublishOfferTask().execute();
+        /*
         final Handler handler = new Handler();
         Thread thread=new Thread(new Runnable() {
             @Override
@@ -283,6 +285,7 @@ public class OfferEditActivity extends Activity {
             }
         });
         thread.start();
+        */
 
     }
 
@@ -341,4 +344,56 @@ public class OfferEditActivity extends Activity {
         }
     }
 
+    private class PublishOfferTask extends AsyncTask<Void, Void, Void>
+    {
+        private boolean errorOccurred=false;
+        private String errorMessage="";
+        private ProgressDialog progressDialog;
+
+
+        protected void onPreExecute()
+        {
+            progressDialog=new ProgressDialog(OfferEditActivity.this);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage("Publishing offer ...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+        }
+
+        protected Void doInBackground(Void... params)
+        {
+            //currentOffer.setPicture(photoFile);
+            currentOffer.setPicture(bitmap);
+            currentOffer.setShortDescription(titleInputField.getText().toString().trim());
+            currentOffer.setLongDescription(longDescriptionInputField.getText().toString().trim());
+            currentOffer.setCategory(1);
+            currentOffer.setMhd(bestBeforeDateInputField.getText().toString().trim());
+            currentOffer.setPickupTimes(Constants.BLA_WORD);
+
+            if (!currentOffer.saveObjectToDatabase()) {
+                Log.e(LOG, currentOffer.getErrorMessage());
+                errorOccurred=true;
+                errorMessage=currentOffer.getErrorMessage();
+                return null;
+            }
+
+            return null;
+        }
+
+
+        protected void onPostExecute(Void param)
+        {
+            if (errorOccurred) {
+                progressDialog.dismiss();
+                Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            progressDialog.dismiss();
+            Toast.makeText(getBaseContext(), Constants.OFFER_EDITED, Toast.LENGTH_LONG).show();
+            finish();
+        }
+    }
 }

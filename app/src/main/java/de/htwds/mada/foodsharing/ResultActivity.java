@@ -33,20 +33,23 @@ public class ResultActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        listAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1);
+        listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         resultListView = (ListView) findViewById(R.id.activity_result_listview);
         resultListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Offer offer = (Offer) parent.getItemAtPosition(position);
                 Log.i(LOG, Constants.OFFER_ID + offer.getOfferID());
-                //TODO: if offer belongs to current user start OfferEditActivity
                 Intent intent = new Intent(ResultActivity.this, OfferDisplayActivity.class);
                 intent.putExtra(Constants.keyOfferID, offer.getOfferID());
                 startActivity(intent);
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         new RetrieveOffersTask().execute();
 
         /*

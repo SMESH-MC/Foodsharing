@@ -55,19 +55,25 @@ public class OfferDisplayActivity extends Activity {
         dateAddedDisplayField = (TextView) findViewById(R.id.offerDisplayDateAdded);
 
 
-        photoImageView = (ImageView)findViewById(R.id.offerDisplayPicture);
+        photoImageView = (ImageView) findViewById(R.id.offerDisplayPicture);
 
 
-        editOfferButton = (Button)findViewById(R.id.offerDisplayEditOfferButton);
+        editOfferButton = (Button) findViewById(R.id.offerDisplayEditOfferButton);
 
 
-        currentOffer=new Offer(OfferDisplayActivity.this);
+        currentOffer = new Offer(OfferDisplayActivity.this);
         currentOffer.setOfferID(getIntent().getIntExtra(Constants.keyOfferID, -1));
         Log.i(LOG, Constants.OFFER_ID + currentOffer.getOfferID());
 
-        currentUser=new User(this);
+        currentUser = new User(this);
 
 
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
         new RetrieveOfferInfoTask().execute();
         /*
         Thread thread = new Thread(new Runnable() {
