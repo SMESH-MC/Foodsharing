@@ -186,6 +186,7 @@
             android:textAllCaps="false"
             android:textColor="@color/abc_primary_text_material_dark"
             android:textStyle="bold"
+            android:layout_marginBottom="5dp"
             android:onClick="showContactInfo" />
 
         <Button
@@ -199,6 +200,7 @@
             android:textColor="@color/abc_primary_text_material_dark"
             android:textStyle="bold"
             android:onClick="editOffer"
+            android:layout_marginTop="5dp"
             android:visibility="invisible" />
 
     </LinearLayout>

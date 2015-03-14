@@ -1,46 +1,70 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="fill_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="de.htwds.mada.foodsharing.ResultActivity"
-    android:orientation="vertical"
-    android:baselineAligned="false"
-    android:background="@color/background_floating_material_dark">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/holo_green_light"
+    tools:context="de.htwds.mada.foodsharing.ResultActivity">
 
-    <RelativeLayout
+    <ProgressBar android:id="@+id/result_progress" style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp" android:visibility="gone" />
+
+    <EditText
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@android:color/holo_green_light">
+        android:layout_height="wrap_content"
+        android:id="@+id/resultActivityFilter"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:hint="Type search text" />
 
-        <ProgressBar android:id="@+id/result_progress" style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp" android:visibility="gone" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:id="@+id/resultActivitySearchButton"
+        android:textAllCaps="false"
+        android:background="@color/blue06"
+        android:textColor="@color/abc_primary_text_material_dark"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/resultActivityFilter"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"/>
 
-        <TextView android:text="@string/result_tv" android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:id="@+id/textView12"
-            android:textColor="@color/abc_primary_text_disable_only_material_dark"
-            android:textStyle="bold"
-            android:layout_gravity="top|center"
-            android:layout_alignParentTop="false"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="false" />
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/resultActivitySortSpinner"
+        android:layout_below="@+id/resultActivityFilter"
+        android:layout_centerHorizontal="true"
+        android:background="@color/blue06"
+        android:textColor="@color/abc_primary_text_material_dark"
+        android:textStyle="bold"
+        android:spinnerMode="dropdown"
+        android:elevation="2dp" />
 
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/activity_result_listview"
-            android:layout_marginTop="44dp"
-            android:visibility="visible"
-            android:nestedScrollingEnabled="false"
-            android:choiceMode="singleChoice"
-            android:footerDividersEnabled="false"
-            android:headerDividersEnabled="false"
-            android:clickable="true"
-            android:background="@color/button_material_light" />
-    </RelativeLayout>
+    <TextView android:text="@string/result_tv" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:id="@+id/textView12"
+        android:textColor="@color/abc_primary_text_disable_only_material_dark"
+        android:textStyle="bold"
+        android:layout_below="@+id/resultActivitySortSpinner"
+        android:layout_centerHorizontal="true" />
 
-</FrameLayout>
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_result_listview"
+        android:visibility="visible"
+        android:nestedScrollingEnabled="false"
+        android:choiceMode="singleChoice"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:clickable="true"
+        android:layout_below="@+id/textView12"
+        android:background="@color/button_material_light" />
+    <!-- android:layout_marginTop="44dp" -->
+
+</RelativeLayout>
+

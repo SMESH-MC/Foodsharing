@@ -315,13 +315,13 @@ public class Offer {
         errorMessage= Constants.EMPTY_STRING;
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
         nameValuePairs.add(new BasicNameValuePair(Constants.JSON_TRANS_ID,String.valueOf(this.getTransactID())));
-        nameValuePairs.add(new BasicNameValuePair(Constants.JSON_IMAGE_ID,"4")); //was macht die 4 hier?
+        nameValuePairs.add(new BasicNameValuePair(Constants.JSON_IMAGE_ID,"4"));
         nameValuePairs.add(new BasicNameValuePair(Constants.TITLE_WORD, this.getShortDescription()));
         nameValuePairs.add(new BasicNameValuePair(Constants.DESCRIPTION_ABK, this.getLongDescription()));
-        nameValuePairs.add(new BasicNameValuePair("bbd", this.getMhd().toString())); // was ist bbd?
+        nameValuePairs.add(new BasicNameValuePair("bbd", this.getMhd().toString()));
         Timestamp timestamp=new Timestamp(this.getDateAdded().getTimeInMillis());
         nameValuePairs.add(new BasicNameValuePair(Constants.DATE_WORD, timestamp.toString()));
-        nameValuePairs.add(new BasicNameValuePair(Constants.JSON_VALID_DATE, "1423216493")); //was kommt hier rein?
+        nameValuePairs.add(new BasicNameValuePair(Constants.JSON_VALID_DATE, "1423216493"));
 
         JSONParser jsonParser = new JSONParser();
         JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_CREATE_OFFER, Constants.JSON_POST, nameValuePairs);

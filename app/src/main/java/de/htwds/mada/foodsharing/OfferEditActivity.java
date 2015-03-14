@@ -68,27 +68,27 @@ public class OfferEditActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_edit);
 
-        activityTitle=(TextView)findViewById(R.id.offerEditActivityTitle);
+        activityTitle = (TextView) findViewById(R.id.offerEditActivityTitle);
 
-        photoImageView = (ImageView)findViewById(R.id.offerPicture);
+        photoImageView = (ImageView) findViewById(R.id.offerPicture);
 
         titleInputField = (EditText) findViewById(R.id.title_tv);
 
 
-        editCategoryField = (EditText)findViewById(R.id.offer_category_edit);
+        editCategoryField = (EditText) findViewById(R.id.offer_category_edit);
         changeCategoryEditFocusChangeListener();
         changeCategoryEditOnClickListener();
 
         bestBeforeDate = Calendar.getInstance();
-        bestBeforeDateInputField = (EditText)findViewById(R.id.best_before_date_edit);
+        bestBeforeDateInputField = (EditText) findViewById(R.id.best_before_date_edit);
         changeDateEditOnClickListener();
         changeDateEditFocusChangeListener();
-        
+
         longDescriptionInputField = (EditText) findViewById(R.id.detailed_description_tv);
         publishOfferButton = (Button) findViewById(R.id.publish_offer_btn);
 
 
-        currentOffer=new Offer(OfferEditActivity.this);
+        currentOffer = new Offer(OfferEditActivity.this);
         currentOffer.setOfferID(getIntent().getIntExtra(Constants.keyOfferID, -1));
         activityTitle.setText(Constants.CREATE_OFFER);
 
@@ -96,43 +96,6 @@ public class OfferEditActivity extends Activity {
             activityTitle.setText(Constants.EDIT_OFFER);
             currentOffer.setEdited(true);
             new RetrieveOfferInfoTask().execute();
-            /*
-            final Handler handler = new Handler();
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    if (currentOffer.fillObjectFromDatabase()) {
-                        photoFile = currentOffer.getPicture();
-                        final File pictureFile=photoFile;
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                titleInputField.setText(currentOffer.getShortDescription());
-                                longDescriptionInputField.setText(currentOffer.getLongDescription());
-                                bestBeforeDateInputField.setText(String.format("%tF", currentOffer.getMhd()));
-                                if (pictureFile != null) {
-                                    photoImageView.setImageURI(null);
-                                    photoImageView.setImageURI(Uri.fromFile(pictureFile));
-                                }
-                                //publishOfferButton.setEnabled(true);
-                                Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    } else {
-                        Log.e(LOG, currentOffer.getErrorMessage());
-                        final String errorMessage = currentOffer.getErrorMessage();
-
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
-                            }
-                        });
-                   }
-                }
-            });
-            thread.start();
-            */
         }
 
 
