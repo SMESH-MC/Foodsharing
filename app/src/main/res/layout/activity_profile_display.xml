@@ -252,19 +252,6 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/profile_display_cancle_btn"
-            android:id="@+id/profileDisplayCancelButton"
-            android:layout_weight="1"
-            android:textAllCaps="false"
-            android:onClick="buttonClicked"
-            android:textSize="12sp"
-            android:textColor="@color/abc_primary_text_material_dark"
-            android:textStyle="bold"
-            android:background="@color/blue06" />
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
             android:text="@string/profile_display_edit_btn"
             android:id="@+id/profileDisplayEditButton"
             android:layout_weight="1"
@@ -275,19 +262,19 @@
             android:textStyle="bold"
             android:background="@color/blue06" />
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_display_show_tr_history"
-            android:id="@+id/profile_edit_show_tr_history"
-            android:layout_weight="1"
-            android:textAllCaps="false"
-            android:onClick="buttonClicked"
-            android:textSize="12sp"
-            android:textColor="@color/abc_primary_text_material_dark"
-            android:textStyle="bold"
-            android:background="@color/blue06"
-            android:visibility="gone" />
+        <!--<Button-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/profile_display_show_tr_history"-->
+            <!--android:id="@+id/profile_edit_show_tr_history"-->
+            <!--android:layout_weight="1"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:onClick="buttonClicked"-->
+            <!--android:textSize="12sp"-->
+            <!--android:textColor="@color/abc_primary_text_material_dark"-->
+            <!--android:textStyle="bold"-->
+            <!--android:background="@color/blue06"-->
+            <!--android:visibility="gone" />-->
 
     </LinearLayout>
 

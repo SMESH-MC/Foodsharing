@@ -58,7 +58,8 @@
                     android:drawableLeft="@drawable/ic_action_person"
                     android:drawablePadding="10dp"
                     android:singleLine="true"
-                    android:textColor="@android:color/background_light" />
+                    android:textColor="@android:color/background_light"
+                    android:textColorHint="@android:color/white" />
                 <!-- auto-fill dummy mail -> android:text="abc@a.de"-->
 
 
@@ -75,7 +76,8 @@
                     android:singleLine="true"
                     android:drawableLeft="@drawable/ic_action_accounts"
                     android:drawablePadding="10dp"
-                    android:textColor="@android:color/background_light" />
+                    android:textColor="@android:color/background_light"
+                    android:textColorHint="@android:color/white" />
                 <!-- auto-fill dummy password -> android:text="123456"-->
 
 

@@ -135,16 +135,14 @@ public class ProfileDisplayActivity extends Activity {
     public void buttonClicked(View view){
         Button btn = (Button) view;
         switch (btn.getId()) {
-            case R.id.profileDisplayCancelButton:
-                finish();
-                break;
+
             case R.id.profileDisplayEditButton:
                 Intent intent=new Intent(ProfileDisplayActivity.this, ProfileEditActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.profile_edit_show_tr_history:
-                fillIntent(TransactionHistoryActivity.class);
-                break;
+//            case R.id.profile_edit_show_tr_history:
+//                fillIntent(TransactionHistoryActivity.class);
+//                break;
             default:
         }
     }
