@@ -1,6 +1,13 @@
 package de.htwds.mada.foodsharing;
 
+import android.content.Context;
+import android.preference.PreferenceManager;
+
 public class Constants {
+
+    public static String getHttpBaseUrl(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString("httpBaseUrl", "http://odin.htw-saarland.de/");
+    }
 
     public static final String keyOfferID = Constants.class.getName() + "keyOfferID";
     public static final String keyUserID = Constants.class.getName() + "keyUserID";

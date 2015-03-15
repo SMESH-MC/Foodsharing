@@ -149,6 +149,7 @@ public class OfferDisplayActivity extends Activity {
 
             pictureFile=currentOffer.getPicture();
 
+            /*
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("tid", String.valueOf(currentOffer.getTransactID())));
 
@@ -172,7 +173,13 @@ public class OfferDisplayActivity extends Activity {
                 return null;
             }
 
-            offererID=transactionJSONObject.optInt("offerer_id", -1);
+            */
+            try { offererID=currentOffer.getOffererID(); }
+            catch (Exception e) {
+                errorOccurred=true;
+                errorMessage="Could not retrieve offerer ID!";
+                return null;
+            }
 
 
             return null;

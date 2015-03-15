@@ -385,10 +385,10 @@ public class Offer {
         JSONParser jsonParser = new JSONParser();
         JSONObject returnObject;
         if (this.objectHasBeenEdited) {
-            returnObject = jsonParser.makeMultipartHttpRequest("http://odin.htw-saarland.de/update_offer_with_image.php", httpRequestEntity);
+            returnObject = jsonParser.makeMultipartHttpRequest(Constants.HTTP_BASE_URL + "update_offer_with_image.php", httpRequestEntity);
         }
         else
-            returnObject = jsonParser.makeMultipartHttpRequest("http://odin.htw-saarland.de/create_offer_with_image_and_transaction.php", httpRequestEntity);
+            returnObject = jsonParser.makeMultipartHttpRequest(Constants.HTTP_BASE_URL + "create_offer_with_image_and_transaction.php", httpRequestEntity);
 
         if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
             errorMessage=returnObject.optString(Constants.MESSAGE_WORD, Constants.UNKNOWN_ERROR);
