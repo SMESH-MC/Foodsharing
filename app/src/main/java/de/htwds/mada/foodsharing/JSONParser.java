@@ -84,7 +84,6 @@ class JSONParser {
             return jObj;
         }
 
-        Log.i(LOG, "Hallo " + json);
 
         try{
             jObj = new JSONObject(json);

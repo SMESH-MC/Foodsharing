@@ -92,6 +92,7 @@ public class Constants {
     public static final String PASSWORD_WORD = "password";
     public static final String DIALOG_WORD = "dialog";
     public static final String NEW_PROFILE = "newProfile";
+    public static final String RESULTS_FILTERED_BY_USER = "resultsFilteredByUser";
 
 
     //multiple words

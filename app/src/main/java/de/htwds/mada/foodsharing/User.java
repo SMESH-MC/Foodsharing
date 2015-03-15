@@ -1,7 +1,6 @@
 package de.htwds.mada.foodsharing;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import org.apache.http.NameValuePair;
@@ -43,13 +42,13 @@ public class User {
 
     public User(Context context)
     {
-        setUid(PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.currentUserIdKey, -1));
+        setID(PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.currentUserIdKey, -1));
     }
 
     public User(Context context, int uid)
     {
-        setUid(uid);
-        //PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(Constants.currentUserIdKey, getUid()).apply();
+        setID(uid);
+        //PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(Constants.currentUserIdKey, getID()).apply();
     }
 
     public void setEdited(boolean edited)
@@ -57,8 +56,8 @@ public class User {
         this.objectHasBeenEdited=edited;
     }
 
-    int getUid() {        return uid;    }
-    void setUid(int uid) {
+    int getID() {        return uid;    }
+    void setID(int uid) {
         //test if positive
         /*
         if (uid >= 0) {
@@ -186,7 +185,7 @@ public class User {
     {
         errorMessage = Constants.EMPTY_STRING;
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
-        nameValuePairs.add(new BasicNameValuePair(Constants.USER_ID_ABK, String.valueOf(this.getUid())));
+        nameValuePairs.add(new BasicNameValuePair(Constants.USER_ID_ABK, String.valueOf(this.getID())));
 
         JSONParser jsonParser = new JSONParser();
         JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_USER, Constants.JSON_GET, nameValuePairs);
@@ -236,7 +235,7 @@ public class User {
         JSONParser jsonParser = new JSONParser();
         JSONObject returnObject;
         if (this.objectHasBeenEdited) {
-            nameValuePairs.add(new BasicNameValuePair("id", String.valueOf(this.getUid())));
+            nameValuePairs.add(new BasicNameValuePair("id", String.valueOf(this.getID())));
             returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + "update_user.php", Constants.JSON_POST, nameValuePairs);
         }
         else

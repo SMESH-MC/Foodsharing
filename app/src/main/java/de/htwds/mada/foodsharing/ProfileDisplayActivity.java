@@ -207,8 +207,8 @@ public class ProfileDisplayActivity extends Activity {
             countryDisplayField.setText(displayedUser.getCountry());
             additionalDisplayField.setText(currentUser.getAdditional());
 
-            Log.i(LOG, "Displayed user: " + displayedUser.getUid() + "Current user: " + currentUser.getUid());
-            if (displayedUser.getUid() == currentUser.getUid())
+            Log.i(LOG, "Displayed user: " + displayedUser.getID() + "Current user: " + currentUser.getID());
+            if (displayedUser.getID() == currentUser.getID())
             {
                 profileEditButton.setVisibility(View.VISIBLE);
             }

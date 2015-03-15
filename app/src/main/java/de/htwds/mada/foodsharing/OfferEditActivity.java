@@ -65,10 +65,10 @@ public class OfferEditActivity extends Activity {
         registerViews();
 
         currentOffer = new Offer(OfferEditActivity.this);
-        currentOffer.setOfferID(getIntent().getIntExtra(Constants.keyOfferID, -1));
+        currentOffer.setID(getIntent().getIntExtra(Constants.keyOfferID, -1));
         activityTitle.setText(Constants.CREATE_OFFER);
 
-        if (currentOffer.getOfferID() >= 0) {
+        if (currentOffer.getID() >= 0) {
             activityTitle.setText(Constants.EDIT_OFFER);
             currentOffer.setEdited(true);
             new RetrieveOfferInfoTask().execute();
@@ -191,7 +191,7 @@ public class OfferEditActivity extends Activity {
             Bundle extras = data.getExtras();
             bitmap = (Bitmap)extras.get(Constants.DATA_WORD);
             photoImageView.setImageBitmap(bitmap);
-            if (currentOffer.getOfferID() >= 0) {
+            if (currentOffer.getID() >= 0) {
                 currentOffer.setPictureEdited(true);
             }
         }

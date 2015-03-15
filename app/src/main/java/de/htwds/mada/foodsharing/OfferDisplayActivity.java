@@ -61,8 +61,8 @@ public class OfferDisplayActivity extends Activity {
 
 
         currentOffer = new Offer(OfferDisplayActivity.this);
-        currentOffer.setOfferID(getIntent().getIntExtra(Constants.keyOfferID, -1));
-        Log.i(LOG, Constants.OFFER_ID + currentOffer.getOfferID());
+        currentOffer.setID(getIntent().getIntExtra(Constants.keyOfferID, -1));
+        Log.i(LOG, Constants.OFFER_ID + currentOffer.getID());
 
         currentUser = new User(this);
 
@@ -101,7 +101,7 @@ public class OfferDisplayActivity extends Activity {
 
     public void editOffer(View view){
         Intent intent = new Intent(getApplicationContext(), OfferEditActivity.class);
-        intent.putExtra(Constants.keyOfferID, currentOffer.getOfferID());
+        intent.putExtra(Constants.keyOfferID, currentOffer.getID());
         startActivity(intent);
     }
 
@@ -195,7 +195,7 @@ public class OfferDisplayActivity extends Activity {
                 photoImageView.setImageURI(null);
                 photoImageView.setImageURI(Uri.fromFile(currentOffer.getPicture()));
             }
-            if (offererID == currentUser.getUid())
+            if (offererID == currentUser.getID())
             {
                 editOfferButton.setVisibility(View.VISIBLE);
                 showContactInformationButton.setVisibility(View.INVISIBLE);
