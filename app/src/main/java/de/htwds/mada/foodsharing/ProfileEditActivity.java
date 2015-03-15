@@ -146,9 +146,9 @@ public class ProfileEditActivity extends Activity {
     public void buttonClicked(View view){
         Button btn = (Button) view;
         switch (btn.getId()) {
-            case R.id.profileEditCancelButton:
-                finish();
-                break;
+//            case R.id.profileEditCancelButton:
+//                finish();
+//                break;
             case R.id.profile_edit_offer_btn:
                 startActivity(new Intent(ProfileEditActivity.this, OfferEditActivity.class));
                 break;

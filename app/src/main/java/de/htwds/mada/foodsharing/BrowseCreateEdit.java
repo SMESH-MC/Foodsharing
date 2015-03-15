@@ -154,9 +154,9 @@ public class BrowseCreateEdit extends Activity { // implements AdapterView.OnIte
                         fillIntent(ProfileEditActivity.class);
                         break;
                     //
-                    case R.id.browseCreateEditTransactionHistoryButton:
-                        fillIntent(TransactionHistoryActivity.class);
-                        break;
+//                    case R.id.browseCreateEditTransactionHistoryButton:
+//                        fillIntent(TransactionHistoryActivity.class);
+//                        break;
                     case R.id.browseCreateEditExitButton:
 
                         SharedPreferences pref = getApplicationContext().getSharedPreferences(Constants.USER_ID, 0); // 0 - for private mode

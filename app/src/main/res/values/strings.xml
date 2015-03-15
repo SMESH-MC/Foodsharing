@@ -60,7 +60,7 @@
     <string name="add_contact_info">Add Contact Info</string>
     <string name="publish_offer_btn">Publish Offer</string>
     <string name="get_location_btn">Get Location</string>
-    <string name="edit_offer_btn">Edit Offer</string>
+    <string name="edit_offer_btn">Edit your Offer</string>
     <string name="new_profile_btn">New Profile</string>
     <string name="account_display_save_btn">Save</string>
     <string name="account_display_cancel_btn">Cancel</string>
@@ -113,5 +113,6 @@
     <string name="save_btn">Save</string>
     <string name="action_register">Register</string>
     <string name="profile_edit_zip_plz">zip</string>
+    <string name="login_title">Foodshare</string>
 
 </resources>

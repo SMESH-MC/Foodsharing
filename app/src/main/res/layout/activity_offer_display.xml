@@ -42,7 +42,6 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:orientation="horizontal"
             android:paddingBottom="30dp">
 
             <TextView
@@ -55,45 +54,45 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/offer_display_pick_up_tv"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="@string/offer_display_pick_up_tv"
-                android:textColor="@color/abc_primary_text_material_dark"
-                android:textStyle="bold" />
-
-            <TextView
                 android:id="@+id/offer_category_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="right"
                 android:text="@string/offer_category_tv"
                 android:textColor="@color/abc_primary_text_material_dark"
                 android:textStyle="bold" />
+
+            <!--<TextView-->
+                <!--android:id="@+id/offer_display_pick_up_tv"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:gravity="center_horizontal"-->
+                <!--android:text="@string/offer_display_pick_up_tv"-->
+                <!--android:textColor="@color/abc_primary_text_material_dark"-->
+                <!--android:textStyle="bold" />-->
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/offer_usernameTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:text="@string/username_et"
-            android:textColor="@color/abc_primary_text_material_dark"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+        <!--<TextView-->
+            <!--android:id="@+id/offer_usernameTitle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:text="@string/username_et"-->
+            <!--android:textColor="@color/abc_primary_text_material_dark"-->
+            <!--android:textSize="15sp"-->
+            <!--android:textStyle="bold" />-->
 
-        <TextView
-            android:id="@+id/offer_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="30dp"
-            android:text="@string/username_et"
-            android:textColor="@color/abc_primary_text_material_dark"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+        <!--<TextView-->
+            <!--android:id="@+id/offer_username"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingBottom="30dp"-->
+            <!--android:text="@string/username_et"-->
+            <!--android:textColor="@color/abc_primary_text_material_dark"-->
+            <!--android:textSize="15sp"-->
+            <!--android:textStyle="bold" />-->
 
         <TextView
             android:id="@+id/detailed_description_tvTitle"
@@ -103,7 +102,8 @@
             android:text="@string/detailed_description_tv"
             android:textColor="@color/abc_primary_text_material_dark"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/detailed_description_tv"
@@ -113,27 +113,28 @@
             android:text="@string/detailed_description_tv"
             android:textColor="@color/abc_primary_text_material_dark"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_weight="1" />
 
-        <TextView
-            android:id="@+id/offer_display_get_location_tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:text="@string/offer_display_get_location_tv"
-            android:textColor="@color/abc_primary_text_material_dark"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+        <!--<TextView-->
+            <!--android:id="@+id/offer_display_get_location_tvTitle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:text="@string/offer_display_get_location_tv"-->
+            <!--android:textColor="@color/abc_primary_text_material_dark"-->
+            <!--android:textSize="15sp"-->
+            <!--android:textStyle="bold" />-->
 
-        <TextView
-            android:id="@+id/offer_display_get_location_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="30dp"
-            android:text="@string/offer_display_get_location_tv"
-            android:textColor="@color/abc_primary_text_material_dark"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+        <!--<TextView-->
+            <!--android:id="@+id/offer_display_get_location_tv"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingBottom="30dp"-->
+            <!--android:text="@string/offer_display_get_location_tv"-->
+            <!--android:textColor="@color/abc_primary_text_material_dark"-->
+            <!--android:textSize="15sp"-->
+            <!--android:textStyle="bold" />-->
 
         <TextView
             android:id="@+id/offerDisplayDateAddedTitle"
@@ -185,18 +186,5 @@
             android:layout_marginBottom="1dp"
             android:visibility="invisible" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:id="@+id/offerDisplayCancelButton"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/blue06"
-            android:textAllCaps="false"
-            android:textColor="@color/abc_primary_text_material_dark"
-            android:textStyle="bold"
-            android:layout_marginTop="1dp"
-            android:layout_marginBottom="1dp"
-            android:onClick="cancelButtonClicked" />
     </LinearLayout>
 </ScrollView>
