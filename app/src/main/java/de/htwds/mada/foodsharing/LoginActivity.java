@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.app.ProgressDialog;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -69,6 +70,8 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     private SignInButton mPlusSignInButton;
     private View mSignOutButtons;
     private View mLoginFormView;
+
+    String email, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,8 +159,8 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString().trim();
-        String password = mPasswordView.getText().toString().trim();
+        email = mEmailView.getText().toString().trim();
+        password = mPasswordView.getText().toString().trim();
 
         boolean cancel = false;
         View focusView = null;
@@ -192,6 +195,8 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             // form field with an error.
             focusView.requestFocus();
         } else {
+            new LoginViaDatabaseTask().execute();
+            /*
             final String emailString=email;
             final String passwordString=password;
             final Handler handler = new Handler();
@@ -229,6 +234,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                 }
             });
             thread.start();
+            */
 
 
 
@@ -470,4 +476,64 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     }
 
 
+
+    private class LoginViaDatabaseTask extends AsyncTask<Void, Void, Void>
+    {
+        private boolean errorOccurred=false;
+        private String errorMessage="";
+        private ProgressDialog progressDialog;
+        int userID;
+
+
+        protected void onPreExecute()
+        {
+            progressDialog=new ProgressDialog(LoginActivity.this);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage("Trying to login via database ...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+        }
+
+        protected Void doInBackground(Void... params)
+        {
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair(Constants.EMAIL_WORD, email));
+            nameValuePairs.add(new BasicNameValuePair(Constants.PASSWORD_WORD, password));
+
+            JSONParser jsonParser = new JSONParser();
+            JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_USERID_WITH_EMAIL_AND_PASSWORD, Constants.JSON_GET, nameValuePairs);
+            userID = returnObject.optInt(Constants.USER_ID_ABK, -1);
+
+            if (userID <= 0)
+            {
+                Log.e(LOG, Constants.LOGIN_INCORRECT);
+                errorOccurred=true;
+                errorMessage=Constants.LOGIN_INCORRECT;
+                return null;
+
+            }
+
+            return null;
+        }
+
+
+        protected void onPostExecute(Void param)
+        {
+            if (errorOccurred) {
+                progressDialog.dismiss();
+                Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            Log.i(LOG, Constants.USER_ID_MESSAGE + userID);
+
+            PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit().putInt(Constants.currentUserIdKey, userID).apply();
+            User user=new User(LoginActivity.this, userID);
+            Intent i = new Intent(getApplicationContext(), BrowseCreateEdit.class);
+            progressDialog.dismiss();
+            startActivity(i);
+        }
+    }
 }
