@@ -8,22 +8,17 @@ import android.util.Base64;
 import android.util.Log;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.sql.Timestamp;
-import java.text.ParseException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,6 +28,7 @@ public class Offer {
     private static final String LOG=Offer.class.getName();
 
     private int offerID;
+    private int offererID=-1;
     private int transactID;
     private int category;
     private String shortDescription;
@@ -68,14 +64,42 @@ public class Offer {
         this.objectHasBeenEdited=edited;
     }
 
-    public int getOfferID() {        return offerID;    }
-    public void setOfferID(int offerID) {
+    public int getID() {        return offerID;    }
+    public void setID(int offerID) {
         /*
         if (offerID < 0) {
             throw new NumberFormatException(NOT_NEGATIVE);
         }
         */
         this.offerID = offerID;
+    }
+
+    public int getOffererID() throws Exception
+    {
+        if (offererID > 0) return offererID;
+
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+        nameValuePairs.add(new BasicNameValuePair("tid", String.valueOf(this.getTransactID())));
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + "get_transaction_details.php", Constants.JSON_GET, nameValuePairs);
+
+        if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
+        {
+            throw new Exception("Could not retrieve offerer ID!");
+
+        }
+
+        JSONArray transactionJSONArray=returnObject.optJSONArray("transaction");
+        JSONObject transactionJSONObject=transactionJSONArray.optJSONObject(0);
+        if (transactionJSONObject == null)
+        {
+            throw new Exception("Could not retrieve offerer ID!");
+        }
+
+        offererID=transactionJSONObject.optInt("offerer_id", -1);
+
+        return offererID;
     }
 
     public int getTransactID() {        return transactID;    }
@@ -237,7 +261,7 @@ public class Offer {
     public boolean fillObjectFromDatabase() {
         errorMessage = Constants.EMPTY_STRING;
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
-        nameValuePairs.add(new BasicNameValuePair(Constants.OFFER_ID_ABK, String.valueOf(this.getOfferID())));
+        nameValuePairs.add(new BasicNameValuePair(Constants.OFFER_ID_ABK, String.valueOf(this.getID())));
 
         JSONParser jsonParser = new JSONParser();
         JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_OFFER, Constants.JSON_GET, nameValuePairs);
@@ -264,7 +288,7 @@ public class Offer {
     }
 
     private void fillObjectFromJSONObject(JSONObject offerJSONObject)    {
-        this.setOfferID(offerJSONObject.optInt(Constants.ID_ABK, -1));
+        this.setID(offerJSONObject.optInt(Constants.ID_ABK, -1));
         this.setTransactID(offerJSONObject.optInt(Constants.JSON_TRANS_ID, -1));
         this.setShortDescription(offerJSONObject.optString(Constants.TITLE_WORD));
         this.setLongDescription(offerJSONObject.optString(Constants.DESCRIPTION_ABK));
@@ -354,7 +378,7 @@ public class Offer {
         builder.addTextBody(Constants.JSON_VALID_DATE, "1423216493");
         builder.addTextBody("offerer_id", String.valueOf(PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.currentUserIdKey, -1)));
         if (this.objectHasBeenEdited) {
-            builder.addTextBody("id", String.valueOf(this.getOfferID()));
+            builder.addTextBody("id", String.valueOf(this.getID()));
         }
         HttpEntity httpRequestEntity = builder.build();
 

@@ -23,13 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 
@@ -50,7 +44,7 @@ public class OfferEditActivity extends Activity {
     //title field
     private EditText titleInputField;
     //category field
-    private EditText editCategoryField;
+    private EditText categoryInputField;
     //mhd field
     private static Calendar bestBeforeDate;
     private EditText bestBeforeDateInputField;
@@ -68,31 +62,13 @@ public class OfferEditActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_edit);
 
-        activityTitle = (TextView) findViewById(R.id.offerEditActivityTitle);
-
-        photoImageView = (ImageView) findViewById(R.id.offerPicture);
-
-        titleInputField = (EditText) findViewById(R.id.title_tv);
-
-
-        editCategoryField = (EditText) findViewById(R.id.offer_category_edit);
-        changeCategoryEditFocusChangeListener();
-        changeCategoryEditOnClickListener();
-
-        bestBeforeDate = Calendar.getInstance();
-        bestBeforeDateInputField = (EditText) findViewById(R.id.best_before_date_edit);
-        changeDateEditOnClickListener();
-        changeDateEditFocusChangeListener();
-
-        longDescriptionInputField = (EditText) findViewById(R.id.detailed_description_tv);
-        publishOfferButton = (Button) findViewById(R.id.publish_offer_btn);
-
+        registerViews();
 
         currentOffer = new Offer(OfferEditActivity.this);
-        currentOffer.setOfferID(getIntent().getIntExtra(Constants.keyOfferID, -1));
+        currentOffer.setID(getIntent().getIntExtra(Constants.keyOfferID, -1));
         activityTitle.setText(Constants.CREATE_OFFER);
 
-        if (currentOffer.getOfferID() >= 0) {
+        if (currentOffer.getID() >= 0) {
             activityTitle.setText(Constants.EDIT_OFFER);
             currentOffer.setEdited(true);
             new RetrieveOfferInfoTask().execute();
@@ -101,28 +77,17 @@ public class OfferEditActivity extends Activity {
 
     }
 
+    private void registerViews()
+    {
+        activityTitle = (TextView) findViewById(R.id.offerEditActivityTitle);
 
-    private void changeCategoryEditOnClickListener() {
-        editCategoryField.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View w) {
-                onCategorieEditClick();
-            }
-        });
-    }
+        photoImageView = (ImageView) findViewById(R.id.offerPicture);
+
+        titleInputField = (EditText) findViewById(R.id.title_tv);
 
 
-    private void changeDateEditOnClickListener() {
-        bestBeforeDateInputField.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onDateEditClick();
-            }
-        });
-    }
-
-    private void changeCategoryEditFocusChangeListener() {
-        editCategoryField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        categoryInputField = (EditText) findViewById(R.id.offer_category_edit);
+        categoryInputField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
@@ -130,9 +95,21 @@ public class OfferEditActivity extends Activity {
                 }
             }
         });
+        categoryInputField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View w) {
+                onCategorieEditClick();
+            }
+        });
 
-    }
-    private void changeDateEditFocusChangeListener() {
+        bestBeforeDate = Calendar.getInstance();
+        bestBeforeDateInputField = (EditText) findViewById(R.id.best_before_date_edit);
+        bestBeforeDateInputField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onDateEditClick();
+            }
+        });
         bestBeforeDateInputField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -141,6 +118,11 @@ public class OfferEditActivity extends Activity {
                 }
             }
         });
+
+        longDescriptionInputField = (EditText) findViewById(R.id.detailed_description_tv);
+
+        publishOfferButton = (Button) findViewById(R.id.publish_offer_btn);
+
     }
 
     private void onCategorieEditClick() {
@@ -188,8 +170,14 @@ public class OfferEditActivity extends Activity {
         //makes sure any app can handle the Intent:
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
 
-            //photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
-            //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+            try {
+                photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(getBaseContext(), "Error trying to get big picture, only thumbnail will be acquired: " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            }
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
@@ -203,7 +191,7 @@ public class OfferEditActivity extends Activity {
             Bundle extras = data.getExtras();
             bitmap = (Bitmap)extras.get(Constants.DATA_WORD);
             photoImageView.setImageBitmap(bitmap);
-            if (currentOffer.getOfferID() >= 0) {
+            if (currentOffer.getID() >= 0) {
                 currentOffer.setPictureEdited(true);
             }
         }
@@ -211,6 +199,7 @@ public class OfferEditActivity extends Activity {
 
     public void publishOfferButtonClicked(View view)
     {
+        if (!formToObject()) return;
         new PublishOfferTask().execute();
         /*
         final Handler handler = new Handler();
@@ -250,6 +239,42 @@ public class OfferEditActivity extends Activity {
         thread.start();
         */
 
+    }
+
+    private boolean formToObject()
+    {
+        boolean formCorrectlyFilled=true;
+        View firstWrongField=null;
+
+        //currentOffer.setPicture(photoFile);
+        currentOffer.setPicture(bitmap);
+        /*
+        try { currentOffer.setPicture(bitmap); }
+        catch (Exception e) { emailInputField.setError(e.getLocalizedMessage()); formCorrectlyFilled=false; if (firstWrongField == null) firstWrongField=longDescriptionInputField;}
+        */
+
+        try { currentOffer.setShortDescription(titleInputField.getText().toString().trim()); }
+        catch (Exception e) { titleInputField.setError(e.getLocalizedMessage()); formCorrectlyFilled=false; if (firstWrongField == null) firstWrongField=titleInputField; }
+
+        try { currentOffer.setLongDescription(longDescriptionInputField.getText().toString().trim()); }
+        catch (Exception e) { longDescriptionInputField.setError(e.getLocalizedMessage()); formCorrectlyFilled=false; if (firstWrongField == null) firstWrongField=longDescriptionInputField; }
+
+        //try { currentOffer.setCategory(Integer.parseInt(categoryInputField.getText().toString().trim())); }
+        try { currentOffer.setCategory(3); }
+        catch (Exception e) { categoryInputField.setError(e.getLocalizedMessage()); formCorrectlyFilled=false; if (firstWrongField == null) firstWrongField=categoryInputField;}
+
+        try { currentOffer.setMhd(bestBeforeDateInputField.getText().toString().trim()); }
+        catch (Exception e) { bestBeforeDateInputField.setError(e.getLocalizedMessage()); formCorrectlyFilled=false; if (firstWrongField == null) firstWrongField=bestBeforeDateInputField;}
+
+        /*
+        try { currentOffer.setPickupTimes(Constants.BLA_WORD); }
+        catch (Exception e) { pickupTimesInputField.setError(e.getLocalizedMessage()); formCorrectlyFilled=false; if (firstWrongField == null) firstWrongField=pickupTimesInputField;}
+        */
+
+        if (firstWrongField != null)
+            firstWrongField.requestFocus();
+
+        return formCorrectlyFilled;
     }
 
     private class RetrieveOfferInfoTask extends AsyncTask<Void, Void, Void>
@@ -327,14 +352,6 @@ public class OfferEditActivity extends Activity {
 
         protected Void doInBackground(Void... params)
         {
-            //currentOffer.setPicture(photoFile);
-            currentOffer.setPicture(bitmap);
-            currentOffer.setShortDescription(titleInputField.getText().toString().trim());
-            currentOffer.setLongDescription(longDescriptionInputField.getText().toString().trim());
-            currentOffer.setCategory(1);
-            currentOffer.setMhd(bestBeforeDateInputField.getText().toString().trim());
-            currentOffer.setPickupTimes(Constants.BLA_WORD);
-
             if (!currentOffer.saveObjectToDatabase()) {
                 Log.e(LOG, currentOffer.getErrorMessage());
                 errorOccurred=true;

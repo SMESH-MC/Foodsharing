@@ -40,11 +40,57 @@ public class ResultActivity extends Activity {
     private EditText filterInputField;
     private ArrayAdapter<String> spinnerAdapter;
 
+    boolean showOffersOnlyForGivenUser=false;
+    User loggedInUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
+        registerViews();
+
+        Intent intent=getIntent();
+        showOffersOnlyForGivenUser=intent.getBooleanExtra(Constants.RESULTS_FILTERED_BY_USER, false);
+        if (showOffersOnlyForGivenUser)
+        {
+            loggedInUser=new User(this);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        offerArrayAdapter=new ArrayAdapter<>(ResultActivity.this, android.R.layout.simple_list_item_1);
+        new RetrieveOffersTask().execute();
+
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_result, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void registerViews()
+    {
         sortSpinner=(Spinner) findViewById(R.id.resultActivitySortSpinner);
         filterInputField=(EditText) findViewById(R.id.resultActivityFilter);
 
@@ -53,16 +99,16 @@ public class ResultActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Offer offer = (Offer) parent.getItemAtPosition(position);
-                Log.i(LOG, Constants.OFFER_ID + offer.getOfferID());
+                Log.i(LOG, Constants.OFFER_ID + offer.getID());
                 Intent intent = new Intent(ResultActivity.this, OfferDisplayActivity.class);
-                intent.putExtra(Constants.keyOfferID, offer.getOfferID());
+                intent.putExtra(Constants.keyOfferID, offer.getID());
                 startActivity(intent);
             }
         });
 
 
         spinnerAdapter=new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
-        spinnerAdapter.add("Not sorted");
+        //spinnerAdapter.add("Not sorted");
         spinnerAdapter.add("Short Description");
         spinnerAdapter.add("Long Description");
         spinnerAdapter.add("Best Before Date");
@@ -77,9 +123,13 @@ public class ResultActivity extends Activity {
                 final Collator collator=Collator.getInstance();
                 switch(selectionString)
                 {
+                    /*
                     case "Not sorted":
+                        //offerArrayAdapter=new ArrayAdapter<>(ResultActivity.this, android.R.layout.simple_list_item_1);
+                        //new RetrieveOffersTask().execute();
                         offerArrayAdapter.sort(null);
                         break;
+                        */
                     case "Short Description":
                         offerArrayAdapter.sort(new Comparator<Offer>() {
                             @Override
@@ -141,37 +191,6 @@ public class ResultActivity extends Activity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        offerArrayAdapter =new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        new RetrieveOffersTask().execute();
-
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_result, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private class RetrieveOffersTask extends AsyncTask<Void, Void, Void>
     {
         private boolean errorOccurred=false;
@@ -216,7 +235,16 @@ public class ResultActivity extends Activity {
             for (int i=0; i<offerJSONArray.length(); i++) {
                 offerJSONObject = offerJSONArray.optJSONObject(i);
                 if (offerJSONObject != null) {
-                    offerArrayAdapter.add(new Offer(ResultActivity.this, offerJSONObject));
+                    Offer offer=new Offer(ResultActivity.this, offerJSONObject);
+                    if (showOffersOnlyForGivenUser)
+                    {
+                        try { if (loggedInUser.getID() != offer.getOffererID()) continue; }
+                        catch (Exception e) {
+                            Log.e(LOG, "Could not retrieve offererID!");
+                            continue;
+                        }
+                    }
+                    offerArrayAdapter.add(offer);
                 }
                 else
                 {

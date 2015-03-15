@@ -1,9 +1,10 @@
 package de.htwds.mada.foodsharing;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,42 +20,54 @@ import android.widget.Toast;
 public class ProfileDisplayActivity extends Activity {
     private static final String LOG=ProfileDisplayActivity.class.getName();
 
+    private TextView emailDisplayField;
+    private TextView userNameDisplayField;
     private TextView firstNameDisplayField;
     private TextView lastNameDisplayField;
-    private TextView userNameDisplayField;
-    private TextView emailDisplayField;
-    private TextView phoneDisplayField;
-    private TextView cityDisplayField;
+    //private TextView phoneDisplayField;
     private TextView streetDisplayField;
     private TextView houseNumberDisplayField;
     private TextView zipcodeDisplayField;
+    private TextView cityDisplayField;
     private TextView countryDisplayField;
+    private TextView additionalDisplayField;
 
-    private User displayedUser;
+    private Button profileEditButton;
+
+    private User displayedUser, currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_display);
 
+        emailDisplayField = (TextView) findViewById(R.id.profileEditEmail);
+        userNameDisplayField = (TextView) findViewById(R.id.profile_display_username_tv);
         firstNameDisplayField = (TextView) findViewById(R.id.profile_edit_first_name_tv);
         lastNameDisplayField = (TextView) findViewById(R.id.profile_edit_last_name_tv);
-        userNameDisplayField = (TextView) findViewById(R.id.profile_display_username_tv);
-        emailDisplayField = (TextView) findViewById(R.id.profile_edit_email_et);
-        phoneDisplayField = (TextView) findViewById(R.id.profile_edit_phone_et);
-        cityDisplayField = (TextView) findViewById(R.id.profile_edit_place_of_res_et);
-        streetDisplayField = (TextView) findViewById(R.id.profile_edit_street_address_et);
-        houseNumberDisplayField = (TextView) findViewById(R.id.profile_edit_street_address_no_et);
-        zipcodeDisplayField = (TextView) findViewById(R.id.profile_edit_zipcode_et);
+        //phoneDisplayField = (TextView) findViewById(R.id.profileEditPhone);
+        streetDisplayField = (TextView) findViewById(R.id.profileEditStreet);
+        houseNumberDisplayField = (TextView) findViewById(R.id.profileEditHouseNumber);
+        zipcodeDisplayField = (TextView) findViewById(R.id.profileEditZipcode);
+        cityDisplayField = (TextView) findViewById(R.id.profileEditCity);
         countryDisplayField = (TextView) findViewById(R.id.profile_displ_country_tv);
+        additionalDisplayField=(TextView) findViewById(R.id.profileDisplayAdditional);
+
+        profileEditButton = (Button) findViewById(R.id.profileDisplayEditButton);
 
         displayedUser = new User(this, getIntent().getIntExtra(Constants.keyUserID, -1));
+        currentUser = new User(this);
     }
 
     @Override
     protected void onResume()
     {
         super.onResume();
+
+        profileEditButton.setVisibility(View.INVISIBLE);
+
+        new RetrieveProfileInfoTask().execute();
+        /*
         final Handler handler = new Handler();
         Thread thread=new Thread(new Runnable() {
             @Override
@@ -93,6 +106,7 @@ public class ProfileDisplayActivity extends Activity {
             }
         });
         thread.start();
+        */
     }
 
 
@@ -117,16 +131,20 @@ public class ProfileDisplayActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-    public void profileDisplay(View view){
+
+    public void buttonClicked(View view){
         Button btn = (Button) view;
         switch (btn.getId()) {
-            case R.id.profile_display_edit_btn:
-                fillIntent(ProfileEditActivity.class);
+            case R.id.profileDisplayCancelButton:
+                finish();
+                break;
+            case R.id.profileDisplayEditButton:
+                Intent intent=new Intent(ProfileDisplayActivity.this, ProfileEditActivity.class);
+                startActivity(intent);
                 break;
             case R.id.profile_edit_show_tr_history:
                 fillIntent(TransactionHistoryActivity.class);
                 break;
-
             default:
         }
     }
@@ -135,5 +153,67 @@ public class ProfileDisplayActivity extends Activity {
         Intent i;
         i = new Intent(getApplicationContext(), activity);
         startActivity(i);
+    }
+
+    private class RetrieveProfileInfoTask extends AsyncTask<Void, Void, Void>
+    {
+        private boolean errorOccurred=false;
+        private String errorMessage="";
+        private ProgressDialog progressDialog;
+
+
+        protected void onPreExecute()
+        {
+            progressDialog=new ProgressDialog(ProfileDisplayActivity.this);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage("Retrieving profile info...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+        }
+
+        protected Void doInBackground(Void... params)
+        {
+            if (!displayedUser.fillObjectFromDatabase())
+            {
+                Log.e(LOG, displayedUser.getErrorMessage());
+                errorOccurred=true;
+                errorMessage=displayedUser.getErrorMessage();
+                return null;
+
+            }
+
+            return null;
+        }
+
+
+        protected void onPostExecute(Void param)
+        {
+            if (errorOccurred) {
+                progressDialog.dismiss();
+                Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            emailDisplayField.setText(displayedUser.getEmail());
+            userNameDisplayField.setText(displayedUser.getUsername());
+            firstNameDisplayField.setText(displayedUser.getVorname());
+            lastNameDisplayField.setText(displayedUser.getNachname());
+            streetDisplayField.setText(displayedUser.getStreet());
+            houseNumberDisplayField.setText(displayedUser.getHouseNumber());
+            zipcodeDisplayField.setText(String.valueOf(displayedUser.getPlz()));
+            cityDisplayField.setText(displayedUser.getCity());
+            countryDisplayField.setText(displayedUser.getCountry());
+            additionalDisplayField.setText(currentUser.getAdditional());
+
+            Log.i(LOG, "Displayed user: " + displayedUser.getID() + "Current user: " + currentUser.getID());
+            if (displayedUser.getID() == currentUser.getID())
+            {
+                profileEditButton.setVisibility(View.VISIBLE);
+            }
+            progressDialog.dismiss();
+            Toast.makeText(getBaseContext(), Constants.USER_FETCHED, Toast.LENGTH_LONG).show();
+        }
     }
 }

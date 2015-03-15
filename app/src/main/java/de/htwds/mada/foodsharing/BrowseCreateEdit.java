@@ -8,14 +8,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import java.util.Locale;
 
 
 public class BrowseCreateEdit extends Activity { // implements AdapterView.OnItemSelectedListener {
@@ -139,26 +135,29 @@ public class BrowseCreateEdit extends Activity { // implements AdapterView.OnIte
                 //switch to pass an intent for distinct search
                 switch (btn.getId()) {
                     //opens offering browser
-                    case R.id.browse_browse_btn:
+                    case R.id.browseCreateEditBrowseButton:
                         fillIntent(ResultActivity.class);
                         break;
                     // Opens OfferEdit to create new offer
-                    case R.id.browse_create_new_offer_btn:
+                    case R.id.browseCreateEditNewOfferButton:
                         fillIntent(OfferEditActivity.class);
                         break;
                     // Opens EditSearch to enter offer which will be edited
-                    case R.id.browse_create_edit_offer_btn:
-                        fillIntent(EditSearchActivity.class);
+                    case R.id.browseCreateEditEditMyOffersButton:
+                        Intent intent=new Intent(BrowseCreateEdit.this, ResultActivity.class);
+                        intent.putExtra(Constants.RESULTS_FILTERED_BY_USER, true);
+                        startActivity(intent);
+                        //fillIntent(EditSearchActivity.class);
                         break;
                     // Opens EditSearch to enter wanted profile
-                    case R.id.browse_edit_profile_btn:
+                    case R.id.browseCreateEditEditProfileButton:
                         fillIntent(ProfileEditActivity.class);
                         break;
                     //
-                    case R.id.browse_history_btn:
+                    case R.id.browseCreateEditTransactionHistoryButton:
                         fillIntent(TransactionHistoryActivity.class);
                         break;
-                    case R.id.browse_exit_btn:
+                    case R.id.browseCreateEditExitButton:
 
                         SharedPreferences pref = getApplicationContext().getSharedPreferences(Constants.USER_ID, 0); // 0 - for private mode
                         SharedPreferences.Editor editor = pref.edit();

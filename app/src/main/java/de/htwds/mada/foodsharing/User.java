@@ -1,7 +1,6 @@
 package de.htwds.mada.foodsharing;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import org.apache.http.NameValuePair;
@@ -30,6 +29,8 @@ public class User {
     private String vorname;
     private String nachname;
 
+    private boolean objectHasBeenEdited=false;
+
     //email regexp test
     private Pattern pattern;
     private Matcher matcher;
@@ -41,17 +42,22 @@ public class User {
 
     public User(Context context)
     {
-        setUid(PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.currentUserIdKey, -1));
+        setID(PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.currentUserIdKey, -1));
     }
 
     public User(Context context, int uid)
     {
-        setUid(uid);
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(Constants.currentUserIdKey, getUid()).apply();
+        setID(uid);
+        //PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(Constants.currentUserIdKey, getID()).apply();
     }
 
-    int getUid() {        return uid;    }
-    void setUid(int uid) {
+    public void setEdited(boolean edited)
+    {
+        this.objectHasBeenEdited=edited;
+    }
+
+    int getID() {        return uid;    }
+    void setID(int uid) {
         //test if positive
         /*
         if (uid >= 0) {
@@ -67,7 +73,7 @@ public class User {
     public void setEmail(String email) {
         //test if not empty
         if (email.trim().isEmpty()) {
-            throw new NullPointerException(Constants.NO_ARGUMENT);
+            throw new NullPointerException("Email address is required!");
         }
         //test if it is a correct email address
         pattern = Pattern.compile(Constants.EMAIL_REGEXP);
@@ -83,7 +89,7 @@ public class User {
     public void setPassword(char[] password) {
         //test if not empty
         if (password.length == 0 || password[0] == 0) {
-            throw new NullPointerException(Constants.NO_ARGUMENT);
+            throw new NullPointerException("Password is required!");
         }
         this.password = password;
     }
@@ -92,7 +98,7 @@ public class User {
     public void setUsername(String username) {
         //test if not empty
         if (username.trim().isEmpty()) {
-            throw new NullPointerException(Constants.NO_ARGUMENT);
+            throw new NullPointerException("Username is required!");
         }
         this.username = username.trim();
     }
@@ -122,6 +128,13 @@ public class User {
 
     public int getPlz() {        return plz;    }
     public void setPlz(int plz) {
+        if (plz < 0 ||  plz > 99999) {
+            throw new NumberFormatException(Constants.NO_VALID_PLZ);
+        }
+        this.plz = plz;
+    }
+    public void setPlz(String zipCode) {
+        int plz=Integer.parseInt(zipCode);
         if (plz < 0 ||  plz > 99999) {
             throw new NumberFormatException(Constants.NO_VALID_PLZ);
         }
@@ -172,7 +185,7 @@ public class User {
     {
         errorMessage = Constants.EMPTY_STRING;
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
-        nameValuePairs.add(new BasicNameValuePair(Constants.USER_ID_ABK, String.valueOf(this.getUid())));
+        nameValuePairs.add(new BasicNameValuePair(Constants.USER_ID_ABK, String.valueOf(this.getID())));
 
         JSONParser jsonParser = new JSONParser();
         JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_USER, Constants.JSON_GET, nameValuePairs);
@@ -220,7 +233,13 @@ public class User {
         nameValuePairs.add(new BasicNameValuePair(Constants.LAND_WORD, this.getCountry()));
 
         JSONParser jsonParser = new JSONParser();
-        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_CREATE_USER, Constants.JSON_POST, nameValuePairs);
+        JSONObject returnObject;
+        if (this.objectHasBeenEdited) {
+            nameValuePairs.add(new BasicNameValuePair("id", String.valueOf(this.getID())));
+            returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + "update_user.php", Constants.JSON_POST, nameValuePairs);
+        }
+        else
+            returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_CREATE_USER, Constants.JSON_POST, nameValuePairs);
 
         if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
             errorMessage=returnObject.optString(Constants.MESSAGE_WORD, Constants.UNKNOWN_ERROR);

@@ -13,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
@@ -212,6 +213,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                             Log.i(LOG, Constants.USER_ID_MESSAGE + userID);
 
                             if(userID > 0){
+                                PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit().putInt(Constants.currentUserIdKey, userID).apply();
                                 User user=new User(LoginActivity.this, userID);
                                 Intent i = new Intent(getApplicationContext(), BrowseCreateEdit.class);
                                 startActivity(i);
@@ -461,6 +463,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     // added for dummy login without user data
     void signInSuccess(){
 
+        PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit().putInt(Constants.currentUserIdKey, 4).apply();
         User currentUser=new User(this,4);
         Intent i = new Intent(getApplicationContext(), BrowseCreateEdit.class);
         startActivity(i);
