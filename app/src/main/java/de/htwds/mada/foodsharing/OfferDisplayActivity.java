@@ -6,15 +6,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +37,7 @@ public class OfferDisplayActivity extends Activity {
     private TextView dateAddedDisplayField;
 
     private Button editOfferButton;
+    private Button showContactInformationButton;
     private Offer currentOffer;
     private int offererID=-1;
     private User currentUser;
@@ -58,7 +56,8 @@ public class OfferDisplayActivity extends Activity {
         photoImageView = (ImageView) findViewById(R.id.offerDisplayPicture);
 
 
-        editOfferButton = (Button) findViewById(R.id.offerDisplayEditOfferButton);
+        editOfferButton=(Button)findViewById(R.id.offerDisplayEditOfferButton);
+        showContactInformationButton=(Button)findViewById(R.id.offerDisplayShowContactInformationButton);
 
 
         currentOffer = new Offer(OfferDisplayActivity.this);
@@ -75,42 +74,6 @@ public class OfferDisplayActivity extends Activity {
     {
         super.onResume();
         new RetrieveOfferInfoTask().execute();
-        /*
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (currentOffer.fillObjectFromDatabase()) {
-                    final File pictureFile=currentOffer.getPicture();
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            titleDisplayField.setText(currentOffer.getShortDescription());
-                            longDescriptionDisplayField.setText(currentOffer.getLongDescription());
-                            bestBeforeDateDisplayField.setText(String.format("%tF", currentOffer.getMhd()));
-                            dateAddedDisplayField.setText(String.format("%1$tF %1$tT", currentOffer.getDateAdded()));
-                            if (pictureFile != null) {
-                                photoImageView.setImageURI(null);
-                                photoImageView.setImageURI(Uri.fromFile(currentOffer.getPicture()));
-                            }
-                            Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
-                        }
-                    });
-                } else {
-                    Log.e(LOG, currentOffer.getErrorMessage());
-                    final String errorMessage = currentOffer.getErrorMessage();
-
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-                }
-            }
-        });
-        thread.start();
-        */
     }
 
 
@@ -149,65 +112,12 @@ public class OfferDisplayActivity extends Activity {
         Intent intent = new Intent(getApplicationContext(), ProfileDisplayActivity.class);
         intent.putExtra(Constants.keyUserID, offererID);
         startActivity(intent);
-        /*
-        final int currentTransactionID=currentOffer.getTransactID();
-        final Handler handler = new Handler();
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String errorMessage = Constants.EMPTY_STRING;
-                ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
-                nameValuePairs.add(new BasicNameValuePair("tid", String.valueOf(currentTransactionID)));
-
-                JSONParser jsonParser = new JSONParser();
-                JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + "get_transaction_details.php", Constants.JSON_GET, nameValuePairs);
-                boolean infoFetchedSuccessfully=true;
-
-                int offerer_id=-1;
-                if (!returnObject.optBoolean(Constants.SUCCESS_WORD)) infoFetchedSuccessfully=false;
-                else
-                {
-                    JSONArray transactionJSONArray=returnObject.optJSONArray("transaction");
-                    JSONObject transactionJSONObject=transactionJSONArray.optJSONObject(0);
-                    if (transactionJSONObject != null)
-                    {
-                        offerer_id=transactionJSONObject.optInt("offerer_id", -1);
-                    }
-                    else
-                    {
-                        infoFetchedSuccessfully=false;
-                    }
-                }
-                final int finalOffererID=offerer_id;
-
-                if (infoFetchedSuccessfully) {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.i(LOG, "Offerer ID  " + finalOffererID);
-                            Intent intent = new Intent(OfferDisplayActivity.this, ProfileDisplayActivity.class);
-                            intent.putExtra(Constants.keyUserID, finalOffererID);
-                            startActivity(intent);
-                        }
-                    });
-                }
-                else
-                {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getBaseContext(), "Could not retrieve offerer ID!", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-
-            }
-        });
-        thread.start();
-        */
-
     }
 
+    public void cancelButtonClicked(View view)
+    {
+        finish();
+    }
 
     private class RetrieveOfferInfoTask extends AsyncTask<Void, Void, Void>
     {
@@ -288,6 +198,7 @@ public class OfferDisplayActivity extends Activity {
             if (offererID == currentUser.getUid())
             {
                 editOfferButton.setVisibility(View.VISIBLE);
+                showContactInformationButton.setVisibility(View.INVISIBLE);
             }
             progressDialog.dismiss();
             Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();

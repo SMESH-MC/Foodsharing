@@ -62,7 +62,7 @@ public class ResultActivity extends Activity {
 
 
         spinnerAdapter=new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
-        spinnerAdapter.add("Not sorted");
+        //spinnerAdapter.add("Not sorted");
         spinnerAdapter.add("Short Description");
         spinnerAdapter.add("Long Description");
         spinnerAdapter.add("Best Before Date");
@@ -77,9 +77,13 @@ public class ResultActivity extends Activity {
                 final Collator collator=Collator.getInstance();
                 switch(selectionString)
                 {
+                    /*
                     case "Not sorted":
+                        //offerArrayAdapter=new ArrayAdapter<>(ResultActivity.this, android.R.layout.simple_list_item_1);
+                        //new RetrieveOffersTask().execute();
                         offerArrayAdapter.sort(null);
                         break;
+                        */
                     case "Short Description":
                         offerArrayAdapter.sort(new Comparator<Offer>() {
                             @Override
@@ -144,7 +148,7 @@ public class ResultActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        offerArrayAdapter =new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        offerArrayAdapter=new ArrayAdapter<>(ResultActivity.this, android.R.layout.simple_list_item_1);
         new RetrieveOffersTask().execute();
 
     }

@@ -1,13 +1,11 @@
 package de.htwds.mada.foodsharing;
 
-import android.preference.PreferenceActivity;
 import android.util.Log;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -17,16 +15,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 class JSONParser {
     private static final String LOG=JSONParser.class.getName();
 
-    private static InputStream is = null;
+    private static InputStream inputStream = null;
     private static JSONObject jObj = new JSONObject();
     private static String json = Constants.EMPTY_STRING;
 
@@ -42,7 +38,7 @@ class JSONParser {
 
                 HttpResponse httpResponse = httpClient.execute(httpPost);
                 HttpEntity httpResponseEntity = httpResponse.getEntity();
-                is = httpResponseEntity.getContent();
+                inputStream = httpResponseEntity.getContent();
             } else if (method.equals(Constants.JSON_GET)) {
                 String paramString = URLEncodedUtils.format(params, Constants.JSON_UTF);
                 url += Constants.QUESTIONMARK + paramString;
@@ -56,7 +52,7 @@ class JSONParser {
 
                 HttpResponse httpResponse = httpClient.execute(httpGet);
                 HttpEntity httpResponseEntity = httpResponse.getEntity();
-                is = httpResponseEntity.getContent();
+                inputStream = httpResponseEntity.getContent();
             }
         } catch (Exception e) {
             String errorMessage=e.getLocalizedMessage();
@@ -69,14 +65,14 @@ class JSONParser {
         }
 
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, Constants.JSON_ISO), 8);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Constants.JSON_ISO), 8);
             StringBuilder sb = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
                 sb.append(line).append(Constants.NEWLINE);
             }
             reader.close();
-            is.close();
+            inputStream.close();
             json = sb.toString();
         } catch (Exception e) {
             String errorMessage=e.getLocalizedMessage();
@@ -87,6 +83,8 @@ class JSONParser {
             } catch (JSONException ignored) { }
             return jObj;
         }
+
+        Log.i(LOG, "Hallo " + json);
 
         try{
             jObj = new JSONObject(json);
@@ -123,7 +121,7 @@ class JSONParser {
 
             HttpResponse httpResponse = httpClient.execute(httpPost);
             HttpEntity httpResponseEntity=httpResponse.getEntity();
-            is = httpResponseEntity.getContent();
+            inputStream = httpResponseEntity.getContent();
         } catch (Exception e) {
             String errorMessage=e.getLocalizedMessage();
             Log.e(LOG, Constants.HTTP_ERROR + errorMessage);
@@ -135,14 +133,14 @@ class JSONParser {
         }
 
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, Constants.JSON_ISO), 8);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Constants.JSON_ISO), 8);
             StringBuilder sb = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
                 sb.append(line).append(Constants.NEWLINE);
             }
             reader.close();
-            is.close();
+            inputStream.close();
             json = sb.toString();
         } catch (Exception e) {
             String errorMessage=e.getLocalizedMessage();
