@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +16,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
-public class BrowseCreateEdit extends Activity { // implements AdapterView.OnItemSelectedListener {
+public class BrowseCreateEdit extends ActionBarActivity { // implements AdapterView.OnItemSelectedListener {
     private Spinner spinner;
     private Intent i;
     private View browseLayout;
@@ -122,6 +124,7 @@ public class BrowseCreateEdit extends Activity { // implements AdapterView.OnIte
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 

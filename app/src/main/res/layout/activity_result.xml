@@ -15,7 +15,8 @@
         android:id="@+id/resultActivityFilter"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:hint="Type search text" />
+        android:textColor="@color/abc_primary_text_material_dark"
+        android:hint="@string/resultActivityFilterHint" />
 
     <Button
         android:layout_width="wrap_content"
@@ -31,26 +32,44 @@
         android:layout_alignParentEnd="true"
         android:visibility="gone"/>
 
-    <Spinner
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/resultActivitySortSpinner"
-        android:layout_below="@+id/resultActivityFilter"
-        android:layout_centerHorizontal="true"
-        android:background="@color/blue06"
-        android:textColor="@color/abc_primary_text_material_dark"
-        android:textStyle="bold"
-        android:spinnerMode="dropdown"
-        android:elevation="2dp" />
+        android:id="@+id/resultActivitySorter"
+        android:layout_below="@+id/resultActivityFilter">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:text="@string/resultActivitySorterLabel"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp" />
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/resultActivitySortSpinner"
+            android:spinnerMode="dropdown"
+            android:elevation="2dp"/>
+
+    </LinearLayout>
 
     <TextView android:text="@string/result_tv" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25sp"
-        android:id="@+id/textView12"
+        android:id="@+id/resultActivityResultsTitle"
         android:textColor="@color/abc_primary_text_disable_only_material_dark"
         android:textStyle="bold"
-        android:layout_below="@+id/resultActivitySortSpinner"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/resultActivitySorter"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
 
     <ListView
         android:layout_width="fill_parent"
@@ -62,9 +81,8 @@
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:clickable="true"
-        android:layout_below="@+id/textView12"
-        android:background="@color/button_material_light" />
-    <!-- android:layout_marginTop="44dp" -->
+        android:layout_below="@+id/resultActivityResultsTitle" />
+
 
 </RelativeLayout>
 

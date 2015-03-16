@@ -20,6 +20,7 @@ public class Constants {
     public static final String OFFER_EDITED = "Offer edited successfully!";
     public static final String SIGNED_OUT = "Sign out successful!";
     public static final String USER_FETCHED = "User data fetched successfully!";
+    //public static final String USER_FETCHED = "@string/userDataFetchedSuccessfully";
     public static final String WAIT_INFO = "Please wait.";
     public static final String PICTURE_WRITTEN = "Picture written successfully!";
 

@@ -34,6 +34,8 @@
     <string name="create_offer_tv">Angebot erstellen</string>
     <string name="offer_display_get_location_tv">Ort</string>
     <string name="offer_display_contact_info_tv">Kontaktinfo</string>
+    <string name="offerDisplayDateAdded">Angebot erstellt</string>
+    <string name="offerDisplayBestBeforeDate">MHD</string>
     <string name="edit_latest_offer_tv">Letztes Angebot</string>
     <string name="passwort_tv">Passwort</string>
     <string name="username_tv">Username</string>
@@ -44,6 +46,8 @@
     <string name="profile_displ_country_tv">Land</string>
     <string name="published_offers_tv">Meine Angebote</string>
     <string name="accepted_offers_tv">Erhaltenes</string>
+    <string name="resultActivityResultListTitle">Ergebnisse</string>
+    <string name="resultActivitySorterLabel">Sortiere nach:</string>
 
 
     <!-- buttons -->
@@ -81,7 +85,7 @@
     <string name="transaction_back_btn">Zurück</string>
 
     <!-- edit texts -->
-    <string name="offer_create_title_et">Angebot</string>
+    <string name="offer_create_title_et">Bezeichnung</string>
     <string name="best_before_date_edit">Haltbar bis</string>
     <string name="detailed_description_et">Beschreibung</string>
     <string name="searching_for_hint">Angebot</string>
@@ -102,7 +106,7 @@
     <string name="edit_search_go_btn">Los!</string>
     <string name="edit_search_et">Suche in…</string>
     <string name="browse_create_new_offer_btn">Neues Angebot</string>
-    <string name="browse_create_edit_offer_btn">Angebot bearbeiten</string>
+    <string name="browse_create_edit_offer_btn">Meine Angebote bearbeiten</string>
     <string name="browse_create_edit_profile_btn">Suche Profil</string>
     <string name="choose_category_btn">Wähle Kategorie</string>
     <string name="choose_mhd_btn">Wähle Haltbarkeit</string>
@@ -127,6 +131,8 @@
     <string name="hello_blank_fragment">Hallo leeres Fragment</string>
     <string name="action_register">Registrieren</string>
     <string name="profile_edit_zip_plz">PLZ</string>
+    <string name="resultActivityFilterHint">Suchbegriff</string>
 
 
+    <string name="userDataFetchedSuccessfully">Nutzerdaten erfolgreich abgerufen!</string>
 </resources>

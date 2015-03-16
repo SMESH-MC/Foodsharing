@@ -36,7 +36,7 @@ public class OfferEditActivity extends Activity {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView photoImageView;
     private Bitmap bitmap;
-    private File photoFile;
+    private File photoFile=null;
 
     private final Handler handler = new Handler();
     private final FragmentManager fragMan = getFragmentManager();
@@ -201,43 +201,6 @@ public class OfferEditActivity extends Activity {
     {
         if (!formToObject()) return;
         new PublishOfferTask().execute();
-        /*
-        final Handler handler = new Handler();
-        Thread thread=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //currentOffer.setPicture(photoFile);
-                currentOffer.setPicture(bitmap);
-                currentOffer.setShortDescription(titleInputField.getText().toString().trim());
-                currentOffer.setLongDescription(longDescriptionInputField.getText().toString().trim());
-                currentOffer.setCategory(1);
-                currentOffer.setMhd(bestBeforeDateInputField.getText().toString().trim());
-                currentOffer.setPickupTimes(Constants.BLA_WORD);
-
-                if (currentOffer.saveObjectToDatabase())
-                {
-                    handler.post(new Runnable (){
-                        @Override
-                        public void run() {
-                            Toast.makeText(getBaseContext(), Constants.OFFER_EDITED, Toast.LENGTH_LONG).show();
-                            finish();
-                        }
-                    });
-                }
-                else
-                {
-                    final String errorMessage=currentOffer.getErrorMessage();
-                    handler.post(new Runnable (){
-                        @Override
-                        public void run() {
-                            Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-            }
-        });
-        thread.start();
-        */
 
     }
 
@@ -246,8 +209,11 @@ public class OfferEditActivity extends Activity {
         boolean formCorrectlyFilled=true;
         View firstWrongField=null;
 
-        //currentOffer.setPicture(photoFile);
-        currentOffer.setPicture(bitmap);
+        if (this.photoFile != null
+                && this.photoFile.isFile()
+                && this.photoFile.canRead())
+            currentOffer.setPicture(photoFile);
+        else currentOffer.setPicture(bitmap);
         /*
         try { currentOffer.setPicture(bitmap); }
         catch (Exception e) { emailInputField.setError(e.getLocalizedMessage()); formCorrectlyFilled=false; if (firstWrongField == null) firstWrongField=longDescriptionInputField;}

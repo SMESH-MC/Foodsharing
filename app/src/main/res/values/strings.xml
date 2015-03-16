@@ -34,6 +34,8 @@
     <string name="create_offer_tv">Create Offer</string>
     <string name="offer_display_get_location_tv">Location</string>
     <string name="offer_display_contact_info_tv">Contact Information</string>
+    <string name="offerDisplayDateAdded">Date added</string>
+    <string name="offerDisplayBestBeforeDate">Best before</string>
     <string name="edit_latest_offer_tv">Edit latest Offer</string>
     <string name="passwort_tv">Password</string>
     <string name="username_tv">Username</string>
@@ -44,6 +46,8 @@
     <string name="profile_displ_country_tv">Country</string>
     <string name="published_offers_tv">My Offers</string>
     <string name="accepted_offers_tv">Accepted Offers</string>
+    <string name="resultActivityResultListTitle">Matches</string>
+    <string name="resultActivitySorterLabel">Sort by:</string>
 
     <!-- buttons -->
     <string name="items">Items</string>
@@ -76,7 +80,7 @@
     <string name="profile_edit_save_btn">Save</string>
     <string name="edit_search_go_btn">Go!</string>
     <string name="browse_create_new_offer_btn">New Offer</string>
-    <string name="browse_create_edit_offer_btn">Edit Offer</string>
+    <string name="browse_create_edit_offer_btn">Edit Your Offers</string>
     <string name="browse_create_edit_profile_btn">Profile</string>
     <string name="browse_create_edit_browse_btn">Browse</string>
     <string name="choose_category_btn">Choose\nCategory</string>
@@ -86,7 +90,7 @@
     <string name="browse_create_edit_exit_btn">Exit</string>
 
     <!-- edit texts -->
-    <string name="offer_create_title_et">Item</string>
+    <string name="offer_create_title_et">Short description</string>
     <string name="best_before_date_edit">Best before</string>
     <string name="detailed_description_et">Detailed Description</string>
     <string name="searching_for_hint">Item</string>
@@ -107,6 +111,7 @@
     <string name="logo">logo</string>
     <string name="edit_search_et">Searching for…</string>
     <string name="offer_category_edit">Category</string>
+    <string name="resultActivityFilterHint">Type search text</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -115,4 +120,5 @@
     <string name="profile_edit_zip_plz">zip</string>
     <string name="login_title">Foodshare</string>
 
+    <string name="userDataFetchedSuccessfully">User data fetched successfully!</string>
 </resources>

@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -33,7 +34,8 @@ import java.util.Comparator;
 
 public class ResultActivity extends Activity {
     private static final String LOG=ResultActivity.class.getName();
-    private ArrayAdapter<Offer> offerArrayAdapter;
+    //private ArrayAdapter<Offer> offerArrayAdapter;
+    private OfferArrayAdapter<Offer> offerArrayAdapter;
     private ListView resultListView;
 
     private Spinner sortSpinner;
@@ -48,7 +50,108 @@ public class ResultActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        registerViews();
+        sortSpinner=(Spinner) findViewById(R.id.resultActivitySortSpinner);
+        filterInputField=(EditText) findViewById(R.id.resultActivityFilter);
+
+        resultListView=(ListView) findViewById(R.id.activity_result_listview);
+        resultListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Offer offer = (Offer) parent.getItemAtPosition(position);
+                Log.i(LOG, Constants.OFFER_ID + offer.getID());
+                Intent intent = new Intent(ResultActivity.this, OfferDisplayActivity.class);
+                intent.putExtra(Constants.keyOfferID, offer.getID());
+                startActivity(intent);
+            }
+        });
+
+
+        spinnerAdapter=new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
+        //spinnerAdapter.add("Not sorted");
+                    /*
+                    case "Not sorted":
+                        //offerArrayAdapter=new ArrayAdapter<>(ResultActivity.this, android.R.layout.simple_list_item_1);
+                        //new RetrieveOffersTask().execute();
+                        offerArrayAdapter.sort(null);
+                        break;
+                        */
+        spinnerAdapter.add("Short Description");
+        spinnerAdapter.add("Long Description");
+        spinnerAdapter.add("Best Before Date");
+        spinnerAdapter.add("Date Added");
+        sortSpinner.setAdapter(spinnerAdapter);
+
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String selectionString=(String)parent.getItemAtPosition(position);
+                final Collator collator=Collator.getInstance();
+                switch(selectionString)
+                {
+                    case "Short Description":
+                        Log.i(LOG, "Short Description");
+                        offerArrayAdapter.sort(new Comparator<Offer>() {
+                            @Override
+                            public int compare(Offer lhs, Offer rhs) {
+                                return collator.compare(lhs.getShortDescription(), rhs.getShortDescription());
+                            }
+                        });
+                        break;
+                    case "Long Description":
+                        Log.i(LOG, "Long Description");
+                        offerArrayAdapter.sort(new Comparator<Offer>() {
+                            @Override
+                            public int compare(Offer lhs, Offer rhs) {
+                                return collator.compare(lhs.getLongDescription(), rhs.getLongDescription());
+                            }
+                        });
+                        break;
+                    case "Best Before Date":
+                        Log.i(LOG, "Best Before Date");
+                        offerArrayAdapter.sort(new Comparator<Offer>() {
+                            @Override
+                            public int compare(Offer lhs, Offer rhs) {
+                                return lhs.getMhd().compareTo(rhs.getMhd());
+                            }
+                        });
+                        break;
+                    case "Date Added":
+                        Log.i(LOG, "Date Added");
+                        offerArrayAdapter.sort(new Comparator<Offer>() {
+                            @Override
+                            public int compare(Offer lhs, Offer rhs) {
+                                return lhs.getDateAdded().compareTo(rhs.getDateAdded());
+                            }
+                        });
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+                Log.i(LOG, "Nothing selected.");
+            }
+        });
+
+        filterInputField.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                ResultActivity.this.offerArrayAdapter.getFilter().filter(cs);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+            }
+        });
+        //registerViews();
 
         Intent intent=getIntent();
         showOffersOnlyForGivenUser=intent.getBooleanExtra(Constants.RESULTS_FILTERED_BY_USER, false);
@@ -61,7 +164,7 @@ public class ResultActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        offerArrayAdapter=new ArrayAdapter<>(ResultActivity.this, android.R.layout.simple_list_item_1);
+        offerArrayAdapter=new OfferArrayAdapter<>(ResultActivity.this, android.R.layout.simple_list_item_1);
         new RetrieveOffersTask().execute();
 
     }
@@ -109,6 +212,13 @@ public class ResultActivity extends Activity {
 
         spinnerAdapter=new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         //spinnerAdapter.add("Not sorted");
+                    /*
+                    case "Not sorted":
+                        //offerArrayAdapter=new ArrayAdapter<>(ResultActivity.this, android.R.layout.simple_list_item_1);
+                        //new RetrieveOffersTask().execute();
+                        offerArrayAdapter.sort(null);
+                        break;
+                        */
         spinnerAdapter.add("Short Description");
         spinnerAdapter.add("Long Description");
         spinnerAdapter.add("Best Before Date");
@@ -123,14 +233,8 @@ public class ResultActivity extends Activity {
                 final Collator collator=Collator.getInstance();
                 switch(selectionString)
                 {
-                    /*
-                    case "Not sorted":
-                        //offerArrayAdapter=new ArrayAdapter<>(ResultActivity.this, android.R.layout.simple_list_item_1);
-                        //new RetrieveOffersTask().execute();
-                        offerArrayAdapter.sort(null);
-                        break;
-                        */
                     case "Short Description":
+                        Log.i(LOG, "Short Description");
                         offerArrayAdapter.sort(new Comparator<Offer>() {
                             @Override
                             public int compare(Offer lhs, Offer rhs) {
@@ -139,6 +243,7 @@ public class ResultActivity extends Activity {
                         });
                         break;
                     case "Long Description":
+                        Log.i(LOG, "Long Description");
                         offerArrayAdapter.sort(new Comparator<Offer>() {
                             @Override
                             public int compare(Offer lhs, Offer rhs) {
@@ -147,6 +252,7 @@ public class ResultActivity extends Activity {
                         });
                         break;
                     case "Best Before Date":
+                        Log.i(LOG, "Best Before Date");
                         offerArrayAdapter.sort(new Comparator<Offer>() {
                             @Override
                             public int compare(Offer lhs, Offer rhs) {
@@ -155,6 +261,7 @@ public class ResultActivity extends Activity {
                         });
                         break;
                     case "Date Added":
+                        Log.i(LOG, "Date Added");
                         offerArrayAdapter.sort(new Comparator<Offer>() {
                             @Override
                             public int compare(Offer lhs, Offer rhs) {
@@ -272,5 +379,57 @@ public class ResultActivity extends Activity {
             Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
         }
     }
+
+
+/*
+    private class ResultSearchFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence prefix) {
+            FilterResults results = new FilterResults();
+            if (mOriginalValues == null) {
+                synchronized (mLock) {
+                    mOriginalValues = new ArrayList<T>(mObjects);
+                }
+            }
+            if (prefix == null || prefix.length() == 0) {
+                ArrayList<T> list;
+                synchronized (mLock) {
+                    list = new ArrayList<T>(mOriginalValues);
+                }
+                results.values = list;
+                results.count = list.size();
+            } else {
+                String prefixString = prefix.toString().toLowerCase();
+                ArrayList<T> values;
+                synchronized (mLock) {
+                    values = new ArrayList<T>(mOriginalValues);
+                }
+                final int count = values.size();
+                final ArrayList<T> newValues = new ArrayList<T>();
+                for (int i = 0; i < count; i++) {
+                    final T value = values.get(i);
+                    final String valueText = value.toString().toLowerCase();
+// First match against the whole, non-splitted value
+                    if (valueText.contains(prefixString)) {
+                        newValues.add(value);
+                    }
+                }
+            }
+            results.values = newValues;
+            results.count = newValues.size();
+        }
+        return results;
+        }
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+//noinspection unchecked
+            mObjects = (List<T>) results.values;
+            if (results.count > 0) {
+                notifyDataSetChanged();
+            } else {
+                notifyDataSetInvalidated();
+            }
+*/
+
 
 }

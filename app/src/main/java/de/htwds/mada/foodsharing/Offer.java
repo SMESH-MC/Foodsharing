@@ -156,27 +156,20 @@ public class Offer {
     }
     public void setPicture(byte[] picture)
     {
-        boolean pictureWrittenSuccessfully=true;
-
         File photoFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
 
         try ( FileOutputStream fileOutputStream = new FileOutputStream(photoFile)) {
             fileOutputStream.write(picture);
             fileOutputStream.close();
         } catch (Exception ex) {
-            pictureWrittenSuccessfully=false;
             Log.e(LOG, Constants.IMAGE_TO_FILE_ERROR);
-        }
-
-        if (pictureWrittenSuccessfully) {
-            Log.i(LOG, Constants.PICTURE_WRITTEN);
-            this.setPicture(photoFile);
-        }
-        else {
-
             if (photoFile != null) photoFile.delete();
             this.picture=null;
+            return;
         }
+
+        Log.i(LOG, Constants.PICTURE_WRITTEN);
+        this.setPicture(photoFile);
     }
 
     public void setPicture(Bitmap picture)

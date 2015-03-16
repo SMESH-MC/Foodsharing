@@ -196,48 +196,6 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             focusView.requestFocus();
         } else {
             new LoginViaDatabaseTask().execute();
-            /*
-            final String emailString=email;
-            final String passwordString=password;
-            final Handler handler = new Handler();
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
-                    nameValuePairs.add(new BasicNameValuePair(Constants.EMAIL_WORD, emailString));
-                    nameValuePairs.add(new BasicNameValuePair(Constants.PASSWORD_WORD, passwordString));
-
-                    JSONParser jsonParser = new JSONParser();
-                    //JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_OFFER, Constants.URL_GET_USERID_WITH_EMAIL_AND_PASSWORD, nameValuePairs);
-                    JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_USERID_WITH_EMAIL_AND_PASSWORD, Constants.JSON_GET, nameValuePairs);
-                    final int userID = returnObject.optInt(Constants.USER_ID_ABK, -1);
-
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.i(LOG, Constants.USER_ID_MESSAGE + userID);
-
-                            if(userID > 0){
-                                PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit().putInt(Constants.currentUserIdKey, userID).apply();
-                                User user=new User(LoginActivity.this, userID);
-                                Intent i = new Intent(getApplicationContext(), BrowseCreateEdit.class);
-                                startActivity(i);
-                            }
-                            else
-                            {
-
-                                Toast.makeText(getBaseContext(), Constants.LOGIN_INCORRECT, Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-
-                }
-            });
-            thread.start();
-            */
-
-
-
 
             /*
             // Show a progress spinner, and kick off a background task to

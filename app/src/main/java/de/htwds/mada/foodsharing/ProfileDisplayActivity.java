@@ -211,7 +211,8 @@ public class ProfileDisplayActivity extends Activity {
                 profileEditButton.setVisibility(View.VISIBLE);
             }
             progressDialog.dismiss();
-            Toast.makeText(getBaseContext(), Constants.USER_FETCHED, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getBaseContext(), Constants.USER_FETCHED, Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), getBaseContext().getString(R.string.userDataFetchedSuccessfully), Toast.LENGTH_LONG).show();
         }
     }
 }
