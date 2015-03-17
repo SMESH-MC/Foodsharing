@@ -195,7 +195,7 @@ public class ProfileEditActivity extends Activity {
             progressDialog=new ProgressDialog(ProfileEditActivity.this);
             progressDialog.setIndeterminate(true);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage("Retrieving profile info...");
+            progressDialog.setMessage(getApplicationContext().getString(R.string.profileDataFetchingInProgress));
             progressDialog.setCancelable(false);
             progressDialog.show();
 
@@ -205,9 +205,9 @@ public class ProfileEditActivity extends Activity {
         {
             if (!loggedInUser.fillObjectFromDatabase())
             {
-                Log.e(LOG, loggedInUser.getErrorMessage());
                 errorOccurred=true;
-                errorMessage= loggedInUser.getErrorMessage();
+                errorMessage=getApplicationContext().getString(R.string.profileDataFetchingNotSuccessful) + loggedInUser.getErrorMessage();
+                Log.e(LOG, errorMessage);
                 return null;
 
             }
@@ -220,7 +220,7 @@ public class ProfileEditActivity extends Activity {
         {
             if (errorOccurred) {
                 progressDialog.dismiss();
-                Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -238,7 +238,7 @@ public class ProfileEditActivity extends Activity {
             additionalInputField.setText(loggedInUser.getAdditional());
 
             progressDialog.dismiss();
-            Toast.makeText(getBaseContext(), Constants.USER_FETCHED, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.userDataFetchingSuccessful), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -255,7 +255,7 @@ public class ProfileEditActivity extends Activity {
             progressDialog=new ProgressDialog(ProfileEditActivity.this);
             progressDialog.setIndeterminate(true);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage("Saving profile ...");
+            progressDialog.setMessage(getApplicationContext().getString(R.string.profileUpdatingInProgress));
             progressDialog.setCancelable(false);
             progressDialog.show();
 
@@ -268,7 +268,7 @@ public class ProfileEditActivity extends Activity {
             {
                 Log.e(LOG, loggedInUser.getErrorMessage());
                 errorOccurred=true;
-                errorMessage= loggedInUser.getErrorMessage();
+                errorMessage=getApplicationContext().getString(R.string.profileUpdatingNotSuccessful) + loggedInUser.getErrorMessage();
                 return null;
             }
 
@@ -280,12 +280,12 @@ public class ProfileEditActivity extends Activity {
         {
             if (errorOccurred) {
                 progressDialog.dismiss();
-                Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
                 return;
             }
 
             progressDialog.dismiss();
-            Toast.makeText(getBaseContext(), Constants.ACCOUNT_UPDATED, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.profileUpdatingSuccessful), Toast.LENGTH_LONG).show();
             finish();
         }
     }

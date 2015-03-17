@@ -82,7 +82,7 @@ public class Offer {
         nameValuePairs.add(new BasicNameValuePair("tid", String.valueOf(this.getTransactID())));
 
         JSONParser jsonParser = new JSONParser();
-        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + "get_transaction_details.php", Constants.JSON_GET, nameValuePairs);
+        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.getHttpBaseUrl(context) + "/" + "get_transaction_details.php", Constants.JSON_GET, nameValuePairs);
 
         if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
         {
@@ -145,15 +145,16 @@ public class Offer {
 
         return this.picture;
     }
+
     public void setPicture(File picture) {
-        /*
-        if (picture == null) {
+        if (picture == null
+                || !picture.isFile()
+                || !picture.canRead())
             throw new IllegalArgumentException(Constants.NO_ARGUMENT);
-        }
-        */
-        /* picture == null says that no picture was set */
+
         this.picture = picture;
     }
+
     public void setPicture(byte[] picture)
     {
         File photoFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
@@ -174,7 +175,6 @@ public class Offer {
 
     public void setPicture(Bitmap picture)
     {
-        boolean pictureWrittenSuccessfully=true;
 
         File photoFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
 
@@ -182,18 +182,14 @@ public class Offer {
             picture.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
             fileOutputStream.close();
         } catch (Exception ex) {
-            pictureWrittenSuccessfully=false;
-            Log.e(LOG, Constants.IMAGE_TO_FILE_ERROR);
-        }
-
-        if (pictureWrittenSuccessfully) {
-            Log.i(LOG, Constants.PICTURE_WRITTEN);
-            this.setPicture(photoFile);
-        }
-        else {
             if (photoFile != null) photoFile.delete();
             this.picture=null;
+            Log.e(LOG, Constants.IMAGE_TO_FILE_ERROR);
+            return;
         }
+
+        Log.i(LOG, Constants.PICTURE_WRITTEN);
+        this.setPicture(photoFile);
     }
 
     public void setPictureEdited(boolean edited)
@@ -257,7 +253,7 @@ public class Offer {
         nameValuePairs.add(new BasicNameValuePair(Constants.OFFER_ID_ABK, String.valueOf(this.getID())));
 
         JSONParser jsonParser = new JSONParser();
-        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_OFFER, Constants.JSON_GET, nameValuePairs);
+        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.getHttpBaseUrl(context) + "/" + Constants.URL_GET_OFFER, Constants.JSON_GET, nameValuePairs);
 
 
         if (!returnObject.optBoolean(Constants.SUCCESS_WORD)) {
@@ -299,7 +295,7 @@ public class Offer {
         nameValuePairs.add(new BasicNameValuePair("pid", String.valueOf(imageID)));
 
         JSONParser jsonParser = new JSONParser();
-        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + "get_image.php", Constants.JSON_GET, nameValuePairs);
+        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.getHttpBaseUrl(context) + "/" + "get_image.php", Constants.JSON_GET, nameValuePairs);
 
         Log.i(LOG, "Getting image with id " + imageID);
         if (!returnObject.optBoolean(Constants.SUCCESS_WORD)) {
@@ -341,7 +337,7 @@ public class Offer {
         nameValuePairs.add(new BasicNameValuePair(Constants.JSON_VALID_DATE, "1423216493"));
 
         JSONParser jsonParser = new JSONParser();
-        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_CREATE_OFFER, Constants.JSON_POST, nameValuePairs);
+        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.getHttpBaseUrl(getApplicationContext()) + "/" + Constants.URL_CREATE_OFFER, Constants.JSON_POST, nameValuePairs);
 
         if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
             errorMessage=returnObject.optString(Constants.MESSAGE_WORD, Constants.UNKNOWN_ERROR);
@@ -378,10 +374,10 @@ public class Offer {
         JSONParser jsonParser = new JSONParser();
         JSONObject returnObject;
         if (this.objectHasBeenEdited) {
-            returnObject = jsonParser.makeMultipartHttpRequest(Constants.HTTP_BASE_URL + "update_offer_with_image.php", httpRequestEntity);
+            returnObject = jsonParser.makeMultipartHttpRequest(Constants.getHttpBaseUrl(context) + "/" + "update_offer_with_image.php", httpRequestEntity);
         }
         else
-            returnObject = jsonParser.makeMultipartHttpRequest(Constants.HTTP_BASE_URL + "create_offer_with_image_and_transaction.php", httpRequestEntity);
+            returnObject = jsonParser.makeMultipartHttpRequest(Constants.getHttpBaseUrl(context) + "/" + "create_offer_with_image_and_transaction.php", httpRequestEntity);
 
         if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
             errorMessage=returnObject.optString(Constants.MESSAGE_WORD, Constants.UNKNOWN_ERROR);

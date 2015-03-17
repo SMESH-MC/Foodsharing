@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
         android:key="preferenceHttpBaseUrl"
-        android:title="HTTP Base Url: "
-        android:defaultValue="http://odin.htw-saarland.de/"/>
+        android:title="@string/preferenceTitleHttpBaseUrl"
+        android:defaultValue="http://odin.htw-saarland.de/" />
 
 </PreferenceScreen>

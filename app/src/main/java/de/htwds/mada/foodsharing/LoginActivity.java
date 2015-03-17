@@ -13,12 +13,13 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -138,6 +139,31 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         mEmailLoginFormView = findViewById(R.id.email_login_form);
         mSignOutButtons = findViewById(R.id.plus_sign_out_buttons);
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_login, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     private void populateAutoComplete() {
         getLoaderManager().initLoader(0, null, this);
@@ -429,7 +455,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
         PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit().putInt(Constants.currentUserIdKey, 4).apply();
         User currentUser=new User(this,4);
-        Intent i = new Intent(getApplicationContext(), BrowseCreateEdit.class);
+        Intent i = new Intent(getApplicationContext(), BrowseCreateEditActivity.class);
         startActivity(i);
     }
 
@@ -448,7 +474,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             progressDialog=new ProgressDialog(LoginActivity.this);
             progressDialog.setIndeterminate(true);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage("Trying to login via database ...");
+            progressDialog.setMessage(getApplicationContext().getString(R.string.loginInProgress));
             progressDialog.setCancelable(false);
             progressDialog.show();
 
@@ -461,14 +487,14 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             nameValuePairs.add(new BasicNameValuePair(Constants.PASSWORD_WORD, password));
 
             JSONParser jsonParser = new JSONParser();
-            JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_USERID_WITH_EMAIL_AND_PASSWORD, Constants.JSON_GET, nameValuePairs);
+            JSONObject returnObject = jsonParser.makeHttpRequest(Constants.getHttpBaseUrl(getApplicationContext()) + "/" + Constants.URL_GET_USERID_WITH_EMAIL_AND_PASSWORD, Constants.JSON_GET, nameValuePairs);
             userID = returnObject.optInt(Constants.USER_ID_ABK, -1);
 
             if (userID <= 0)
             {
-                Log.e(LOG, Constants.LOGIN_INCORRECT);
+                Log.e(LOG, getApplicationContext().getString(R.string.loginNotSuccessful));
                 errorOccurred=true;
-                errorMessage=Constants.LOGIN_INCORRECT;
+                errorMessage=getApplicationContext().getString(R.string.loginNotSuccessful);
                 return null;
 
             }
@@ -481,7 +507,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         {
             if (errorOccurred) {
                 progressDialog.dismiss();
-                Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -489,7 +515,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
             PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit().putInt(Constants.currentUserIdKey, userID).apply();
             User user=new User(LoginActivity.this, userID);
-            Intent i = new Intent(getApplicationContext(), BrowseCreateEdit.class);
+            Intent i = new Intent(getApplicationContext(), BrowseCreateEditActivity.class);
             progressDialog.dismiss();
             startActivity(i);
         }

@@ -4,14 +4,13 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
         <item name="android:spinnerDropDownItemStyle">@style/SpinnerItem.DropDownItem</item>
-        <!--<item name="android:textColor">@color/abc_primary_text_material_dark</item>-->
-        <!--<item name="android:textStyle">bold</item>-->
-        <item name="android:colorAccent">@android:color/holo_orange_dark</item>
-        <item name="android:colorFocusedHighlight">@android:color/holo_orange_dark</item>
         <item name="android:textViewStyle">@style/StyleOfTextView</item>
         <!--<item name="android:editTextStyle">@style/StyleOfEditText</item>-->
         <item name="android:buttonStyle">@style/StyleOfButton</item>
         <item name="android:listViewStyle">@style/StyleOfListView</item>
+        <item name="android:background">@android:color/holo_green_light</item>
+        <item name="android:textColor">@color/abc_primary_text_material_dark</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="SpinnerItem" parent="@android:style/Widget.TextView.SpinnerItem">
@@ -46,7 +45,9 @@
 
     <style name="StyleOfListView">
         <item name="android:textColor">@color/abc_primary_text_material_dark</item>
-        <item name="android:background">@color/green04</item>
+        <item name="android:background">@color/green01</item>
+        <item name="android:dividerHeight">2dp</item>
+        <item name="android:divider">@color/green04</item>
     </style>
 
     <style name="StyleOfButton">

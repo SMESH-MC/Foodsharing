@@ -35,6 +35,10 @@ public class User {
     private Pattern pattern;
     private Matcher matcher;
 
+
+    Context context;
+
+
     public User(String email, String password){
         setEmail(email);
         setPassword(password.toCharArray());
@@ -42,11 +46,13 @@ public class User {
 
     public User(Context context)
     {
+        this.context=context;
         setID(PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.currentUserIdKey, -1));
     }
 
     public User(Context context, int uid)
     {
+        this.context=context;
         setID(uid);
         //PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(Constants.currentUserIdKey, getID()).apply();
     }
@@ -188,7 +194,7 @@ public class User {
         nameValuePairs.add(new BasicNameValuePair(Constants.USER_ID_ABK, String.valueOf(this.getID())));
 
         JSONParser jsonParser = new JSONParser();
-        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_USER, Constants.JSON_GET, nameValuePairs);
+        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.getHttpBaseUrl(this.context) + "/" + Constants.URL_GET_USER, Constants.JSON_GET, nameValuePairs);
 
         if (!returnObject.optBoolean(Constants.SUCCESS_WORD)) {
             errorMessage=returnObject.optString(Constants.MESSAGE_WORD);
@@ -236,10 +242,10 @@ public class User {
         JSONObject returnObject;
         if (this.objectHasBeenEdited) {
             nameValuePairs.add(new BasicNameValuePair("id", String.valueOf(this.getID())));
-            returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + "update_user.php", Constants.JSON_POST, nameValuePairs);
+            returnObject = jsonParser.makeHttpRequest(Constants.getHttpBaseUrl(this.context) + "/" + "update_user.php", Constants.JSON_POST, nameValuePairs);
         }
         else
-            returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_CREATE_USER, Constants.JSON_POST, nameValuePairs);
+            returnObject = jsonParser.makeHttpRequest(Constants.getHttpBaseUrl(this.context) + "/" + Constants.URL_CREATE_USER, Constants.JSON_POST, nameValuePairs);
 
         if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
             errorMessage=returnObject.optString(Constants.MESSAGE_WORD, Constants.UNKNOWN_ERROR);

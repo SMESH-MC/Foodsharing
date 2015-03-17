@@ -119,12 +119,28 @@ public class OfferDisplayActivity extends Activity {
         finish();
     }
 
+
+    public void imageViewClicked(View view)
+    {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(photoFile), "image/*");
+            startActivity(intent);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.imageViewerStartNotSuccessful) + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+        }
+
+
+    }
+
+
     private class RetrieveOfferInfoTask extends AsyncTask<Void, Void, Void>
     {
         private boolean errorOccurred=false;
         private String errorMessage="";
         private ProgressDialog progressDialog;
-        private File pictureFile;
 
 
         protected void onPreExecute()
@@ -132,7 +148,7 @@ public class OfferDisplayActivity extends Activity {
             progressDialog=new ProgressDialog(OfferDisplayActivity.this);
             progressDialog.setIndeterminate(true);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage("Retrieving offer info...");
+            progressDialog.setMessage(getApplicationContext().getString(R.string.offerDataFetchingInProgress));
             progressDialog.setCancelable(false);
             progressDialog.show();
 
@@ -141,20 +157,20 @@ public class OfferDisplayActivity extends Activity {
         protected Void doInBackground(Void... params)
         {
             if (!currentOffer.fillObjectFromDatabase()) {
-                Log.e(LOG, currentOffer.getErrorMessage());
                 errorOccurred=true;
-                errorMessage=currentOffer.getErrorMessage();
+                errorMessage=getApplicationContext().getString(R.string.offerDataFetchingNotSuccessful) + currentOffer.getErrorMessage();
+                Log.e(LOG, errorMessage);
                 return null;
             }
 
-            pictureFile=currentOffer.getPicture();
+            photoFile=currentOffer.getPicture();
 
             /*
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("tid", String.valueOf(currentOffer.getTransactID())));
 
             JSONParser jsonParser = new JSONParser();
-            JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + "get_transaction_details.php", Constants.JSON_GET, nameValuePairs);
+            JSONObject returnObject = jsonParser.makeHttpRequest(Constants.getHttpBaseUrl(getApplicationContext()) + "/" + "get_transaction_details.php", Constants.JSON_GET, nameValuePairs);
 
             if (!returnObject.optBoolean(Constants.SUCCESS_WORD))
             {
@@ -190,7 +206,7 @@ public class OfferDisplayActivity extends Activity {
         {
             if (errorOccurred) {
                 progressDialog.dismiss();
-                Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -198,9 +214,9 @@ public class OfferDisplayActivity extends Activity {
             longDescriptionDisplayField.setText(currentOffer.getLongDescription());
             bestBeforeDateDisplayField.setText(String.format("%tF", currentOffer.getMhd()));
             dateAddedDisplayField.setText(String.format("%1$tF %1$tT", currentOffer.getDateAdded()));
-            if (pictureFile != null) {
+            if (photoFile != null) {
                 photoImageView.setImageURI(null);
-                photoImageView.setImageURI(Uri.fromFile(currentOffer.getPicture()));
+                photoImageView.setImageURI(Uri.fromFile(photoFile));
             }
             if (offererID == currentUser.getID())
             {
@@ -208,7 +224,7 @@ public class OfferDisplayActivity extends Activity {
                 showContactInformationButton.setVisibility(View.INVISIBLE);
             }
             progressDialog.dismiss();
-            Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.offerDataFetchingSuccessful), Toast.LENGTH_LONG).show();
 
             Log.i(LOG, "Offerer ID  " + offererID);
         }

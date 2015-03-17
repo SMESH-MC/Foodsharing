@@ -6,7 +6,7 @@ import android.preference.PreferenceManager;
 public class Constants {
 
     public static String getHttpBaseUrl(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString("httpBaseUrl", "http://odin.htw-saarland.de/");
+        return PreferenceManager.getDefaultSharedPreferences(context).getString("preferenceHttpBaseUrl", "http://odin.htw-saarland.de/");
     }
 
     public static final String keyOfferID = Constants.class.getName() + "keyOfferID";

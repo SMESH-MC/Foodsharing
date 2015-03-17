@@ -120,5 +120,36 @@
     <string name="profile_edit_zip_plz">zip</string>
     <string name="login_title">Foodshare</string>
 
-    <string name="userDataFetchedSuccessfully">User data fetched successfully!</string>
+    <string name="userDataFetchingInProgress">Retrieving user data ...</string>
+    <string name="userDataFetchingNotSuccessful">Failed to fetch user data: </string>
+    <string name="userDataFetchingSuccessful">User data fetched successfully!</string>
+
+    <string name="offersDataFetchingInProgress">Retrieving all offers ...</string>
+    <string name="offersDataFetchingSuccessful">Offer data fetched successfully!</string>
+    <string name="offersDataFetchingNotSuccessful">Failed to fetch offers!</string>
+
+    <string name="offerDataFetchingInProgress">Retrieving offer info ...</string>
+    <string name="offerDataFetchingSuccessful">Offer data fetched successfully!</string>
+    <string name="offerDataFetchingNotSuccessful">Failed to fetch offer data!</string>
+
+    <string name="offerUpdatingInProgress">Publishing offer ...</string>
+    <string name="offerUpdatingSuccessful">Offer edited successfully!</string>
+    <string name="offerUpdatingNotSuccessful">Failed to edit offers!</string>
+
+    <string name="profileUpdatingNotSuccessful">Failed to update account!</string>
+    <string name="profileUpdatingSuccessful">Account updated successfully!</string>
+    <string name="profileUpdatingInProgress">Saving profile ...</string>
+
+    <string name="profileDataFetchingInProgress">Retrieving profile info ...</string>
+    <string name="profileDataFetchingNotSuccessful">Failed to fetch profile data: </string>
+    <string name="profileDataFetchingSuccessful">Profile data fetched successfully!</string>
+
+    <string name="loginNotSuccessful">Login incorrect!</string>
+    <string name="loginInProgress">Trying to login via database ...</string>
+
+    <string name="bigPictureSavingNotSuccessful">Error trying to get big picture, only thumbnail will be acquired: </string>
+
+    <string name="imageViewerStartNotSuccessful">Could not start imageviewer: </string>
+
+    <string name="preferenceTitleHttpBaseUrl">HTTP Base URL</string>
 </resources>

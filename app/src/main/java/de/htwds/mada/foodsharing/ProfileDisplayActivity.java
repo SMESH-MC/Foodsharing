@@ -41,6 +41,24 @@ public class ProfileDisplayActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_display);
 
+        registerViews();
+
+        displayedUser = new User(this, getIntent().getIntExtra(Constants.keyUserID, -1));
+        currentUser = new User(this);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        profileEditButton.setVisibility(View.INVISIBLE);
+
+        new RetrieveProfileInfoTask().execute();
+    }
+
+    private void registerViews()
+    {
         emailDisplayField = (TextView) findViewById(R.id.profileEditEmail);
         userNameDisplayField = (TextView) findViewById(R.id.profile_display_username_tv);
         firstNameDisplayField = (TextView) findViewById(R.id.profile_edit_first_name_tv);
@@ -55,58 +73,6 @@ public class ProfileDisplayActivity extends Activity {
 
         profileEditButton = (Button) findViewById(R.id.profileDisplayEditButton);
 
-        displayedUser = new User(this, getIntent().getIntExtra(Constants.keyUserID, -1));
-        currentUser = new User(this);
-    }
-
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-
-        profileEditButton.setVisibility(View.INVISIBLE);
-
-        new RetrieveProfileInfoTask().execute();
-        /*
-        final Handler handler = new Handler();
-        Thread thread=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (displayedUser.fillObjectFromDatabase())
-                {
-                    handler.post(new Runnable (){
-                        @Override
-                        public void run() {
-                            firstNameDisplayField.setText(displayedUser.getVorname());
-                            lastNameDisplayField.setText(displayedUser.getNachname());
-                            userNameDisplayField.setText(displayedUser.getUsername());
-                            emailDisplayField.setText(displayedUser.getEmail());
-                            cityDisplayField.setText(displayedUser.getCity());
-                            streetDisplayField.setText(displayedUser.getStreet());
-                            houseNumberDisplayField.setText(displayedUser.getHouseNumber());
-                            zipcodeDisplayField.setText(String.valueOf(displayedUser.getPlz()));
-                            countryDisplayField.setText(displayedUser.getCountry());
-                            Toast.makeText(getBaseContext(), Constants.USER_FETCHED, Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-                else
-                {
-                    Log.e(LOG, displayedUser.getErrorMessage());
-                    final String errorMessage=displayedUser.getErrorMessage();
-
-                    handler.post(new Runnable (){
-                        @Override
-                        public void run() {
-                            Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-                }
-            }
-        });
-        thread.start();
-        */
     }
 
 
@@ -165,7 +131,7 @@ public class ProfileDisplayActivity extends Activity {
             progressDialog=new ProgressDialog(ProfileDisplayActivity.this);
             progressDialog.setIndeterminate(true);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage("Retrieving profile info...");
+            progressDialog.setMessage(getApplicationContext().getString(R.string.userDataFetchingInProgress));
             progressDialog.setCancelable(false);
             progressDialog.show();
 
@@ -175,9 +141,9 @@ public class ProfileDisplayActivity extends Activity {
         {
             if (!displayedUser.fillObjectFromDatabase())
             {
-                Log.e(LOG, displayedUser.getErrorMessage());
                 errorOccurred=true;
-                errorMessage=displayedUser.getErrorMessage();
+                errorMessage=getApplicationContext().getString(R.string.userDataFetchingNotSuccessful) + displayedUser.getErrorMessage();
+                Log.e(LOG, errorMessage);
                 return null;
 
             }
@@ -190,7 +156,7 @@ public class ProfileDisplayActivity extends Activity {
         {
             if (errorOccurred) {
                 progressDialog.dismiss();
-                Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -211,8 +177,8 @@ public class ProfileDisplayActivity extends Activity {
                 profileEditButton.setVisibility(View.VISIBLE);
             }
             progressDialog.dismiss();
-            //Toast.makeText(getBaseContext(), Constants.USER_FETCHED, Toast.LENGTH_LONG).show();
-            Toast.makeText(getBaseContext(), getBaseContext().getString(R.string.userDataFetchedSuccessfully), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), Constants.USER_FETCHED, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.userDataFetchingSuccessful), Toast.LENGTH_LONG).show();
         }
     }
 }

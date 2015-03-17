@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -49,6 +48,7 @@ public class ResultActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+        Log.i(LOG, "Server after: " + Constants.getHttpBaseUrl(this));
 
         sortSpinner=(Spinner) findViewById(R.id.resultActivitySortSpinner);
         filterInputField=(EditText) findViewById(R.id.resultActivityFilter);
@@ -310,7 +310,7 @@ public class ResultActivity extends Activity {
             progressDialog=new ProgressDialog(ResultActivity.this);
             progressDialog.setIndeterminate(true);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage("Retrieving all offers ...");
+            progressDialog.setMessage(getApplicationContext().getString(R.string.offersDataFetchingInProgress));
             progressDialog.setCancelable(false);
             progressDialog.show();
 
@@ -322,12 +322,12 @@ public class ResultActivity extends Activity {
             nameValuePairs.add(new BasicNameValuePair(Constants.JSON_TRANS_ID,Constants.BLA_WORD));
 
             JSONParser jsonParser = new JSONParser();
-            JSONObject returnObject = jsonParser.makeHttpRequest(Constants.HTTP_BASE_URL + Constants.URL_GET_ALL_OFFERS, Constants.JSON_GET, nameValuePairs);
+            JSONObject returnObject = jsonParser.makeHttpRequest(Constants.getHttpBaseUrl(getApplicationContext()) + "/" + Constants.URL_GET_ALL_OFFERS, Constants.JSON_GET, nameValuePairs);
 
 
             if (!returnObject.optBoolean(Constants.SUCCESS_WORD)) {
                 errorOccurred=true;
-                errorMessage="Failed to fetch offers!";
+                errorMessage=getApplicationContext().getString(R.string.offersDataFetchingNotSuccessful);
                 return null;
             }
 
@@ -335,7 +335,7 @@ public class ResultActivity extends Activity {
             if (offerJSONArray == null)
             {
                 errorOccurred=true;
-                errorMessage="Failed to fetch offers!";
+                errorMessage=getApplicationContext().getString(R.string.offersDataFetchingNotSuccessful);
                 return null;
             }
             JSONObject offerJSONObject;
@@ -369,67 +369,18 @@ public class ResultActivity extends Activity {
         {
             if (errorOccurred) {
                 progressDialog.dismiss();
-                Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
                 return;
             }
 
             offerArrayAdapter.notifyDataSetChanged();
             resultListView.setAdapter(offerArrayAdapter);
             progressDialog.dismiss();
-            Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.offersDataFetchingSuccessful), Toast.LENGTH_LONG).show();
         }
     }
 
 
-/*
-    private class ResultSearchFilter extends Filter {
-        @Override
-        protected FilterResults performFiltering(CharSequence prefix) {
-            FilterResults results = new FilterResults();
-            if (mOriginalValues == null) {
-                synchronized (mLock) {
-                    mOriginalValues = new ArrayList<T>(mObjects);
-                }
-            }
-            if (prefix == null || prefix.length() == 0) {
-                ArrayList<T> list;
-                synchronized (mLock) {
-                    list = new ArrayList<T>(mOriginalValues);
-                }
-                results.values = list;
-                results.count = list.size();
-            } else {
-                String prefixString = prefix.toString().toLowerCase();
-                ArrayList<T> values;
-                synchronized (mLock) {
-                    values = new ArrayList<T>(mOriginalValues);
-                }
-                final int count = values.size();
-                final ArrayList<T> newValues = new ArrayList<T>();
-                for (int i = 0; i < count; i++) {
-                    final T value = values.get(i);
-                    final String valueText = value.toString().toLowerCase();
-// First match against the whole, non-splitted value
-                    if (valueText.contains(prefixString)) {
-                        newValues.add(value);
-                    }
-                }
-            }
-            results.values = newValues;
-            results.count = newValues.size();
-        }
-        return results;
-        }
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-//noinspection unchecked
-            mObjects = (List<T>) results.values;
-            if (results.count > 0) {
-                notifyDataSetChanged();
-            } else {
-                notifyDataSetInvalidated();
-            }
-*/
 
 
 }

@@ -176,13 +176,12 @@ public class OfferEditActivity extends Activity {
             }
             catch (Exception e)
             {
-                Toast.makeText(getBaseContext(), "Error trying to get big picture, only thumbnail will be acquired: " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.bigPictureSavingNotSuccessful) +  e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             }
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
-    /* Thumbnail */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.i(LOG, Constants.IN_ONACTIVITY_RESULT);
         Log.i(LOG, Constants.IN_ONACTIVITY_RESULT + requestCode + " " + resultCode);
@@ -209,15 +208,12 @@ public class OfferEditActivity extends Activity {
         boolean formCorrectlyFilled=true;
         View firstWrongField=null;
 
-        if (this.photoFile != null
-                && this.photoFile.isFile()
-                && this.photoFile.canRead())
-            currentOffer.setPicture(photoFile);
-        else currentOffer.setPicture(bitmap);
-        /*
-        try { currentOffer.setPicture(bitmap); }
-        catch (Exception e) { emailInputField.setError(e.getLocalizedMessage()); formCorrectlyFilled=false; if (firstWrongField == null) firstWrongField=longDescriptionInputField;}
-        */
+        try { currentOffer.setPicture(photoFile); }
+        catch (Exception e)
+        {
+            Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.bigPictureSavingNotSuccessful) +  e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            try { currentOffer.setPicture(bitmap); } catch (Exception ex) {}
+        }
 
         try { currentOffer.setShortDescription(titleInputField.getText().toString().trim()); }
         catch (Exception e) { titleInputField.setError(e.getLocalizedMessage()); formCorrectlyFilled=false; if (firstWrongField == null) firstWrongField=titleInputField; }
@@ -256,7 +252,7 @@ public class OfferEditActivity extends Activity {
             progressDialog=new ProgressDialog(OfferEditActivity.this);
             progressDialog.setIndeterminate(true);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage("Retrieving offer info...");
+            progressDialog.setMessage(getApplicationContext().getString(R.string.offerDataFetchingInProgress));
             progressDialog.setCancelable(false);
             progressDialog.show();
 
@@ -265,9 +261,9 @@ public class OfferEditActivity extends Activity {
         protected Void doInBackground(Void... params)
         {
             if (!currentOffer.fillObjectFromDatabase()) {
-                Log.e(LOG, currentOffer.getErrorMessage());
                 errorOccurred=true;
-                errorMessage=currentOffer.getErrorMessage();
+                errorMessage=getApplicationContext().getString(R.string.offerDataFetchingNotSuccessful) + currentOffer.getErrorMessage();
+                Log.e(LOG, errorMessage);
                 return null;
             }
 
@@ -281,7 +277,7 @@ public class OfferEditActivity extends Activity {
         {
             if (errorOccurred) {
                 progressDialog.dismiss();
-                Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -294,7 +290,7 @@ public class OfferEditActivity extends Activity {
             }
 
             progressDialog.dismiss();
-            Toast.makeText(getBaseContext(), Constants.OFFER_FETCHED, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.offerDataFetchingSuccessful), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -310,7 +306,7 @@ public class OfferEditActivity extends Activity {
             progressDialog=new ProgressDialog(OfferEditActivity.this);
             progressDialog.setIndeterminate(true);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage("Publishing offer ...");
+            progressDialog.setMessage(getApplicationContext().getString(R.string.offerUpdatingInProgress));
             progressDialog.setCancelable(false);
             progressDialog.show();
 
@@ -319,9 +315,9 @@ public class OfferEditActivity extends Activity {
         protected Void doInBackground(Void... params)
         {
             if (!currentOffer.saveObjectToDatabase()) {
-                Log.e(LOG, currentOffer.getErrorMessage());
                 errorOccurred=true;
-                errorMessage=currentOffer.getErrorMessage();
+                errorMessage=getApplicationContext().getString(R.string.offerUpdatingNotSuccessful) + currentOffer.getErrorMessage();
+                Log.e(LOG, errorMessage);
                 return null;
             }
 
@@ -333,12 +329,12 @@ public class OfferEditActivity extends Activity {
         {
             if (errorOccurred) {
                 progressDialog.dismiss();
-                Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
                 return;
             }
 
             progressDialog.dismiss();
-            Toast.makeText(getBaseContext(), Constants.OFFER_EDITED, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.offerUpdatingSuccessful), Toast.LENGTH_LONG).show();
             finish();
         }
     }
