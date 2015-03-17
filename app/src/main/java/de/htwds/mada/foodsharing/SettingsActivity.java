@@ -44,7 +44,7 @@ public class SettingsActivity extends ActionBarActivity {
     }
 
 
-    private class SettingsFragment extends PreferenceFragment {
+    public static class SettingsFragment extends PreferenceFragment {
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
