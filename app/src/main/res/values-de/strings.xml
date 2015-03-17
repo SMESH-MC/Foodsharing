@@ -133,6 +133,7 @@
     <string name="profile_edit_zip_plz">PLZ</string>
     <string name="resultActivityFilterHint">Suchbegriff</string>
 
+    <string name="login_title">Foodshare</string>
 
     <string name="userDataFetchingInProgress">Rufe Nutzerdaten ab ...</string>
     <string name="userDataFetchingNotSuccessful">Nutzerdaten konnten nicht abgerufen werden: </string>
