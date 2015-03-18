@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.hardware.Camera;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -214,7 +215,8 @@ public class OfferEditActivity extends Activity {
 
 
     public void makePictureButtonClicked(View view) {
-        if (!getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA))
+        if (!getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)
+                || Camera.getNumberOfCameras() == 0)
         {
             Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.cameraDetectionNotSuccessful), Toast.LENGTH_LONG).show();
             return;
