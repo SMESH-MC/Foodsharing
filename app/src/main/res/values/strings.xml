@@ -144,12 +144,20 @@
     <string name="profileDataFetchingNotSuccessful">Failed to fetch profile data: </string>
     <string name="profileDataFetchingSuccessful">Profile data fetched successfully!</string>
 
+    <string name="categoriesFetchingInProgress">Retrieving categories ...</string>
+    <string name="categoriesFetchingNotSuccessful">Failed to fetch categories: </string>
+    <string name="categoriesFetchingSuccessful">Categories fetched successfully!</string>
+
     <string name="loginNotSuccessful">Login incorrect!</string>
     <string name="loginInProgress">Trying to login via database ...</string>
 
     <string name="bigPictureSavingNotSuccessful">Error trying to get big picture, only thumbnail will be acquired: </string>
 
     <string name="imageViewerStartNotSuccessful">Could not start imageviewer: </string>
+
+    <string name="cameraDetectionNotSuccessful">No camera attached to this device!</string>
+
+    <string name="offerDisplayCategories">Categories</string>
 
     <string name="preferenceTitleHttpBaseUrl">HTTP Base URL</string>
 </resources>

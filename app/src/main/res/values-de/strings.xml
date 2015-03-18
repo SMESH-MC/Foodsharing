@@ -159,12 +159,20 @@
     <string name="profileDataFetchingNotSuccessful">Nutzerdaten konnten nicht abgerufen werden: </string>
     <string name="profileDataFetchingSuccessful">Nutzerdaten erfolgreich abgerufen!</string>
 
+    <string name="categoriesFetchingInProgress">Rufe Kategorien ab ...</string>
+    <string name="categoriesFetchingNotSuccessful">Kategorien konnten nicht abgerufen werden: </string>
+    <string name="categoriesFetchingSuccessful">Kategorien erfolgreich abgerufen!</string>
+
     <string name="loginNotSuccessful">Einloggen fehlgeschlagen!</string>
     <string name="loginInProgress">Einloggen über die Datenbank ...</string>
 
     <string name="bigPictureSavingNotSuccessful">Großes Foto konnte nicht gespeichert werden, es wird nur die kleine Ausgabe verwendet: </string>
 
     <string name="imageViewerStartNotSuccessful">Bildbetrachter konnte nicht gestartet werden: </string>
+
+    <string name="cameraDetectionNotSuccessful">Keine Kamera angeschlossen!</string>
+
+    <string name="offerDisplayCategories">Kategorien</string>
 
     <string name="preferenceTitleHttpBaseUrl">HTTP Basis URL</string>
 </resources>

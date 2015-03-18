@@ -61,7 +61,7 @@
             android:singleLine="true" />
     </LinearLayout>
 
-    <LinearLayout
+<!--    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -78,6 +78,26 @@
             android:textColor="@color/abc_primary_text_material_dark"
             android:singleLine="true"
             android:inputType="none"/>
+    </LinearLayout>-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/offerEditCategoriesSpinner"
+            android:spinnerMode="dropdown" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/offer_category_edit"
+            android:hint="@string/offer_category_edit"
+            android:textColorHint="@color/abc_primary_text_material_dark"
+            android:singleLine="true"/>
     </LinearLayout>
 
     <LinearLayout

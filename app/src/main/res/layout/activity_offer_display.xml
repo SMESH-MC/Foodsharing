@@ -96,8 +96,29 @@
             android:textColor="@color/abc_primary_text_material_dark"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:layout_weight="1"
-            android:elegantTextHeight="true" />
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/offerDisplayCategoriesTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:text="@string/offerDisplayCategories"
+            android:textColor="@color/abc_primary_text_material_dark"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/offerDisplayCategories"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="30dp"
+            android:text="@string/offerDisplayCategories"
+            android:textColor="@color/abc_primary_text_material_dark"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_weight="1" />
 
         <!--<TextView-->
             <!--android:id="@+id/offer_usernameTitle"-->

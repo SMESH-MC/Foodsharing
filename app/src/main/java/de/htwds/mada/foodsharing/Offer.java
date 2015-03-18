@@ -12,6 +12,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 public class Offer {
     private static final String LOG=Offer.class.getName();
@@ -45,6 +47,9 @@ public class Offer {
 
     private boolean objectHasBeenEdited=false;
     private boolean pictureHasBeenEdited=false;
+
+
+    private HashMap<String,Integer> categories= new HashMap<String,Integer>();
 
     //Exceptions
 
@@ -118,6 +123,32 @@ public class Offer {
         this.category = category;
     }
 
+    public HashMap<String,Integer> getCategories()
+    {
+        return categories;
+    }
+    public void setCategories(HashMap<String,Integer> categories) {
+        this.categories=categories;
+    }
+
+    public void setCategories(String categoriesString) {
+        if (categoriesString == null
+                || categoriesString.trim().isEmpty())
+            throw new IllegalArgumentException(Constants.NO_ARGUMENT);
+
+        categories.clear();
+
+        //TODO: das muss in der activity geschehen, und als Argument wird nur eine HashMap übergeben
+        String[] categoryStrings=categoriesString.split(",");
+        for (String category: categoryStrings)
+        {
+           if (category.trim().isEmpty())
+               continue;
+
+            categories.put(category, 1);
+        }
+    }
+
     public String getShortDescription() {        return shortDescription;    }
     public void setShortDescription(String shortDescription) {
         if (shortDescription.trim().isEmpty()) {
@@ -175,6 +206,8 @@ public class Offer {
 
     public void setPicture(Bitmap picture)
     {
+        if (picture == null)
+            throw new IllegalArgumentException(Constants.NO_ARGUMENT);
 
         File photoFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.PHOTO_FILENAME);
 
@@ -272,6 +305,8 @@ public class Offer {
 
         this.fillObjectFromJSONObject(offerJSONObject);
 
+        this.getCategoriesFromDatabase();
+
 
         return true;
     }
@@ -322,6 +357,83 @@ public class Offer {
         return true;
     }
 
+    private boolean getCategoriesFromDatabase() {
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+        nameValuePairs.add(new BasicNameValuePair(Constants.OFFER_ID_ABK, String.valueOf(this.getID())));
+
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject returnObject = jsonParser.makeHttpRequest(Constants.getHttpBaseUrl(context) + "/" + "get_offer_categories.php", Constants.JSON_GET, nameValuePairs);
+
+        if (!returnObject.optBoolean(Constants.SUCCESS_WORD)) {
+            errorMessage=this.context.getString(R.string.categoriesFetchingNotSuccessful) + returnObject.optString(Constants.MESSAGE_WORD);
+            return false;
+        }
+
+        JSONArray categoriesJSONArray =returnObject.optJSONArray("categories");
+        if (categoriesJSONArray == null)
+        {
+            errorMessage=this.context.getString(R.string.categoriesFetchingNotSuccessful);
+            return false;
+        }
+
+        String categoryName;
+        int categoryID;
+        JSONObject categoryJSONObject;
+        categories.clear();
+        for (int i=0; i< categoriesJSONArray.length(); i++) {
+            categoryJSONObject = categoriesJSONArray.optJSONObject(i);
+            if (categoryJSONObject == null) {
+                errorMessage="Could not retrieve category " + i;
+                return false;
+            }
+
+            categoryID= categoryJSONObject.optInt("cat_id", -1);
+            // TODO:
+            if (categoryID == -1) {
+                errorMessage = "Could not retrieve category " + i;
+                return false;
+            }
+            nameValuePairs.clear();
+            nameValuePairs.add(new BasicNameValuePair("cid", String.valueOf(categoryID)));
+            returnObject = jsonParser.makeHttpRequest(Constants.getHttpBaseUrl(context) + "/" + "get_category_by_id.php", Constants.JSON_GET, nameValuePairs);
+
+            if (!returnObject.optBoolean(Constants.SUCCESS_WORD)) {
+                errorMessage=this.context.getString(R.string.categoriesFetchingNotSuccessful) + returnObject.optString(Constants.MESSAGE_WORD);
+                return false;
+            }
+
+            JSONArray categoryJSONArray =returnObject.optJSONArray("category");
+            if (categoryJSONArray == null)
+            {
+                errorMessage=this.context.getString(R.string.categoriesFetchingNotSuccessful);
+                return false;
+            }
+
+            JSONObject catJSONObject=categoryJSONArray.optJSONObject(0);
+            if (catJSONObject == null)
+            {
+                errorMessage=this.context.getString(R.string.categoriesFetchingNotSuccessful);
+                return false;
+            }
+            categoryName= catJSONObject.optString("name", "");
+            //categoryID= catJSONObject.optInt("id", -1);
+            // TODO:
+            if (categoryName.isEmpty()) {
+                errorMessage=this.context.getString(R.string.categoriesFetchingNotSuccessful);
+                return false;
+            }
+            categories.put(categoryName, categoryID);
+        }
+
+        return true;
+    }
+
+
+
+
+
+
     /*
     public boolean saveObjectToDatabase()
     {
@@ -348,6 +460,7 @@ public class Offer {
 
 
     public boolean saveObjectToDatabase()    {
+        /* http://stackoverflow.com/questions/16293388/how-to-send-the-string-array-of-values-in-one-key-word-using-post-method-to-the */
         errorMessage= Constants.EMPTY_STRING;
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
@@ -366,6 +479,16 @@ public class Offer {
         builder.addTextBody(Constants.DESCRIPTION_ABK, this.getLongDescription());
         builder.addTextBody(Constants.JSON_VALID_DATE, "1423216493");
         builder.addTextBody("offerer_id", String.valueOf(PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.currentUserIdKey, -1)));
+
+        for (int categoryID : categories.values()) {
+            Log.i(LOG, "Category: " + categoryID);
+            try {
+                builder.addPart("categories[]", new StringBody(String.valueOf(categoryID)));
+            } catch (Exception e) {
+            }
+        }
+
+
         if (this.objectHasBeenEdited) {
             builder.addTextBody("id", String.valueOf(this.getID()));
         }

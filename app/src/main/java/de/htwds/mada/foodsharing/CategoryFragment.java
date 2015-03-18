@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class CategoryFragment extends DialogFragment {
 
@@ -17,7 +18,8 @@ public class CategoryFragment extends DialogFragment {
                .setItems(values, new DialogInterface.OnClickListener() {
                    @Override
                    public void onClick(DialogInterface dialog, int which) {
-                       EditText et = (EditText) getActivity().findViewById(R.id.offer_category_edit);
+                       //EditText et = (EditText) getActivity().findViewById(R.id.offer_category_edit);
+                       TextView et = (TextView) getActivity().findViewById(R.id.offer_category_edit);
                        et.setText(values[which]);
                    }
                });

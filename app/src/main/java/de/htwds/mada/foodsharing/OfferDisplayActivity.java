@@ -36,6 +36,8 @@ public class OfferDisplayActivity extends Activity {
     private TextView longDescriptionDisplayField;
     private TextView dateAddedDisplayField;
 
+    private TextView categoriesDisplayField;
+
     private Button editOfferButton;
     private Button showContactInformationButton;
     private Offer currentOffer;
@@ -47,17 +49,7 @@ public class OfferDisplayActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_display);
 
-        titleDisplayField = (TextView) findViewById(R.id.offerDisplayTitle);
-        bestBeforeDateDisplayField = (TextView) findViewById(R.id.offer_display_best_before_tv);
-        longDescriptionDisplayField = (TextView) findViewById(R.id.detailed_description_tv);
-        dateAddedDisplayField = (TextView) findViewById(R.id.offerDisplayDateAdded);
-
-
-        photoImageView = (ImageView) findViewById(R.id.offerDisplayPicture);
-
-
-        editOfferButton=(Button)findViewById(R.id.offerDisplayEditOfferButton);
-        showContactInformationButton=(Button)findViewById(R.id.offerDisplayShowContactInformationButton);
+        registerViews();
 
 
         currentOffer = new Offer(OfferDisplayActivity.this);
@@ -97,6 +89,23 @@ public class OfferDisplayActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void registerViews()
+    {
+        titleDisplayField = (TextView) findViewById(R.id.offerDisplayTitle);
+        bestBeforeDateDisplayField = (TextView) findViewById(R.id.offer_display_best_before_tv);
+        longDescriptionDisplayField = (TextView) findViewById(R.id.detailed_description_tv);
+        dateAddedDisplayField = (TextView) findViewById(R.id.offerDisplayDateAdded);
+
+        categoriesDisplayField = (TextView) findViewById(R.id.offerDisplayCategories);
+
+        photoImageView = (ImageView) findViewById(R.id.offerDisplayPicture);
+
+
+        editOfferButton=(Button)findViewById(R.id.offerDisplayEditOfferButton);
+        showContactInformationButton=(Button)findViewById(R.id.offerDisplayShowContactInformationButton);
+
     }
 
     public void editOffer(View view){
@@ -223,6 +232,9 @@ public class OfferDisplayActivity extends Activity {
                 editOfferButton.setVisibility(View.VISIBLE);
                 showContactInformationButton.setVisibility(View.INVISIBLE);
             }
+
+            categoriesDisplayField.setText(currentOffer.getCategories().keySet().toString());
+
             progressDialog.dismiss();
             Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.offerDataFetchingSuccessful), Toast.LENGTH_LONG).show();
 
