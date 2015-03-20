@@ -5,22 +5,19 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 
 public class BrowseCreateEditActivity extends Activity { // implements AdapterView.OnItemSelectedListener {
     private static final String LOG=BrowseCreateEditActivity.class.getName();
-    private Spinner spinner;
-    private Intent i;
-    private View browseLayout;
+    //private Spinner spinner;
+    //private View browseLayout;
     private ProgressDialog progress;
 
 
@@ -31,7 +28,7 @@ public class BrowseCreateEditActivity extends Activity { // implements AdapterVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_create_edit_new);
         //spinner = (android.widget.Spinner) findViewById(R.id.browse_spinner);
-        browseLayout = findViewById(R.id.browse_layout);
+        //browseLayout = findViewById(R.id.browse_layout);
 
 
         Log.i(LOG, "Server: " + Constants.getHttpBaseUrl(this));
@@ -129,7 +126,6 @@ public class BrowseCreateEditActivity extends Activity { // implements AdapterVi
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
@@ -152,7 +148,7 @@ public class BrowseCreateEditActivity extends Activity { // implements AdapterVi
                         break;
                     // Opens EditSearch to enter offer which will be edited
                     case R.id.browseCreateEditEditMyOffersButton:
-                        Intent intent=new Intent(BrowseCreateEditActivity.this, ResultActivity.class);
+                        Intent intent=new Intent(getApplicationContext(), ResultActivity.class);
                         intent.putExtra(Constants.RESULTS_FILTERED_BY_USER, true);
                         startActivity(intent);
                         //fillIntent(EditSearchActivity.class);
@@ -179,7 +175,7 @@ public class BrowseCreateEditActivity extends Activity { // implements AdapterVi
             }
 
     void fillIntent(Class activity) {
-        i = new Intent(getApplicationContext(), activity);
+        Intent i = new Intent(getApplicationContext(), activity);
         startActivity(i);
     }
 
