@@ -261,7 +261,6 @@
             android:textColor="@color/abc_primary_text_material_dark"
             android:textStyle="bold"
             android:background="@color/blue06"
-            android:elevation="1dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp" />
 

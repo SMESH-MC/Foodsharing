@@ -160,8 +160,7 @@
             android:textColor="@color/abc_primary_text_material_dark"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:layout_weight="1"
-            android:elegantTextHeight="true" />
+            android:layout_weight="1"/>
 
         <!--<TextView-->
             <!--android:id="@+id/offer_display_get_location_tvTitle"-->
